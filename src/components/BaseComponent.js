@@ -6,10 +6,13 @@ var moment = require('moment');
 export class BaseComponent extends Component {
     
     // local
-    //ip = "http://localhost:8080";  
+    //ip = "http://localhost:3000";  
+    // local_peer
+    // ip = "http://211.65.35.118:3000";  
     // remote
-     ip = "http://ifnya.com:3000";
-
+    // ip = "http://ifnya.com:3000";
+    // remote Azure
+    ip = "http://nyako.moe:3000"
 
     post = (url, form, successAction,unsuccessAction,errorAction) => {
         return fetch(this.ip + url, { 
@@ -44,6 +47,12 @@ export class BaseComponent extends Component {
             .then((response) => (response.json()))
             .catch((error) => { console.log(error); })
             .then((result) => { this.handleResult(result,successAction,unsuccessAction,errorAction); });
+    }
+
+    timeout(ms) {
+        return new Promise((resolve, reject) => {
+          setTimeout(resolve, ms, 'done');
+        });
     }
 
     handleResult=(result,successAction,unsuccessAction,errorAction) => {

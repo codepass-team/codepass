@@ -1,13 +1,11 @@
-## 现有的对zIndex的规定
-0-4：局部自定组件的设定，往往在外部引入组件之下
+后端代码为根目录vq.py
 
-5：遮罩（如电影页头的渐变遮罩）固定的z值
+其余代码为前端代码
 
-6-9：高级父组件覆盖所用的zIndex
+Demo部署地址为nyako.moe，由于部署于国际版Azure，请务必挂梯子访问
 
-10+：全局组件（如“回到顶部”组件以及modal组件）
+演示包括在ppt中
 
-## 独创功能
-全部采用响应式布局
-渐变遮罩的页头组合
-基于redux实现的全局抽屉
+![image](http://ces2019.oss-cn-shanghai.aliyuncs.com/image2.png)
+
+![image](http://ces2019.oss-cn-shanghai.aliyuncs.com/image1.png)
