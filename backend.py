@@ -1,44 +1,22 @@
-from flask import *
-from flask_cors import CORS
-from bson.objectid import ObjectId
-import pymongo
+import os
+import json
+import time
 import random
 import string
 from datetime import datetime
-import os
 import subprocess
 import http.client
 import urllib.parse
-import json
-# from azure.cosmos import exceptions, CosmosClient, PartitionKey
 from urllib.parse import quote
-import time
+import pymongo
+from flask import *
+from flask_cors import CORS
+from bson.objectid import ObjectId
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
 
-
 db = pymongo.MongoClient(host='127.0.0.1', port=27017)['vq']
-
-# endpoint = "https://vq-search-database.documents.azure.com:443/"
-# key = 'OFkHXptjGLrlDRXZcWj84JK9KBVT0srlc7w9suWVnNJwoolWiwXbRkhhcM0uTgMrAbR8JNY2K4j9awbr2bkYYA=='
-
-# client = CosmosClient(endpoint, key)
-
-# database_name = 'vq-s'
-# database = client.create_database_if_not_exists(id=database_name)
-
-# container_name = 'vq-q'
-# container = database.create_container_if_not_exists(
-#     id=container_name,
-#     partition_key=PartitionKey(path="/qid"),
-#     offer_throughput=400,
-#     unique_key_policy={
-#         'uniqueKeys': [
-#             {'paths': ['/qid']},
-#         ]
-#     }
-# )
 
 
 def update_qid_search(qid):
@@ -59,15 +37,6 @@ def update_qid_search(qid):
 
         res += answer['diff']
         res += answer['desp']
-
-    # try:
-    #     old_question = container.query_items(query="SELECT * FROM test t where t.qid='" + qid + "'", enable_cross_partition_query=True)
-    #     for i in old_question:
-    #         container.delete_item(i, partition_key=i['qid'])
-    # except exceptions.CosmosResourceNotFoundError as identifier:
-    #     pass
-
-    # container.upsert_item({'qid': qid, 'data': res})
 
 
 def new_docker_id(fatherDockerId=None):
@@ -282,14 +251,6 @@ def listQuestion():
         tmp['desp'] = question['desp']
         tmp['status'] = question['status']
 
-        tmp = {}
-        tmp['qid'] = str(question['_id'])
-        tmp['user'] = question['user']
-        tmp['title'] = question['title']
-        tmp['time'] = question['time']
-        tmp['desp'] = question['desp']
-        tmp['status'] = question['status']
-
         if user:
             tmp['dockerId'] = question['dockerId']
 
@@ -356,6 +317,7 @@ def signin():
     username = request.args.get('username')
     password = request.args.get('password')
     res = db['user'].insert({'username': username, 'password': password})
+
     return {'status': 'ok'}
 
 if __name__ == '__main__':
