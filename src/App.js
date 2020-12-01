@@ -1,30 +1,26 @@
-
-import React,{Component} from "react"
-import {BrowserRouter as Router,Route} from "react-router-dom";
-import { Provider } from 'react-redux';
+import React, { Component } from "react"
+import { BrowserRouter as Router, Route, withRouter } from "react-router-dom";
+import { Provider, connect } from 'react-redux';
+import { createBrowserHistory } from 'history'
 import store from './redux/store';
-import indexRoutes from "./routes/index.jsx";
-import {createBrowserHistory} from 'history'
-//由于browserHistory的采用，部署时注意配置服务器端
-//https://www.thinktxt.com/react/2017/02/26/react-router-browserHistory-refresh-404-solution.html
+import BaseLayout from './components/layouts/BaseLayout'
 
-const hist = createBrowserHistory()
-var routesToRoutes = (prop) => {
-    return <Route path={prop.path} component={prop.component} />;
-}
+const mapStateToProps = (state) => ({
+    user: state.identityReducer.user,
+    admin: state.identityReducer.admin,
+    signInVisible: state.modalReducer.signInVisible,
+    signUpVisible: state.modalReducer.signUpVisible,
+    keyword: state.keywordReducer.keyword,
+})
 
-class App extends Component{
-    constructor(props){
-        super(props);
-    };
+let baseLayout = connect(mapStateToProps)(withRouter(BaseLayout))
 
-    render(){
-        return(
+class App extends Component {
+    render() {
+        return (
             <Provider store={store}>
-                <Router history={hist}>    
-                    <div>
-                        {indexRoutes.map(routesToRoutes)}
-                    </div> 
+                <Router history={createBrowserHistory()}>
+                    <Route path={'/'} component={baseLayout} />
                 </Router>
             </Provider>
         );

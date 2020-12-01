@@ -1,21 +1,19 @@
-import React,{Component} from "react";
-import {withRouter } from "react-router-dom";
+import React from "react";
+import {withRouter} from "react-router-dom";
 import {connect} from "react-redux"
 import BaseComponent from "../BaseComponent"
-import { Typography, List,ListItem } from '@material-ui/core';
-import { showDrawer } from '../../redux/actions/action';
-import { logout } from "../../redux/actions/action";
+import {List, ListItem, Typography} from '@material-ui/core';
+import {logout} from '../../redux/actions/action';
 
 const mapStateToProps = state => ({
     user: state.identityReducer.user,
     admin: state.identityReducer.admin
 })
 
-class UserPopover extends BaseComponent{
-    constructor(props){
+class UserPopover extends BaseComponent {
+    constructor(props) {
         super(props);
-        this.state={
-        }
+        this.state = {}
     }
 
     handleClose = name => () => {
@@ -24,7 +22,7 @@ class UserPopover extends BaseComponent{
         });
     };
 
-    signOut=()=>{
+    signOut = () => {
         localStorage.clear()
         this.props.dispatch(logout())
     }
@@ -33,14 +31,14 @@ class UserPopover extends BaseComponent{
     //     this.props.dispatch(showDrawer("历史消费记录",<PayRecord/>))
     // }
 
-    render(){
+    render() {
 
         return (
             <List component="nav">
                 <ListItem button onClick={this.signOut}>
                     <Typography>Sign Out</Typography>
                 </ListItem>
-            </List>        
+            </List>
         )
     }
 }

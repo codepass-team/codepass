@@ -1,24 +1,22 @@
 import React from "react";
 import BaseComponent from './BaseComponent'
-import { Row, Col, AutoComplete,Typography } from 'antd';
+import {Col, Row, Typography} from 'antd';
 
 export default class ErrorPage extends BaseComponent {
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.state={
-
-        }
+        this.state = {}
     }
 
-    render(){
+    render() {
         return (
-            <Row style={styles.rows} >
+            <Row style={styles.rows}>
                 <Col span={24} style={styles.rows}>
                     <Row type='flex' justify='center'>
                         <img style={styles.pic} src={require('./resource/error.png')}/>
                     </Row>
                 </Col>
-                <Col span={24} style={styles.rows}>    
+                <Col span={24} style={styles.rows}>
                     <Row type='flex' justify='center'>
                         <Typography style={styles.name}>{this.props.text}</Typography>
                     </Row>
@@ -29,19 +27,19 @@ export default class ErrorPage extends BaseComponent {
 }
 
 const styles = {
-    container:{
-        marginTop:"100px"
+    container: {
+        marginTop: "100px"
     },
-    pic:{
-        height:180,
-        width:180
+    pic: {
+        height: 180,
+        width: 180
     },
-    name:{
-        textAlign:'start',
-        fontSize:"24px",
-        color:"black",
-        fontFamily:"Georgia",
-        margin:10
+    name: {
+        textAlign: 'start',
+        fontSize: "24px",
+        color: "black",
+        fontFamily: "Georgia",
+        margin: 10
     },
 }
 

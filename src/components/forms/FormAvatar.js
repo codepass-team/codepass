@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
-import { Row, Col, Input, Button, Upload, Icon, message, Form } from 'antd';
+import React, {Component} from 'react';
+import {Form, Icon, message, Upload} from 'antd';
+
 const FormItem = Form.Item;
 
 
@@ -24,7 +25,7 @@ export class FormAvatar extends Component {
         }
 
         var objecturl = window.URL.createObjectURL(info.file.originFileObj)
-        this.setState({ avatarUrl: objecturl, loading: false })
+        this.setState({avatarUrl: objecturl, loading: false})
 
     }
 
@@ -47,16 +48,16 @@ export class FormAvatar extends Component {
     render() {
 
         const formItemLayout = {
-            labelCol: { span: 6 },
-            wrapperCol: { span: 14 },
+            labelCol: {span: 6},
+            wrapperCol: {span: 14},
         };
 
 
-        const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
+        const {getFieldDecorator, getFieldsError, getFieldError, isFieldTouched} = this.props.form;
 
         const uploadButton = (
             <div>
-                <Icon type={this.state.loading ? 'loading' : 'plus'} />
+                <Icon type={this.state.loading ? 'loading' : 'plus'}/>
                 <div className="ant-upload-text">上传</div>
             </div>
         );
@@ -67,15 +68,15 @@ export class FormAvatar extends Component {
                     valuePropName: 'file',
                     getValueFromEvent: this.normFile,
                 })(
-                <Upload
-                    listType="picture-card"
-                    showUploadList={false}
-                    beforeUpload={this.beforeUpload}
-                    onChange={this.handleUploadChange}
-                    style={styles.container}
+                    <Upload
+                        listType="picture-card"
+                        showUploadList={false}
+                        beforeUpload={this.beforeUpload}
+                        onChange={this.handleUploadChange}
+                        style={styles.container}
                     >
-                    {this.state.avatarUrl ? <img src={this.state.avatarUrl} alt="avatar" /> : uploadButton}
-                </Upload>
+                        {this.state.avatarUrl ? <img src={this.state.avatarUrl} alt="avatar"/> : uploadButton}
+                    </Upload>
                 )}
             </FormItem>
         );
