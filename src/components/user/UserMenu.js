@@ -1,27 +1,24 @@
-import React,{Component} from "react";
-import {Icon,Row} from 'antd';
-import {withRouter } from "react-router-dom";
+import React from "react";
+import {Row} from 'antd';
+import {withRouter} from "react-router-dom";
 import {connect} from "react-redux"
 import BaseComponent from "../BaseComponent"
-import { Grid, Avatar, Typography} from '@material-ui/core';
+import {Avatar, Typography} from '@material-ui/core';
 
 const mapStateToProps = state => ({
     user: state.identityReducer.user
 })
 
-class UserMenu extends BaseComponent{
-    constructor(props){
-        super(props);
-    }
+class UserMenu extends BaseComponent {
 
     handleClose = name => () => {
         this.setState({
             [name]: null,
         });
     };
-    
+
     renderAvatar = () => {
-        if (this.props.user === null) 
+        if (this.props.user === null)
             return null;
         return (
             <Avatar style={styles.avatar}>
@@ -29,9 +26,10 @@ class UserMenu extends BaseComponent{
             </Avatar>
         )
     }
+
     /* <Avatar style={styles.avatar} src={this.getImagePath(this.props.user.avatarId)}/> */
 
-    render(){
+    render() {
         if (this.props.user == null) {
             return null;
         }
@@ -47,20 +45,20 @@ class UserMenu extends BaseComponent{
 }
 
 const styles = {
-    container:{
-        backgroundColor:"rgba(0,0,0,0)",
+    container: {
+        backgroundColor: "rgba(0,0,0,0)",
     },
-    title1:{
-        color:"white",
+    title1: {
+        color: "white",
         fontSize: '20px',
     },
-    title2:{
-        color:"white",
+    title2: {
+        color: "white",
         fontSize: '22px',
-        marginLeft:5
+        marginLeft: 5
     },
     avatar: {
-        marginRight:20,
+        marginRight: 20,
     },
 
 };

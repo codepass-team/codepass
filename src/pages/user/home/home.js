@@ -1,9 +1,9 @@
 import React from "react";
 import BaseComponent from '../../../components/BaseComponent'
-import { Row, Col, AutoComplete } from 'antd';
+import {Row} from 'antd';
 
 export class Home extends BaseComponent {
-    render(){
+    render() {
         return (
             <Row style={styles.container}>
                 <Row type='flex' justify='center'>
@@ -14,8 +14,8 @@ export class Home extends BaseComponent {
 }
 
 const styles = {
-    container:{
-        marginTop:"700px"
+    container: {
+        marginTop: "700px"
     }
 }
 

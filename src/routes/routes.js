@@ -1,8 +1,7 @@
-import React,{Component} from "react";
+import React from "react";
 import * as Pages from "../pages";
 import UserLayout from '../components/layouts/user/UserLayout'
 import { connect } from 'react-redux';
-import _ from 'lodash';
 import { withRouter } from 'react-router-dom';
 import { Form } from 'antd';
 
@@ -19,7 +18,7 @@ const mainRoutes = [//默认路由（其实是第二层，第一层在隔壁inde
         path: "/user",
         icon: 'user',
         component: UserLayout,
-        children:[
+        children: [
             {
                 path: "/home",
                 icon: 'home',
@@ -47,12 +46,6 @@ const mainRoutes = [//默认路由（其实是第二层，第一层在隔壁inde
             },
         ]
     }
-    // {
-    //     path: "/signin",
-    //     icon: 'signin',
-    //     component: wrap(Pages.SignIn),
-    // },
-    // use Drawer Instead
 ];
 
 export default mainRoutes;

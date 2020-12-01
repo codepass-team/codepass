@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
-import {Button, Form } from 'antd';
+import React, {Component} from 'react';
+import {Button, Form} from 'antd';
+
 const FormItem = Form.Item;
 
 
 export class FormButton extends Component {
-    state = {  }
+    state = {}
 
     hasErrors(fieldsError) {
         return Object.keys(fieldsError).some(field => fieldsError[field]);
@@ -12,13 +13,13 @@ export class FormButton extends Component {
 
     render() {
 
-        const { getFieldsError } = this.props.form;
+        const {getFieldsError} = this.props.form;
 
         return (
-            <FormItem style={{marginBottom:"10px"}}>
-                <Button type="primary" htmlType="submit" 
-                // disabled={this.hasErrors(getFieldsError())} 
-                style={this.props.style}>
+            <FormItem style={{marginBottom: "10px"}}>
+                <Button type="primary" htmlType="submit"
+                    // disabled={this.hasErrors(getFieldsError())}
+                        style={this.props.style}>
                     {this.props.label}
                 </Button>
             </FormItem>

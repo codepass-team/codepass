@@ -1,29 +1,28 @@
 import React from "react";
 import BaseComponent from '../../../components/BaseComponent'
-import copy from 'copy-to-clipboard';
-import {Card, Row, Col, Typography,Button,Icon, Table,Divider,Descriptions,Input } from 'antd';
+import {Col, Input, Row, Typography} from 'antd';
 import User from '../../../components/auth/user'
 import Description from '../../../components/markd/Description'
-const { TextArea } = Input;
-const { Title,Paragraph } = Typography;
-const test={
-}
+
+const {TextArea} = Input;
+const {Title, Paragraph} = Typography;
+const test = {}
 
 var columns = [];
 export default class CCard extends BaseComponent {
 
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.state={
-            desp:1,
+        this.state = {
+            desp: 1,
         }
     };
 
-    componentWillMount(){
+    componentWillMount() {
     }
 
-    renderTitle=(title,desp,user,time)=>{
-        return(
+    renderTitle = (title, desp, user, time) => {
+        return (
             <Row type="flex" justify="start" align="middle">
                 <Col span={24}>
                     <Title level={2}>{title}</Title>
@@ -34,10 +33,10 @@ export default class CCard extends BaseComponent {
                     </Row>
                 </Col>
                 <Col span={24}>
-                    <Paragraph style={{fontSize:18,marginBottom:5}}>{time}</Paragraph> 
+                    <Paragraph style={{fontSize: 18, marginBottom: 5}}>{time}</Paragraph>
                 </Col>
-                <Row type="flex" justify="start" align="middle" style={{width: '100%'}}>  
-                    <Paragraph style={{fontSize:18,marginBottom:5}}>
+                <Row type="flex" justify="start" align="middle" style={{width: '100%'}}>
+                    <Paragraph style={{fontSize: 18, marginBottom: 5}}>
                         <Description desp={desp}/>
                     </Paragraph>
                 </Row>
@@ -45,26 +44,26 @@ export default class CCard extends BaseComponent {
         )
     }
 
-    render(){
-        const {title,desp,user,time}=this.props.data
+    render() {
+        const {title, desp, user, time} = this.props.data
         return (
-            this.renderTitle(title,desp,user,time)
+            this.renderTitle(title, desp, user, time)
         );
     }
 }
 
 const styles = {
-    container:{
-        marginBottom:"20px",
-        fontSize:22
+    container: {
+        marginBottom: "20px",
+        fontSize: 22
     },
-    btn:{
-        padding:5,
-        marginRight:10
+    btn: {
+        padding: 5,
+        marginRight: 10
     },
-    btn2:{
-        padding:0,
-        marginLeft:5
+    btn2: {
+        padding: 0,
+        marginLeft: 5
     }
 }
 

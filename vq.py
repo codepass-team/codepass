@@ -10,33 +10,35 @@ import subprocess
 import http.client
 import urllib.parse
 import json
-from azure.cosmos import exceptions, CosmosClient, PartitionKey
+# from azure.cosmos import exceptions, CosmosClient, PartitionKey
 from urllib.parse import quote
 import time
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
+
+
 db = pymongo.MongoClient(host='127.0.0.1', port=27017)['vq']
 
-endpoint = "https://vq-search-database.documents.azure.com:443/"
-key = 'OFkHXptjGLrlDRXZcWj84JK9KBVT0srlc7w9suWVnNJwoolWiwXbRkhhcM0uTgMrAbR8JNY2K4j9awbr2bkYYA=='
+# endpoint = "https://vq-search-database.documents.azure.com:443/"
+# key = 'OFkHXptjGLrlDRXZcWj84JK9KBVT0srlc7w9suWVnNJwoolWiwXbRkhhcM0uTgMrAbR8JNY2K4j9awbr2bkYYA=='
 
-client = CosmosClient(endpoint, key)
+# client = CosmosClient(endpoint, key)
 
-database_name = 'vq-s'
-database = client.create_database_if_not_exists(id=database_name)
+# database_name = 'vq-s'
+# database = client.create_database_if_not_exists(id=database_name)
 
-container_name = 'vq-q'
-container = database.create_container_if_not_exists(
-    id=container_name,
-    partition_key=PartitionKey(path="/qid"),
-    offer_throughput=400,
-    unique_key_policy={
-        'uniqueKeys': [
-            {'paths': ['/qid']},
-        ]
-    }
-)
+# container_name = 'vq-q'
+# container = database.create_container_if_not_exists(
+#     id=container_name,
+#     partition_key=PartitionKey(path="/qid"),
+#     offer_throughput=400,
+#     unique_key_policy={
+#         'uniqueKeys': [
+#             {'paths': ['/qid']},
+#         ]
+#     }
+# )
 
 
 def update_qid_search(qid):
@@ -58,34 +60,31 @@ def update_qid_search(qid):
         res += answer['diff']
         res += answer['desp']
 
-    try:
-        query = "SELECT * FROM test t where t.qid='" + qid + "'"
-        old_question = container.query_items(query=query, enable_cross_partition_query=True)
-        for i in old_question:
-            container.delete_item(i, partition_key=i['qid'])
-    except exceptions.CosmosResourceNotFoundError as identifier:
-        pass
-    
-    container.upsert_item({'qid': qid, 'data': res})
+    # try:
+    #     old_question = container.query_items(query="SELECT * FROM test t where t.qid='" + qid + "'", enable_cross_partition_query=True)
+    #     for i in old_question:
+    #         container.delete_item(i, partition_key=i['qid'])
+    # except exceptions.CosmosResourceNotFoundError as identifier:
+    #     pass
+
+    # container.upsert_item({'qid': qid, 'data': res})
 
 
 def new_docker_id(fatherDockerId=None):
     dockerId = ''.join(random.sample(string.ascii_letters + string.digits, 12))
 
-    os.system('mkdir /Users/nyako/vqp/' + dockerId)
-    os.system('chmod -R 777 /Users/nyako/vqp/' + dockerId)
+    os.system(f'mkdir -p /bugs/vqp/{dockerId}')
+    os.system(f'chmod -R 777 /bugs/vqp/{dockerId}')
     if fatherDockerId:
-        os.system('cp -r /Users/nyako/vqp/' + fatherDockerId +
-                  '/ /Users/nyako/vqp/' + dockerId + '/')
+        os.system(f'cp -r /bugs/vqp/{fatherDockerId}/ /bugs/vqp/{dockerId}/')
 
     return dockerId
 
 
 def get_diff(dockerIda, dockerIdb):
-    diff = os.popen('diff -ruNa /Users/nyako/vqp/' +
-                    dockerIda + ' /Users/nyako/vqp/' + dockerIdb).read()
-    diff = diff.replace('/Users/nyako/vqp/' + dockerIda, '/a')
-    diff = diff.replace('/Users/nyako/vqp/' + dockerIdb, '/b')
+    diff = os.popen(f'diff -ruNa /bugs/vqp/{dockerIda}/bugs/vqp/{dockerIdb}').read()
+    diff = diff.replace(f'/bugs/vqp/{dockerIda}', '/a')
+    diff = diff.replace(f'/bugs/vqp/{dockerIdb}', '/b')
     return diff
 
 
@@ -99,8 +98,7 @@ def createAnswer():
     user = request.args.get('user')
     desp = ''
     qid = request.args.get('qid')
-    fatherDockerId = db['question'].find_one(
-        {'_id': ObjectId(qid)})['dockerId']
+    fatherDockerId = db['question'].find_one({'_id': ObjectId(qid)})['dockerId']
     dockerId = new_docker_id(fatherDockerId)
 
     answer = {}
@@ -125,8 +123,7 @@ def saveAnswer(final=0):
     aid = request.args.get('aid')
     desp = request.args.get('desp')
 
-    fatherDockerId = db['answer'].find_one(
-        {'_id': ObjectId(aid)})['fatherDockerId']
+    fatherDockerId = db['answer'].find_one({'_id': ObjectId(aid)})['fatherDockerId']
     dockerId = db['answer'].find_one({'_id': ObjectId(aid)})['dockerId']
 
     answer = {}
@@ -154,26 +151,27 @@ def dockerIdIn():
 
     password = db['user'].find_one({'username': user})['password']
     port = str(random.randint(10000, 20000))
-    subprocess.Popen('timeout 1800 docker run --env PASSWORD=' + password + ' -it -p 0.0.0.0:' + port +
-                     ':8080 -v "/Users/nyako/vqp/' + dockerId + ':/home/coder/project" codercom/code-server:v2', shell=True)
+    subprocess.Popen(f'timeout 1800 docker run --env PASSWORD={password} -it -p 0.0.0.0:{port}:8080 -v "/bugs/vqp/{dockerId}:/bugs/coder/project" codercom/code-server', shell=True)
     time.sleep(3)
-    return redirect('http://211.65.35.118:' + port + '/?folder=/home/coder/project')
+    return redirect('http://localhost:' + port + '/?folder=/home/coder/project')
 
 
 @app.route('/question/searchRecommend')
 def searchRecommendQuestion():
     keywords = request.args.get('keywords')
 
-    subscriptionKey = 'a767a7b743c345f085a3a812845690f4'
-    headers = {'Ocp-Apim-Subscription-Key': subscriptionKey}
-    conn = http.client.HTTPSConnection('vq-recomm.cognitiveservices.azure.com')
-    conn.request(
-        "GET", '/bing/v7.0/suggestions?setLang=en-US&mkt=en-US&q=' + quote(keywords), None, headers)
-    response = conn.getresponse().read()
-    recommend = eval(response)
-    res = []
-    for rec in recommend['suggestionGroups'][0]['searchSuggestions']:
-        res.append(rec['query'])
+    # subscriptionKey = 'a767a7b743c345f085a3a812845690f4'
+    # headers = {'Ocp-Apim-Subscription-Key': subscriptionKey}
+    # conn = http.client.HTTPSConnection('vq-recomm.cognitiveservices.azure.com')
+    # conn.request(
+    #     "GET", '/bing/v7.0/suggestions?setLang=en-US&mkt=en-US&q=' + quote(keywords), None, headers)
+    # response = conn.getresponse().read()
+    # recommend = eval(response)
+    recommend = []
+
+    # res = []
+    # for rec in recommend['suggestionGroups'][0]['searchSuggestions']:
+    #     res.append(rec['query'])
 
     return {'status': 'ok', 'recommend': recommend}
 
@@ -188,13 +186,13 @@ def searchQuestion():
     else:
         limit = 9999
 
-    subscriptionKey = 'A726C37600686E6ECF0BF3E0A36CD57B'
-    headers = {'api-key': subscriptionKey}
-    conn = http.client.HTTPSConnection('vq-search.search.windows.net')
-    conn.request(
-        "GET", '/indexes/cosmosdb-index/docs?api-version=2019-05-06&search=' + quote(keywords), None, headers)
-    response = conn.getresponse().read()
-    qids = set([i['qid'] for i in eval(response)['value']])
+    # subscriptionKey = 'A726C37600686E6ECF0BF3E0A36CD57B'
+    # headers = {'api-key': subscriptionKey}
+    # conn = http.client.HTTPSConnection('vq-search.search.windows.net')
+    # conn.request("GET", '/indexes/cosmosdb-index/docs?api-version=2019-05-06&search=' + quote(keywords), None, headers)
+    # response = conn.getresponse().read()
+    # qids = set([i['qid'] for i in eval(response)['value']])
+    qids = []
 
     res = []
 
@@ -358,9 +356,7 @@ def signin():
     username = request.args.get('username')
     password = request.args.get('password')
     res = db['user'].insert({'username': username, 'password': password})
-
     return {'status': 'ok'}
-
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=3000)

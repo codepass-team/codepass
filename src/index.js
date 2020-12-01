@@ -1,13 +1,12 @@
 import React from "react";
 import ReactDOM from 'react-dom';
 
-import 'antd/dist/antd.css';//全局引入antD样式文件
-
+import 'antd/dist/antd.css'; //全局引入antD样式文件
 import * as serviceWorker from './serviceWorker';
 import App from './App.js'
 
 ReactDOM.render(
-    <App />, 
+    <App/>,
     document.getElementById('root')
 );
 

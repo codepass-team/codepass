@@ -1,46 +1,42 @@
-import React,{Component} from "react";
-import {Icon,Row} from 'antd';
-import {withRouter } from "react-router-dom";
-import {connect} from "react-redux"
+import React from "react";
 import BaseComponent from "../BaseComponent"
+
 const ReactMarkdown = require('react-markdown')
 
-export default class Description extends BaseComponent{
-    constructor(props){
-        super(props);
-    }
-    render(){
+export default class Description extends BaseComponent {
+
+    render() {
         if (this.props.desp == null) {
             return null;
         }
 
         return (
             <ReactMarkdown
-            source={this.props.desp}
-            escapeHtml={false}
-            renderers={{
-                paragraph: props => <paragraph {...props} style={{marginBottom:5}}/>
-            }}
+                source={this.props.desp}
+                escapeHtml={false}
+                renderers={{
+                    paragraph: props => <paragraph {...props} style={{marginBottom: 5}}/>
+                }}
             />
         )
     }
 }
 
 const styles = {
-    container:{
-        backgroundColor:"rgba(0,0,0,0)",
+    container: {
+        backgroundColor: "rgba(0,0,0,0)",
     },
-    title1:{
-        color:"white",
+    title1: {
+        color: "white",
         fontSize: '20px',
     },
-    title2:{
-        color:"white",
+    title2: {
+        color: "white",
         fontSize: '22px',
-        marginLeft:5
+        marginLeft: 5
     },
     avatar: {
-        marginRight:20,
+        marginRight: 20,
     },
 
 };
