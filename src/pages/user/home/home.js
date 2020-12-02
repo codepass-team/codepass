@@ -1,6 +1,6 @@
 import React from "react";
 import BaseComponent from '../../../components/BaseComponent'
-import {Row} from 'antd';
+import { Row } from 'antd';
 
 export class Home extends BaseComponent {
     render() {

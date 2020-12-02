@@ -51,7 +51,7 @@ def new_docker_id(fatherDockerId=None):
 
 
 def get_diff(dockerIda, dockerIdb):
-    diff = os.popen(f'diff -ruNa /bugs/vqp/{dockerIda}/bugs/vqp/{dockerIdb}').read()
+    diff = os.popen(f'diff -ruNa /bugs/vqp/{dockerIda} /bugs/vqp/{dockerIdb}').read()
     diff = diff.replace(f'/bugs/vqp/{dockerIda}', '/a')
     diff = diff.replace(f'/bugs/vqp/{dockerIdb}', '/b')
     return diff
@@ -136,7 +136,7 @@ def searchRecommendQuestion():
     #     "GET", '/bing/v7.0/suggestions?setLang=en-US&mkt=en-US&q=' + quote(keywords), None, headers)
     # response = conn.getresponse().read()
     # recommend = eval(response)
-    recommend = []
+    recommend = ''
 
     # res = []
     # for rec in recommend['suggestionGroups'][0]['searchSuggestions']:

@@ -1,8 +1,8 @@
 import React from 'react'
-import {Route, withRouter} from "react-router-dom";
-import {connect} from 'react-redux';
-import {cancelModal, setOnCancel, showSignIn} from '../redux/actions/action';
-import {notification} from 'antd';
+import { Route, withRouter } from "react-router-dom";
+import { connect } from 'react-redux';
+import { cancelModal, setOnCancel, showSignIn } from '../redux/actions/action';
+import { notification } from 'antd';
 
 const mapStateToProps = state => ({
     user_redux: state.identityReducer.user,
@@ -10,20 +10,20 @@ const mapStateToProps = state => ({
     sales: state.identityReducer.sales,
 })
 
-const PrivateRoute = ({
-                          component: Component,
-                          user,//传入观察值
-                          user_redux,
-                          sales,
-                          admin,
-                          location,
-                          history,
-                          dispatch,
-                          path,//路径
-                          role,//如果需要授权，需要的权限等级
-                          auth,//是否需要授权
-                          ...props
-                      }) => {
+const PrivateRoute = function ({
+    component: Component,
+    user,//传入观察值
+    user_redux,
+    sales,
+    admin,
+    location,
+    history,
+    dispatch,
+    path,//路径
+    role,//如果需要授权，需要的权限等级
+    auth,//是否需要授权
+    ...props
+}) {
     // 解构赋值 将 props 里面的 component 赋值给 Component
 
     const jumpBack = (_user) => {
@@ -71,18 +71,16 @@ const PrivateRoute = ({
     }
 
     return <Route {...props} path={path}
-                  render={(p) => {
-                      if (user || login || !auth) {
-                          return <Component/>
-                      } else {
-                          pushNotification("danger", "请先登录再进行操作")
-                          dispatch(showSignIn())
-                          dispatch(setOnCancel(jumpBack))
-                          return null
-                      }
-                  }
-                  }
-    />
+        render={(p) => {
+            if (user || login || !auth) {
+                return <Component />
+            } else {
+                pushNotification("danger", "请先登录再进行操作")
+                dispatch(showSignIn())
+                dispatch(setOnCancel(jumpBack))
+                return null
+            }
+        }} />
 }
 
 PrivateRoute.defaultProps = {
