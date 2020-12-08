@@ -1,12 +1,11 @@
-import React from "react";
-import { connect } from 'react-redux';
-import { Avatar, Button, Col, Divider, Input, Row, Tabs, Typography } from 'antd';
+import React from "react"
+import { connect } from 'react-redux'
+import { Avatar, Button, Col, Divider, Input, Row, Typography } from 'antd'
 import Answer from './answer'
 import BaseComponent from '../../../components/BaseComponent'
 import Description from '../../../components/markd/Description'
-import { showSignIn } from "../../../redux/actions/action";
+import { showSignIn } from "../../../redux/actions/action"
 
-const { TabPane } = Tabs;
 const { Title, Paragraph } = Typography;
 const { TextArea } = Input;
 const mapStateToProps = state => ({
@@ -36,14 +35,15 @@ class ADetail extends BaseComponent {
 
     componentWillMount() {
         //get my answer
-        if (this.state.question == 0)
+        if (this.state.question === 0) {
             this.setState({
                 question: this.props.data
             })
+        }
     }
 
     renderTitle = (title, desp) => {
-        const { time, dockerId } = this.state.question
+        const { time } = this.state.question
         return (
             <Row type="flex" justify="start" align="middle">
                 <Col span={24}>
@@ -178,7 +178,7 @@ class ADetail extends BaseComponent {
 
     render() {
         this.state.question = this.props.data
-        const { desp, time, title, user, answer } = this.state.question
+        const { desp, title, answer } = this.state.question
         return (
             <Row style={styles.container}>
                 <Col lg={4} xs={1} />
@@ -202,7 +202,7 @@ class ADetail extends BaseComponent {
             return null;
         }
         this.setState({ loading: true })
-        const { qid, title, desp } = this.state.question
+        const { qid } = this.state.question
         const user = this.loadStorage("user")
         var s1 = (result) => {
             if (result.status == "ok") {
@@ -213,7 +213,7 @@ class ADetail extends BaseComponent {
             }
         }
 
-        var e1 = (result) => {
+        var e1 = () => {
             this.pushNotification("danger", "Request Failed");
         }
 
@@ -236,7 +236,7 @@ class ADetail extends BaseComponent {
             }
         }
 
-        var errorAction = (result) => {
+        var errorAction = () => {
             this.pushNotification("danger", "Update Failed");
         }
 
@@ -258,7 +258,7 @@ class ADetail extends BaseComponent {
             }
         }
 
-        var errorAction = (result) => {
+        var errorAction = () => {
             this.pushNotification("danger", "Submit Failed");
         }
 

@@ -64,7 +64,7 @@ class BaseComponent extends Component {
             return;
         }
 
-        if (result.status == null) {
+        if (result.status === null) {
             if (unsuccessAction)
                 unsuccessAction(result)
             return;
@@ -87,9 +87,9 @@ class BaseComponent extends Component {
         if (_date) {
             _date += ""
             let date = _date.substring(5, 7) + "月" + _date.substring(8, 10) + "日";
-            if (count == 1)
+            if (count === 1)
                 date += "（今天）";
-            else if (count == 2)
+            else if (count === 2)
                 date += "（明天）";
             return date;
         }
@@ -113,12 +113,12 @@ class BaseComponent extends Component {
             top: 80,
             duration: 4,
         });
-        if (kind == 'danger')
+        if (kind === 'danger')
             notification.warning({
                 message: reason,
                 description: "Unsuccess",
             })
-        else if (kind == 'success')
+        else if (kind === 'success')
             notification.success({
                 message: reason,
                 description: "Success"

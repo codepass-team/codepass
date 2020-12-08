@@ -105,9 +105,7 @@ class BaseBanner extends BaseComponent {
                     id="title2"
                     style={styles.title2}
                 >
-                    More Segment
-                    &nbsp;&nbsp;&nbsp;
-                    More Stack
+                    基于 Docker 和 Code-Server 的代码问答社区
                 </TweenOne>
                 <TweenOne
                     animation={{ y: 30, opacity: 0, type: 'from', delay: 300 }}
@@ -122,7 +120,7 @@ class BaseBanner extends BaseComponent {
                     id="title2"
                     style={styles.title2}
                 >
-                    有问题?
+                    遇到新问题?
                 </TweenOne>
 
                 <TweenOne

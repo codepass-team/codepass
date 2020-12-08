@@ -79,7 +79,6 @@ class BaseHeader extends BaseComponent {
         )
     }
 
-
     signIn = () => {
         this.props.dispatch(showSignIn())
     }
@@ -95,11 +94,11 @@ class BaseHeader extends BaseComponent {
                     <Row type="flex" justify="end" align='middle' style={{ marginRight: "40px" }}>
                         <Button style={{ color: "white" }} type="link" icon="user" size="large"
                             onClick={this.signIn}>
-                            Sign In
+                            登录
                         </Button>
                         <Button type="primary" icon="user-add" size="large"
                             onClick={this.signUp}>
-                            Sign up
+                            注册
                         </Button>
                     </Row>
                 </Col>
@@ -127,7 +126,7 @@ class BaseHeader extends BaseComponent {
                 <Col sm={0} lg={10}>
                     {/* 当屏幕分辨率小于sm值时隐藏logo */}
                     <Row type="flex" justify='center'>
-                        <img style={styles.logo} src={require("./resource/logo.png")} />
+                        <img style={styles.logo} src={require("./resource/logo2.png")} />
                     </Row>
                 </Col>
                 <Col sm={12} lg={10}>

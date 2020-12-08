@@ -1,16 +1,14 @@
-import React from "react";
+import React from "react"
 import BaseComponent from '../../../components/BaseComponent'
-import copy from 'copy-to-clipboard';
-import {withRouter} from "react-router-dom";
+import copy from 'copy-to-clipboard'
+import { withRouter } from "react-router-dom"
 import Description from '../../../components/markd/Description'
-import {Avatar, Card, Col, Collapse, Row, Typography} from 'antd';
-import {Diff2Html} from "diff2html";
-import "./resource/diff.css";
+import { Avatar, Card, Col, Collapse, Row, Typography } from 'antd'
+import { Diff2Html } from "diff2html"
+import "./resource/diff.css"
 
-const {Title, Paragraph} = Typography;
-const {Panel} = Collapse;
-
-var columns = [];
+const { Paragraph } = Typography
+const { Panel } = Collapse
 
 class Answer extends BaseComponent {
 
@@ -21,10 +19,6 @@ class Answer extends BaseComponent {
         }
     };
 
-    componentWillMount() {
-
-    }
-
     handleCopy = (dockerId) => {
         if (copy(dockerId + ""))
             this.pushNotification("success", "Docker-" + dockerId + " has been copied. Please open it in VS Code")
@@ -34,17 +28,17 @@ class Answer extends BaseComponent {
 
     renderUser(user, time) {
         return (
-            <Row type="flex" style={{width: "100%"}}>
+            <Row type="flex" style={{ width: "100%" }}>
                 <Row type="flex" align='middle' justify="start">
-                    <Avatar shape="square" style={{marginRight: 8, fontSize: 25}} size={44}>
+                    <Avatar shape="square" style={{ marginRight: 8, fontSize: 25 }} size={44}>
                         {user.toUpperCase()[0]}
                     </Avatar>
                 </Row>
-                <Col span={18} style={{padding: 2}}>
-                    <Row type="flex" align='middle' justify="start" style={{width: "80%", fontSize: 16}}>
+                <Col span={18} style={{ padding: 2 }}>
+                    <Row type="flex" align='middle' justify="start" style={{ width: "80%", fontSize: 16 }}>
                         {user}
                     </Row>
-                    <Row type="flex" align='middle' justify="start" style={{width: "80%", fontSize: 14}}>
+                    <Row type="flex" align='middle' justify="start" style={{ width: "80%", fontSize: 14 }}>
                         {time}
                     </Row>
                 </Col>
@@ -53,14 +47,14 @@ class Answer extends BaseComponent {
     }
 
     render() {
-        const {aid, desp, diff, status, time, user, dockerId} = this.props.data
+        const { desp, diff, time, user } = this.props.data
         return (
-            <Card style={{marginBottom: 15}}>
-                <Row style={{width: "100%"}}>
+            <Card style={{ marginBottom: 15 }}>
+                <Row style={{ width: "100%" }}>
                     {this.renderUser(user, time)}
                 </Row>
-                <Paragraph style={{fontSize: 22}}>
-                    <Description desp={desp}/>
+                <Paragraph style={{ fontSize: 22 }}>
+                    <Description desp={desp} />
                 </Paragraph>
                 <Collapse defaultActiveKey={['1']}>
                     <Panel header="Show me the code" key="1">
@@ -80,24 +74,10 @@ class Answer extends BaseComponent {
         });
         html = html.replace(/href/g, "file")
         return (
-            <div dangerouslySetInnerHTML={{__html: html}}/>
+            <div dangerouslySetInnerHTML={{ __html: html }} />
         )
     }
 }
 
-const styles = {
-    container: {
-        marginBottom: "20px",
-        fontSize: 22
-    },
-    btn: {
-        padding: 5,
-        marginRight: 10
-    },
-    btn2: {
-        padding: 0,
-        marginLeft: 5
-    }
-}
 
 export default withRouter(Answer);
