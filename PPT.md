@@ -37,15 +37,17 @@ theme: gaia
 
 # 系统架构 (模块划分)
 
-CodePass系统整体上分为4个主要的功能模块
+CodePass系统整体上分为6个主要的功能模块
 
-![](images/arch.svg)
+![](images/arch.png)
 
 ---
 
 # 需求分析
 
 - 参与者
+
+    - 普通用户
 
     - 提问者
 
