@@ -1,16 +1,16 @@
-import React from "react";
-import {Paper} from '@material-ui/core';
-import {Button, Col, Icon, Layout, Menu, Popover, Row} from 'antd';
-import {withRouter} from "react-router-dom";
-import {connect} from "react-redux"
+import React from "react"
+import { Paper } from '@material-ui/core'
+import { Button, Col, Icon, Layout, Menu, Popover, Row } from 'antd'
+import { withRouter } from "react-router-dom"
+import { connect } from "react-redux"
 import BaseComponent from "../../BaseComponent"
 import BaseBanner from './BaseBanner'
 import SearchBar from '../../SearchBar'
 import UserPopover from '../../user/UserPopover'
 import UserMenu from '../../user/UserMenu'
-import {showSignIn, showSignUp,} from "../../../redux/actions/action";
+import { showSignIn, showSignUp, } from "../../../redux/actions/action"
 
-const {Header} = Layout
+const { Header } = Layout
 
 const mapStateToProps = state => ({
     user: state.identityReducer.user,
@@ -18,7 +18,7 @@ const mapStateToProps = state => ({
     signUpVisible: state.modalReducer.signUpVisible,
 })
 
-var heights = [{height: "800px"}, {height: "700px"}]
+var heights = [{ height: "800px" }, { height: "700px" }]
 
 //每个版块的页头高度固定，不影响布局
 
@@ -58,8 +58,8 @@ class BaseHeader extends BaseComponent {
     }
 
     renderItems = (item) => {
-        return (<Menu.Item key={item.key} style={{color: '#d8d8d8'}}>
-            <Icon type={item.icon}/>{item.name}
+        return (<Menu.Item key={item.key} style={{ color: '#d8d8d8' }}>
+            <Icon type={item.icon} />{item.name}
         </Menu.Item>);
     }
 
@@ -92,26 +92,26 @@ class BaseHeader extends BaseComponent {
         if (this.props.user == null) {
             return (
                 <Col span={12}>
-                    <Row type="flex" justify="end" align='middle' style={{marginRight: "40px"}}>
-                        <Button style={{color: "white"}} type="link" icon="user" size="large"
-                                onClick={this.signIn}>
+                    <Row type="flex" justify="end" align='middle' style={{ marginRight: "40px" }}>
+                        <Button style={{ color: "white" }} type="link" icon="user" size="large"
+                            onClick={this.signIn}>
                             Sign In
                         </Button>
                         <Button type="primary" icon="user-add" size="large"
-                                onClick={this.signUp}>
+                            onClick={this.signUp}>
                             Sign up
                         </Button>
                     </Row>
                 </Col>
             );
         } else {
-            const content = (<UserPopover/>)
+            const content = (<UserPopover />)
             return (
                 <Col span={12}>
-                    <Row type="flex" justify="end" style={{marginRight: "40px"}}>
+                    <Row type="flex" justify="end" style={{ marginRight: "40px" }}>
                         <Popover content={content}>
-                            <Button style={{height: 64, backgroundColor: "rgba(0,0,0,0)"}} type="link">
-                                <UserMenu/>
+                            <Button style={{ height: 64, backgroundColor: "rgba(0,0,0,0)" }} type="link">
+                                <UserMenu />
                             </Button>
                         </Popover>
                     </Row>
@@ -127,11 +127,11 @@ class BaseHeader extends BaseComponent {
                 <Col sm={0} lg={10}>
                     {/* 当屏幕分辨率小于sm值时隐藏logo */}
                     <Row type="flex" justify='center'>
-                        <img style={styles.logo} src={require("./resource/logo.png")}/>
+                        <img style={styles.logo} src={require("./resource/logo.png")} />
                     </Row>
                 </Col>
                 <Col sm={12} lg={10}>
-                    <SearchBar/>
+                    <SearchBar />
                 </Col>
             </Col>
         );
@@ -155,7 +155,7 @@ class BaseHeader extends BaseComponent {
             return (
                 <BaseBanner
                     getBanner={(c) => this.state.banner = c}
-                    index={this.state.index}/>
+                    index={this.state.index} />
             )
     }
 
@@ -164,7 +164,7 @@ class BaseHeader extends BaseComponent {
         const paperStyle = this.handleStyle()
         return (
             <Header style={{
-                ...{backgroundColor: 'white', padding: 0},
+                ...{ backgroundColor: 'white', padding: 0 },
             }}>
                 <Row>
                     {this.renderBanner()}

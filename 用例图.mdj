@@ -13843,6 +13843,24 @@
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
 					"name": "搜索问题"
+				},
+				{
+					"_type": "UMLActivity",
+					"_id": "AAAAAAF2QWBlMk61zJI=",
+					"_parent": {
+						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
+					},
+					"name": "Activity1",
+					"ownedElements": [
+						{
+							"_type": "UMLActivityDiagram",
+							"_id": "AAAAAAF2QWBlMk62TTo=",
+							"_parent": {
+								"$ref": "AAAAAAF2QWBlMk61zJI="
+							},
+							"name": "ActivityDiagram1"
+						}
+					]
 				}
 			]
 		}

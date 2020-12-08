@@ -1,9 +1,9 @@
-import React from "react";
-import * as Pages from "../pages";
+import React from "react"
+import * as Pages from "../pages"
 import UserLayout from '../components/layouts/user/UserLayout'
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import { Form } from 'antd';
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
+import { Form } from 'antd'
 
 const mapStateToProps = state => ({
     user: state.identityReducer.user,

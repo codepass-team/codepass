@@ -1,8 +1,8 @@
-import React from "react";
-import { Router, withRouter } from "react-router-dom";
-import { BackTop, Layout } from 'antd';
-import { cancelModal, loginAsUser, logout, setOnCancel, showSignIn, showSignUp } from '../../../redux/actions/action';
-import mainRoutes from "../../../routes/routes";
+import React from "react"
+import { Router, withRouter } from "react-router-dom"
+import { BackTop, Layout } from 'antd'
+import { cancelModal, loginAsUser, logout, setOnCancel, showSignIn, showSignUp } from '../../../redux/actions/action'
+import mainRoutes from "../../../routes/routes"
 import PrivateRoute from "../../PrivateRoute"
 import BaseHeader from "./BaseHeader"
 import BaseComponent from "../../BaseComponent"
@@ -24,9 +24,9 @@ class UserLayout extends BaseComponent {
         super(props);
         this.state = {
             items: [
-                { key: "/user/home", name: "Homepage", icon: "home" },
-                { key: "/user/list", name: "QA Lists", icon: "unordered-list" },
-                { key: "/user/my", name: "My QA", icon: "user" }
+                { key: "/user/home", name: "首页", icon: "home" },
+                { key: "/user/list", name: "问答列表", icon: "unordered-list" },
+                { key: "/user/my", name: "我的提问", icon: "user" }
             ],
         }
     }

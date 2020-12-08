@@ -1,6 +1,6 @@
-import React from "react";
+import React from "react"
 import BaseComponent from './BaseComponent'
-import {Button} from 'antd';
+import { Button } from 'antd'
 
 const seatTypes = [
     [require("./resource/seat0.png"), require("./resource/seat0.png"), require("./resource/seat0.png")],
@@ -17,8 +17,8 @@ export default class Seat extends BaseComponent {
     }
 
     onClick = () => {
-        const {selected} = this.state
-        const {x, y} = this.props
+        const { selected } = this.state
+        const { x, y } = this.props
         this.state.selected = !selected
         if (!selected)
             this.props.addSelected(x, y)
@@ -27,7 +27,7 @@ export default class Seat extends BaseComponent {
     }
 
     render() {
-        const {isLocked, seats} = this.props
+        const { isLocked, seats } = this.props
         if (this.state.selected)
             return (this.renderSeatType(seatTypes[seats][2]))
         else
@@ -35,14 +35,14 @@ export default class Seat extends BaseComponent {
     }
 
     renderSeatType = (seatType) => {
-        const {isLocked, seats} = this.props
+        const { isLocked, seats } = this.props
         return (
             <Button
                 style={styles.seatButton}
                 onClick={this.onClick}
                 disabled={seats == 0 || isLocked != 0}
                 type="link">
-                <img style={styles.seat} src={seatType}/>
+                <img style={styles.seat} src={seatType} />
             </Button>
         )
     }

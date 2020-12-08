@@ -1,6 +1,6 @@
 import React from 'react';
-import {Button, Divider} from 'antd';
-import BannerAnim, {Element} from 'rc-banner-anim';
+import { Button, Divider } from 'antd';
+import BannerAnim, { Element } from 'rc-banner-anim';
 import TweenOne from 'rc-tween-one';
 import BaseComponent from '../../BaseComponent'
 import QuestionBar from '../../QuestionBar'
@@ -11,10 +11,9 @@ const BgElement = Element.BgElement;
 var count = 0;
 
 class BaseBanner extends BaseComponent {
-;
 
     renderButton = (button) => {
-        const {icon, text, onClick, href} = button
+        const { icon, text, onClick, href } = button
         return (
             <Button
                 type="primary"
@@ -33,13 +32,13 @@ class BaseBanner extends BaseComponent {
         if (this.props.index == 0)
             return (
                 <TweenOne
-                    animation={{y: 30, opacity: 0, type: 'from'}}
+                    animation={{ y: 30, opacity: 0, type: 'from' }}
                     style={styles.gradient}
                 >
                     <div style={{
                         height: "300px",
                         backgroundImage: "linear-gradient(rgba(0,0,0,0),rgba(255,255,255,1))"
-                    }}/>
+                    }} />
                 </TweenOne>
             )
     }
@@ -51,7 +50,7 @@ class BaseBanner extends BaseComponent {
                     this.props.getBanner(c);
                 }}
                 type="vertical"
-                style={{height: '800px'}}
+                style={{ height: '800px' }}
                 arrow={false}
                 dragPlay={false}
                 autoPlay={true}
@@ -71,7 +70,7 @@ class BaseBanner extends BaseComponent {
                 followParallax={{
                     delay: 500,
                     data: [
-                        {id: 'bg' + count, value: 20, bgPosition: '50%', type: ['backgroundPositionX']},
+                        { id: 'bg' + count, value: 20, bgPosition: '50%', type: ['backgroundPositionX'] },
                     ],
                 }}
             >
@@ -79,14 +78,14 @@ class BaseBanner extends BaseComponent {
                 <BgElement
                     key={"bg" + count}
                     style={{
-                        ...{backgroundImage: `url(${back})`},
+                        ...{ backgroundImage: `url(${back})` },
                         ...styles.bg
                     }}
                     id={"bg" + count}
                 />
 
                 <TweenOne
-                    animation={{y: 30, opacity: 0, type: 'from'}}
+                    animation={{ y: 30, opacity: 0, type: 'from' }}
                     id="title"
                     style={styles.title2}
                 >
@@ -94,15 +93,15 @@ class BaseBanner extends BaseComponent {
                 </TweenOne>
 
                 <TweenOne
-                    animation={{y: 30, opacity: 0, type: 'from'}}
+                    animation={{ y: 30, opacity: 0, type: 'from' }}
                     id="title"
                     style={styles.title}
                 >
-                    Bug Stranding
+                    CodePass
                 </TweenOne>
 
                 <TweenOne
-                    animation={{y: 30, opacity: 0, type: 'from', delay: 100}}
+                    animation={{ y: 30, opacity: 0, type: 'from', delay: 100 }}
                     id="title2"
                     style={styles.title2}
                 >
@@ -111,27 +110,27 @@ class BaseBanner extends BaseComponent {
                     More Stack
                 </TweenOne>
                 <TweenOne
-                    animation={{y: 30, opacity: 0, type: 'from', delay: 300}}
+                    animation={{ y: 30, opacity: 0, type: 'from', delay: 300 }}
                     id="title2"
                     style={styles.title2}
                 >
-                    <Divider style={{width: "50%"}}/>
+                    <Divider style={{ width: "50%" }} />
                 </TweenOne>
 
                 <TweenOne
-                    animation={{y: 30, opacity: 0, type: 'from', delay: 300}}
+                    animation={{ y: 30, opacity: 0, type: 'from', delay: 300 }}
                     id="title2"
                     style={styles.title2}
                 >
-                    Brand New Bug?
+                    有问题?
                 </TweenOne>
 
                 <TweenOne
-                    animation={{y: 50, opacity: 0, type: 'from', delay: 300}}
+                    animation={{ y: 50, opacity: 0, type: 'from', delay: 300 }}
                     id="bar"
                     style={styles.bar}
                 >
-                    <QuestionBar/>
+                    <QuestionBar />
                 </TweenOne>
             </Element>
         )

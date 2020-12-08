@@ -1,11 +1,11 @@
 import React from "react";
-import {AutoComplete, Button, Card, Input, List, Row, Skeleton} from 'antd';
+import { AutoComplete, Button, Card, Input, List, Row, Skeleton } from 'antd';
 import BaseComponent from './BaseComponent'
-import {withRouter} from "react-router-dom";
-import {connect} from 'react-redux';
-import {showSignIn} from "../redux/actions/action";
+import { withRouter } from "react-router-dom";
+import { connect } from 'react-redux';
+import { showSignIn } from "../redux/actions/action";
 
-const {TextArea} = Input;
+const { TextArea } = Input;
 const mapStateToProps = state => ({
     keyword: state.keywordReducer.keyword,
 })
@@ -22,8 +22,10 @@ class QuestionBar extends BaseComponent {
             caption: "Submit",
             dockerId: "",
             qid: 0,
-            optData: [{title: "1", description: "2"},
-                {title: "3", description: "4"}],
+            optData: [
+                { title: "CodePass 使用指南", description: "CodePass 使用指南" },
+                { title: "Hello world", description: "测试提问" },
+            ],
             optVis: false,
         }
     };
@@ -35,7 +37,7 @@ class QuestionBar extends BaseComponent {
     }
 
     request = () => {
-        this.setState({optVis: false})
+        this.setState({ optVis: false })
         if (!this.loadStorage("user") || this.loadStorage("user") == "") {
             this.pushNotification("danger", "Please Login First")
             this.props.dispatch(showSignIn())
@@ -46,14 +48,14 @@ class QuestionBar extends BaseComponent {
             this.pushNotification("danger", "Title Shouldn't Be Empty")
             return null;
         }
-        this.setState({loading: true})
+        this.setState({ loading: true })
         //request
         var successAction = (result) => {
             if (result.status == "ok") {
-                this.setState({loading: false, dockerId: result.dockerId, qid: result.qid})
+                this.setState({ loading: false, dockerId: result.dockerId, qid: result.qid })
                 this.pushNotification("success", "Docker is now being setup!")
                 this.timeout(600).then(() =>
-                    this.setState({loading2: false})
+                    this.setState({ loading2: false })
                 )
             } else {
                 this.pushNotification("danger", JSON.stringify(result));
@@ -74,14 +76,14 @@ class QuestionBar extends BaseComponent {
     }
 
     submit = () => {
-        const {qid, title, desp} = this.state
+        const { qid, title, desp } = this.state
         const user = this.loadStorage("user")
         var successAction = (result) => {
             if (result.status == "ok") {
-                this.setState({loading: false, dockerId: result.dockerId, qid: result.qid})
+                this.setState({ loading: false, dockerId: result.dockerId, qid: result.qid })
                 this.pushNotification("success", "Question saved.")
                 this.timeout(600).then(() =>
-                    this.props.history.push({pathname: "/user/detail", state: {qid, user, completed: false}})
+                    this.props.history.push({ pathname: "/user/detail", state: { qid, user, completed: false } })
                 )
             } else {
                 this.pushNotification("danger", JSON.stringify(result));
@@ -97,19 +99,19 @@ class QuestionBar extends BaseComponent {
 
     renderDocker = () => {
         const dockerId = this.state.dockerId
-        var style = {width: '100%', opacity: 0.9, fontFamily: "Georgia", fontSize: 18}
+        var style = { width: '100%', opacity: 0.9, fontFamily: "Georgia", fontSize: 18 }
         if (dockerId != "") {
             if (this.state.loading2) {
                 return (
                     <Card style={style}>
-                        <Skeleton active/>
+                        <Skeleton active />
                     </Card>
                 )
             } else {
                 return (
                     <Card style={style}>
                         <Input
-                            style={{marginBottom: 3, fontWeight: "bold"}}
+                            style={{ marginBottom: 3, fontWeight: "bold" }}
                             defaultValue={this.state.title}
                             onChange={this.onChangeTitle}
                         />
@@ -117,22 +119,22 @@ class QuestionBar extends BaseComponent {
                             addonBefore="Description(Optional)"
                             onChange={this.onChangeDesp}
                             placeholder="(Optional) Add more detail to your Question to attract more helper"
-                            autosize={{minRows: 2, maxRows: 5}}
+                            autosize={{ minRows: 2, maxRows: 5 }}
                         />
-                        <Row style={{width: "100%", fontSize: 14, marginTop: 7}} type="flex" justify="end">
+                        <Row style={{ width: "100%", fontSize: 14, marginTop: 7 }} type="flex" justify="end">
                             Docker-{dockerId} has been set up
                         </Row>
-                        <Row style={{width: "100%"}} type="flex" justify="end">
+                        <Row style={{ width: "100%" }} type="flex" justify="end">
                             <Button
-                                style={{marginTop: 5}}
+                                style={{ marginTop: 5 }}
                                 size="large"
                                 type="primary"
                                 onClick={this.redirectDocker}
                             >Open the docker and show us the code</Button>
                         </Row>
-                        <Row style={{width: "100%"}} type="flex" justify="end">
+                        <Row style={{ width: "100%" }} type="flex" justify="end">
                             <Button
-                                style={{marginTop: 5}}
+                                style={{ marginTop: 5 }}
                                 size="large"
                                 type="link"
                                 onClick={this.submit}
@@ -151,14 +153,14 @@ class QuestionBar extends BaseComponent {
             title: value
         })
         if (value == "") {
-            this.setState({optVis: false})
+            this.setState({ optVis: false })
         } else {
-            this.setState({optVis: true})
+            this.setState({ optVis: true })
         }
         if (value != "")
             this.get("/question/search?keywords=" + value + "&limit=3", result => {
                 var tt = result.question
-                var xx = tt.map(x => ({title: x.title, description: x.desp, qid: x.qid}))
+                var xx = tt.map(x => ({ title: x.title, description: x.desp, qid: x.qid }))
                 this.setState({
                     optData: xx
 
@@ -166,7 +168,7 @@ class QuestionBar extends BaseComponent {
             })
     }
 
-    onChangeDesp = ({target: {value}}) => {
+    onChangeDesp = ({ target: { value } }) => {
         this.setState({
             desp: value
         })
@@ -175,7 +177,7 @@ class QuestionBar extends BaseComponent {
 
     renderOpt() {
         if (this.state.optVis) {
-            return <div><span style={{fontSize: 22}}>Here are the probable questions you may want to ask:</span>
+            return <div><span style={{ fontSize: 22 }}>您可能想问:</span>
                 <List
                     bordered={true}
                     itemLayout="horizontal"
@@ -184,15 +186,15 @@ class QuestionBar extends BaseComponent {
                         <List.Item>
                             <List.Item.Meta
                                 title={<a title={"Press to view the details of the question"}
-                                          style={{color: "white", fontSize: 22}} onClick={() => {
-                                    var tx = this.loadStorage("user")
-                                    var qid = item.qid
-                                    this.props.history.push({
-                                        pathname: "/user/detail",
-                                        state: {qid, tx, completed: true}
-                                    })
-                                }}>{item.title}</a>}
-                                description={<span style={{color: "white"}}>{item.description}</span>}
+                                    style={{ color: "white", fontSize: 22 }} onClick={() => {
+                                        var tx = this.loadStorage("user")
+                                        var qid = item.qid
+                                        this.props.history.push({
+                                            pathname: "/user/detail",
+                                            state: { qid, tx, completed: true }
+                                        })
+                                    }}>{item.title}</a>}
+                                description={<span style={{ color: "white" }}>{item.description}</span>}
                             />
                         </List.Item>
                     )}
@@ -208,28 +210,28 @@ class QuestionBar extends BaseComponent {
     renderInput = () => {
         let style = {}
         if (this.state.isEnter)
-            style = {width: '100%', opacity: 0.8, fontFamily: "Georgia", fontSize: 18}
+            style = { width: '100%', opacity: 0.8, fontFamily: "Georgia", fontSize: 18 }
         else
-            style = {width: '100%', opacity: 0.4, fontFamily: "Georgia", fontSize: 18}
+            style = { width: '100%', opacity: 0.4, fontFamily: "Georgia", fontSize: 18 }
         return (
             <AutoComplete
                 size="large"
                 style={style}
                 onChange={this.onChangeTitle}
                 disabled={this.state.dockerId != ""}
-                placeholder="Describe Your Question And Request A New Stranding">
+                placeholder="描述您遇到的问题">
                 <Input
                     suffix={
                         <Button
                             className="search-btn"
-                            style={{marginRight: -12}}
+                            style={{ marginRight: -12 }}
                             size="large"
                             type="link"
                             loading={this.state.loading}
                             onClick={this.request}
                             disabled={this.state.dockerId != ""}
                         >
-                            Request
+                            提问
                         </Button>}
                 />
             </AutoComplete>
@@ -239,7 +241,7 @@ class QuestionBar extends BaseComponent {
     render() {
         return (
             <div
-                onClick={() => this.setState({isEnter: true})}>
+                onClick={() => this.setState({ isEnter: true })}>
                 {this.renderInput()}
                 {this.renderOpt()}
                 {this.renderDocker()}

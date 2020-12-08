@@ -71,7 +71,6 @@ class BaseComponent extends Component {
         }
         successAction(result);
         return;
-        this.pushNotification("danger", "Unparsable " + JSON.stringify(result));
     }
 
     fromNow = (date) => {

@@ -8,7 +8,6 @@ theme: gaia
 - 配环境配到头秃?
 
 - 我照书上写的, 为啥也有错?
-- 31231231231212
 
 - StackOverflow? SegmentFault? CoreDump?...
 
@@ -28,7 +27,7 @@ theme: gaia
 
 - 目标
 
-    - 基于`Docker`提供`code server`运行环境, 让回答者可以使用拥有完整功能的vscode网页版进行错误复现
+    - 基于`Docker`提供完整版的代码运行环境, 让回答者可以使用功能强大的vscode网页版进行错误复现
 
     - 使用`Git`, `Diff`工具显示代码变化, 让提问者可以直观地看到问题出在哪里
 

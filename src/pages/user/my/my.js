@@ -1,10 +1,10 @@
-import React from "react";
+import React from "react"
 import BaseComponent from '../../../components/BaseComponent'
-import {Col, Row, Tabs} from 'antd';
+import { Col, Row, Tabs } from 'antd'
 import QCard from './qCard'
 import ErrorPage from '../../../components/ErrorPage'
 
-const {TabPane} = Tabs;
+const { TabPane } = Tabs;
 
 export class My extends BaseComponent {
 
@@ -18,7 +18,7 @@ export class My extends BaseComponent {
     componentWillMount() {
         var successAction = (result) => {
             if (result.status == "ok") {
-                this.setState({data: result.questions})
+                this.setState({ data: result.questions })
             } else {
                 this.pushNotification("danger", JSON.stringify(result));
             }
@@ -34,28 +34,28 @@ export class My extends BaseComponent {
     renderQCard = (data) => {
         if (data.user != this.loadStorage("user"))
             return (
-                <QCard data={data}/>
+                <QCard data={data} />
             )
     }
 
     renderACard = (data) => {
         if (data.user == this.loadStorage("user"))
             return (
-                <QCard data={data}/>
+                <QCard data={data} />
             )
     }
 
     render() {
         if (!this.loadStorage("user") || this.loadStorage("user") == "")
             return (
-                <Row type="flex" justify="center" style={{marginTop: 200}}>
-                    <ErrorPage text={"You have not logged in."}/>
+                <Row type="flex" justify="center" style={{ marginTop: 200 }}>
+                    <ErrorPage text={"You have not logged in."} />
                 </Row>)
 
         if (this.state.data.length)
             return (
                 <Row style={styles.container}>
-                    <Col lg={6} xs={1}/>
+                    <Col lg={6} xs={1} />
                     <Col lg={12} xs={22}>
                         <Tabs defaultActiveKey="1">
                             <TabPane tab="Answers" key="1">
@@ -66,14 +66,14 @@ export class My extends BaseComponent {
                             </TabPane>
                         </Tabs>
                     </Col>
-                    <Col lg={6} xs={1}/>
+                    <Col lg={6} xs={1} />
                 </Row>
             );
         else
             return (
                 <Row style={styles.container} type="flex" justify="center">
-                    <Row style={{fontSize: 22, marginTop: 300}}>
-                        No questions or answers yet.
+                    <Row style={{ fontSize: 22, marginTop: 300 }}>
+                        现在还没有提问...
                     </Row>
                 </Row>
             )
