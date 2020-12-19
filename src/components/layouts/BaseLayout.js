@@ -9,7 +9,7 @@ import PrivateRoute from "../PrivateRoute";
 import BaseComponent from "../BaseComponent";
 
 
-const { Header, Content } = Layout;
+const { Content } = Layout;
 
 const mapStateToProps = state => ({
   user: state.identityReducer.user
@@ -22,12 +22,7 @@ class BaseLayout extends BaseComponent {
   }
 
   getDefaultRoute() {
-    // return (
-    //   <Route exact path="/user">
-    //     <Redirect to="/user/home" />
-    //   </Route>
-    // )
-    if (this.props.history.location.pathname.indexOf("/user") == -1)
+    if (this.props.history.location.pathname.indexOf("/user") === -1)
       return (<Redirect to={"/user/home"} />)//这一行是找到首页面
     return null
   }

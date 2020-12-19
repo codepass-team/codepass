@@ -29,7 +29,7 @@ class BaseBanner extends BaseComponent {
     }
 
     renderGradient = () => {
-        if (this.props.index == 0)
+        if (this.props.index === 0)
             return (
                 <TweenOne
                     animation={{ y: 30, opacity: 0, type: 'from' }}

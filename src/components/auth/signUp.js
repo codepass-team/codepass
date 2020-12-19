@@ -3,7 +3,6 @@ import { withRouter } from "react-router-dom";
 import { Button, Col, Form, Row } from 'antd';
 import BaseComponent from '../BaseComponent';
 import { FormButton, FormText } from '../../components/forms';
-import md5 from "md5";
 
 import { connect } from 'react-redux';
 
@@ -51,8 +50,7 @@ class SignUp extends BaseComponent {
                 this.pushNotification("warning", result.message);
             }
 
-            this.post("/api/register", form, successAction)
-
+            this.post("/api/register", form, successAction, unsuccessAction)
         });
     }
 

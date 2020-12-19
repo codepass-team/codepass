@@ -22,7 +22,7 @@ class User extends BaseComponent {
     /* <Avatar style={styles.avatar} src={this.getImagePath(this.props.user.avatarId)}/> */
 
     render() {
-        if (this.props.user == null) {
+        if (this.props.user === null) {
             return null;
         }
         styles = styles_l

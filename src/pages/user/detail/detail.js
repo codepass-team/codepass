@@ -1,12 +1,9 @@
 import React from "react";
 import BaseComponent from '../../../components/BaseComponent'
-import {Col, Input, Row, Tabs, Typography} from 'antd';
+import { Col, Row } from 'antd';
 import QDetail from './qDetail'
 import ADetail from './aDetail'
 
-const {TabPane} = Tabs;
-const {Title, Paragraph} = Typography;
-const {TextArea} = Input;
 
 export class Detail extends BaseComponent {
     constructor(props) {
@@ -18,20 +15,20 @@ export class Detail extends BaseComponent {
     }
 
     componentWillMount() {
-        const {qid, user, completed} = this.props.location.state
+        const { qid } = this.props.location.state
         var successAction = (result) => {
-            if (result.status == "ok") {
-                this.setState({question: result.question, found: true})
+            if (result.status === "ok") {
+                this.setState({ question: result.question, found: true })
             } else {
                 this.pushNotification("warning", JSON.stringify(result));
             }
         }
 
-        var errorAction = (result) => {
+        var errorAction = () => {
             this.pushNotification("warning", "Question Not Found");
         }
 
-        if (this.state.question == 0)
+        if (this.state.question === 0)
             this.getWithErrorAction('/question/get?user=' + this.loadStorage("user") + "&qid=" + qid, successAction, errorAction);
 
 
@@ -41,21 +38,21 @@ export class Detail extends BaseComponent {
         if (!this.state.found)
             return (
                 <Row style={styles.container}>
-                    <Col lg={6} xs={1}/>
+                    <Col lg={6} xs={1} />
                     {/* <Col lg={12} xs={22}>
                         Sorry, answer not found. 
                     </Col> */}
-                    <Col lg={6} xs={1}/>
+                    <Col lg={6} xs={1} />
                 </Row>
             )
-        if (this.props.location.state && this.state.question.user == this.loadStorage("user")) {
+        if (this.props.location.state && this.state.question.user === this.loadStorage("user")) {
 
             return (
-                <QDetail data={this.state.question}/>
+                <QDetail data={this.state.question} />
             )
         } else {
             return (
-                <ADetail data={this.state.question}/>
+                <ADetail data={this.state.question} />
             )
         }
     }

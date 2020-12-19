@@ -15,6 +15,7 @@ class SignIn extends BaseComponent {
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
+            console.log(values)
             if (values.usrname === '') {
                 this.pushNotification("warning", "Username Empty", this.props.dispatch);
                 return;
@@ -24,13 +25,9 @@ class SignIn extends BaseComponent {
                 return;
             }
 
-            let form = new FormData();
-            form.append('email', values.username);
-            form.append('password', values.password);
-
             var successAction = (result) => {
-                if (result.status == "ok") {
-                    this.handleSuccess(values.usrname);
+                if (result.status === "ok") {
+                    this.handleSuccess(values.usrname, result.data.token);
                 } else {
                     this.pushNotification("warning", "Username or Password Wrong");
                 }
@@ -40,14 +37,16 @@ class SignIn extends BaseComponent {
                 this.pushNotification("warning", "Username or Password Wrong");
             }
 
-            this.post('/api/login', form, successAction, errorAction);
+            let param = `?email=${values.usrname}&password=${values.pwd}`
+            this.post('/api/login' + param, null, successAction, errorAction);
 
         });
     }
 
-    handleSuccess = (username) => {
-        this.props.dispatch(loginAsUser(username));
+    handleSuccess = (username, token) => {
+        this.props.dispatch(loginAsUser(username, token));
         localStorage.setItem('user', username);
+        localStorage.setItem('token', token);
         this.props.onCancel()
         this.pushNotification("success", "Sign In Successfully As " + username);
     }

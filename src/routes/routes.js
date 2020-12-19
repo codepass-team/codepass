@@ -1,4 +1,3 @@
-import React from "react"
 import * as Pages from '../pages'
 import UserLayout from '../components/layouts/user/UserLayout'
 import { connect } from 'react-redux'

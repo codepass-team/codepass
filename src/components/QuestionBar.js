@@ -38,20 +38,20 @@ class QuestionBar extends BaseComponent {
 
     request = () => {
         this.setState({ optVis: false })
-        if (!this.loadStorage("user") || this.loadStorage("user") == "") {
+        if (!this.loadStorage("user") || this.loadStorage("user") === "") {
             this.pushNotification("warning", "Please Login First")
             this.props.dispatch(showSignIn())
             return null;
         }
         const title = this.state.title
-        if (title == "") {
+        if (title === "") {
             this.pushNotification("warning", "Title Shouldn't Be Empty")
             return null;
         }
         this.setState({ loading: true })
         //request
         var successAction = (result) => {
-            if (result.status == "ok") {
+            if (result.status === "ok") {
                 this.setState({ loading: false, dockerId: result.dockerId, qid: result.qid })
                 this.pushNotification("success", "Docker is now being setup!")
                 this.timeout(600).then(() =>
@@ -65,7 +65,7 @@ class QuestionBar extends BaseComponent {
         var errorAction = (result) => {
             this.pushNotification("warning", "Request Failed");
         }
-        this.getWithErrorAction("/question/create?user=" + this.loadStorage("user") + "&title=" + title, successAction, errorAction)
+        this.getWithErrorAction("/api/question/create?user=" + this.loadStorage("user") + "&title=" + title, successAction, errorAction)
 
     }
 
@@ -79,7 +79,7 @@ class QuestionBar extends BaseComponent {
         const { qid, title, desp } = this.state
         const user = this.loadStorage("user")
         var successAction = (result) => {
-            if (result.status == "ok") {
+            if (result.status === "ok") {
                 this.setState({ loading: false, dockerId: result.dockerId, qid: result.qid })
                 this.pushNotification("success", "Question saved.")
                 this.timeout(600).then(() =>
@@ -94,13 +94,13 @@ class QuestionBar extends BaseComponent {
             this.pushNotification("warning", "Submit Failed");
         }
 
-        this.getWithErrorAction("/question/save?qid=" + this.state.qid + "&title=" + title + "&desp=" + escape(desp), successAction, errorAction)
+        this.getWithErrorAction("/api/question/save?qid=" + this.state.qid + "&title=" + title + "&desp=" + escape(desp), successAction, errorAction)
     }
 
     renderDocker = () => {
         const dockerId = this.state.dockerId
         var style = { width: '100%', opacity: 0.9, fontFamily: "Georgia", fontSize: 18 }
-        if (dockerId != "") {
+        if (dockerId !== "") {
             if (this.state.loading2) {
                 return (
                     <Card style={style}>
@@ -152,13 +152,13 @@ class QuestionBar extends BaseComponent {
         this.setState({
             title: value
         })
-        if (value == "") {
+        if (value === "") {
             this.setState({ optVis: false })
         } else {
             this.setState({ optVis: true })
         }
-        if (value != "")
-            this.get("/question/search?keywords=" + value + "&limit=3", result => {
+        if (value !== "")
+            this.get("/api/question/search?keywords=" + value + "&limit=3", result => {
                 var tt = result.question
                 var xx = tt.map(x => ({ title: x.title, description: x.desp, qid: x.qid }))
                 this.setState({
@@ -218,7 +218,7 @@ class QuestionBar extends BaseComponent {
                 size="large"
                 style={style}
                 onChange={this.onChangeTitle}
-                disabled={this.state.dockerId != ""}
+                disabled={this.state.dockerId !== ""}
                 placeholder="描述您遇到的问题">
                 <Input
                     suffix={
@@ -229,7 +229,7 @@ class QuestionBar extends BaseComponent {
                             type="link"
                             loading={this.state.loading}
                             onClick={this.request}
-                            disabled={this.state.dockerId != ""}
+                            disabled={this.state.dockerId !== ""}
                         >
                             提问
                         </Button>}

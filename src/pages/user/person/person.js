@@ -1,33 +1,32 @@
 import { UserOutlined } from '@ant-design/icons';
-import { Col, Divider, Row,Avatar } from 'antd';
+import { Col, Divider, Row, Avatar } from 'antd';
 import React from 'react'
-import { Link } from 'react-router-dom';
 import BaseComponent from '../../../components/BaseComponent';
 import Data from './Data';
 
-class Person extends BaseComponent{
-    constructor(props){
+class Person extends BaseComponent {
+    constructor(props) {
         super(props)
-        this.state={
-            name:{
-                name:'昵称',
-                content:null
+        this.state = {
+            name: {
+                name: '昵称',
+                content: null
             },
-            gender:{
-                name:'性别',
-                content:null
+            gender: {
+                name: '性别',
+                content: null
             },
-            job:{
-                name:'职业',
-                content:null
+            job: {
+                name: '职业',
+                content: null
             },
-            tech:{
-                name:'所在行业',
-                content:null,
+            tech: {
+                name: '所在行业',
+                content: null,
             },
-            age:{
-                name:'年龄',
-                content:null
+            age: {
+                name: '年龄',
+                content: null
             }
         }
     }
@@ -36,19 +35,19 @@ class Person extends BaseComponent{
         this.setState(state)
     }
 
-    render(){
+    render() {
         return (
-            <Row style={{marginTop:'15px'}}>
+            <Row style={{ marginTop: '15px' }}>
                 <Col span='18' offset={3}>
-                    <Divider orientation='left'><h2 style={{fontWeight:600}}>个人资料</h2></Divider>
+                    <Divider orientation='left'><h2 style={{ fontWeight: 600 }}>个人资料</h2></Divider>
                 </Col>
                 <Col span='14' offset='5'>
                     <Col span='6'>
                         <div>
-                            <Avatar shape="square" size={128}><UserOutlined style={{fontSize:'128px',color:'#08c'}} /></Avatar>
+                            <Avatar shape="square" size={128}><UserOutlined style={{ fontSize: '128px', color: '#08c' }} /></Avatar>
                         </div>
                     </Col>
-                    <Col span='18' style={{position:'relative',top:'25px'}}>
+                    <Col span='18' style={{ position: 'relative', top: '25px' }}>
                         <Data {...this.state.name} onChangeState={this.onChangeState}></Data>
                         <Divider></Divider>
                         <Data {...this.state.gender} onChangeState={this.onChangeState}></Data>

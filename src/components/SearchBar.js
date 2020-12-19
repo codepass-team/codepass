@@ -23,7 +23,7 @@ class SearchBar extends BaseComponent {
     search = () => {
         const keyword = this.state.name
         this.props.dispatch(setKeyword(keyword))
-        if (!keyword || keyword == "") {
+        if (!keyword || keyword === "") {
             this.pushNotification("warning", "Keyword shouldn't be empty.")
             return
         }
@@ -46,7 +46,7 @@ class SearchBar extends BaseComponent {
                 this.setState({dataSource: suggestions});
             }
         }
-        this.get('/question/searchRecommend?keywords=' + value, successAction)
+        this.get('/api/question/searchRecommend?keywords=' + value, successAction)
     }
 
     autoOnChange = (value) => {

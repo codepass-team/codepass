@@ -1,9 +1,8 @@
 import React from "react";
 import BaseComponent from '../../../components/BaseComponent'
-import {Col, Divider, Row, Tabs} from 'antd';
+import { Col, Divider, Row } from 'antd';
 import UCard from './uCard'
 
-const {TabPane} = Tabs;
 
 export class List extends BaseComponent {
 
@@ -16,14 +15,14 @@ export class List extends BaseComponent {
 
     componentWillMount() {
         var successAction = (result) => {
-            if (result.status == "ok") {
-                this.setState({data: result.questions})
+            if (result.status === "ok") {
+                this.setState({ data: result.questions })
             } else {
                 this.pushNotification("warning", JSON.stringify(result));
             }
         }
 
-        var errorAction = (result) => {
+        var errorAction = () => {
             this.pushNotification("warning", "Connection Failed");
         }
 
@@ -31,9 +30,9 @@ export class List extends BaseComponent {
     }
 
     renderUCards = () => {
-        if (this.state.data != 1)
+        if (this.state.data !== 1)
             return (
-                <Row style={{fontSize: 20, width: "100%"}} type="flex" justify="center">
+                <Row style={{ fontSize: 20, width: "100%" }} type="flex" justify="center">
                     {this.state.data.map(this.renderUCard)}
                 </Row>
             )
@@ -41,9 +40,9 @@ export class List extends BaseComponent {
     }
 
     renderUCard = (item) => {
-        if (item.status == 1)
+        if (item.status === 1)
             return (
-                <UCard data={item}/>
+                <UCard data={item} />
             )
         else
             return null
@@ -71,13 +70,13 @@ export class List extends BaseComponent {
     render() {
         return (
             <Row style={styles.container}>
-                <Col lg={6} xs={1}/>
+                <Col lg={6} xs={1} />
                 <Col lg={12} xs={22}>
-                    <Row style={{fontWeight: "bold", fontSize: 20}}>Question List</Row>
-                    <Divider style={{marginTop: 5}}/>
+                    <Row style={{ fontWeight: "bold", fontSize: 20 }}>Question List</Row>
+                    <Divider style={{ marginTop: 5 }} />
                     {this.renderUCards()}
                 </Col>
-                <Col lg={6} xs={1}/>
+                <Col lg={6} xs={1} />
             </Row>
         );
     }

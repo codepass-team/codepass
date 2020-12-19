@@ -39,7 +39,7 @@ class ACard extends BaseComponent {
     getAnswer = (data) => {
         for (var i = 0; i < data.length; i++) {
             const item = data[i]
-            if (item.user == this.loadStorage("user")) {
+            if (item.user === this.loadStorage("user")) {
                 return item
             }
         }
@@ -77,7 +77,7 @@ class ACard extends BaseComponent {
         if (!my || !my.dockerId) {
             return null
         }
-        if (this.state.desp == 1)
+        if (this.state.desp === 1)
             this.state.desp = my.desp
         return (
             <Card title={"Title: " + title}

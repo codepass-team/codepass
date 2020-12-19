@@ -11,7 +11,7 @@ import BaseDrawer from "../../BaseDrawer"
 
 import { connect } from 'react-redux';
 
-const { Header, Content } = Layout;
+const { Content } = Layout;
 const mapStateToProps = state => ({
     user: state.identityReducer.user,
     signInVisible: state.modalReducer.signInVisible,
@@ -32,7 +32,7 @@ class UserLayout extends BaseComponent {
     }
 
     componentWillMount() {
-        if (localStorage.getItem("user") != null) {
+        if (localStorage.getItem("user") !== null) {
             const user = localStorage.getItem("user")
             this.props.dispatch(loginAsUser(user))
         } else {

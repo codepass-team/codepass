@@ -64,7 +64,7 @@ class ADetail extends BaseComponent {
     }
 
     renderAnswer = (data) => {
-        if (data.status != 0)
+        if (data.status !== 0)
             return (
                 <Answer data={data} />
             )
@@ -78,7 +78,7 @@ class ADetail extends BaseComponent {
 
     renderAnswers = () => {
         const { answer } = this.state.question
-        if (answer.length == 0) {
+        if (answer.length === 0) {
             return (
                 <Row style={{ marginTop: 100 }} type="flex" justify="center">
                     <Paragraph style={{ fontSize: 24 }}>Be the first hero.</Paragraph>
@@ -196,7 +196,7 @@ class ADetail extends BaseComponent {
     }
 
     offer = () => {
-        if (!this.loadStorage("user") || this.loadStorage("user") == "") {
+        if (!this.loadStorage("user") || this.loadStorage("user") === "") {
             this.pushNotification("warning", "Please Login First")
             this.props.dispatch(showSignIn())
             return null;
@@ -205,7 +205,7 @@ class ADetail extends BaseComponent {
         const { qid } = this.state.question
         const user = this.loadStorage("user")
         var s1 = (result) => {
-            if (result.status == "ok") {
+            if (result.status === "ok") {
                 this.setState({ edit: true, loading: false, dockerId: result.dockerId, aid: result.aid })
                 this.pushNotification("success", "Docker has been setup!")
             } else {
@@ -217,19 +217,18 @@ class ADetail extends BaseComponent {
             this.pushNotification("warning", "Request Failed");
         }
 
-        this.getWithErrorAction(
-            "/answer/create?user=" + user + "&qid=" + qid
+        this.getWithErrorAction("/api/answer/create?user=" + user + "&qid=" + qid
             , s1, e1)
     }
 
     save = () => {
-        if (this.state.desp == null || this.state.desp == "") {
+        if (this.state.desp === null || this.state.desp === "") {
             this.pushNotification("warning", "Describe your solution, less or more")
             return null;
         }
         const { aid, desp } = this.state
         var successAction = (result) => {
-            if (result.status == "ok") {
+            if (result.status === "ok") {
                 this.pushNotification("success", "Update Succeeded")
             } else {
                 this.pushNotification("warning", JSON.stringify(result));
@@ -240,17 +239,17 @@ class ADetail extends BaseComponent {
             this.pushNotification("warning", "Update Failed");
         }
 
-        this.getWithErrorAction("/answer/save?aid=" + aid + "&desp=" + escape(desp), successAction, errorAction)
+        this.getWithErrorAction("/api/answer/save?aid=" + aid + "&desp=" + escape(desp), successAction, errorAction)
     }
 
     submit = () => {
-        if (this.state.desp == null || this.state.desp == "") {
+        if (this.state.desp === null || this.state.desp === "") {
             this.pushNotification("warning", "Describe your solution, less or more")
             return null;
         }
         const { aid, desp } = this.state
         var successAction = (result) => {
-            if (result.status == "ok") {
+            if (result.status === "ok") {
                 this.pushNotification("success", "Submit Succeeded")
                 this.setState({ edit: false })
             } else {
@@ -262,13 +261,11 @@ class ADetail extends BaseComponent {
             this.pushNotification("warning", "Submit Failed");
         }
 
-        this.getWithErrorAction("/answer/submit?aid=" + aid + "&desp=" + escape(desp), successAction, errorAction)
+        this.getWithErrorAction("/api/answer/submit?aid=" + aid + "&desp=" + escape(desp), successAction, errorAction)
     }
 
     redirectDocker = () => {
-        var win = window.open(
-            this.ip + "/dockerId/in?user=" + this.loadStorage("user") + "&dockerId=" + this.state.dockerId, '_blank');
-        win.focus()
+        window.open(this.ip + "/dockerId/in?user=" + this.loadStorage("user") + "&dockerId=" + this.state.dockerId, '_blank').focus();
     }
 }
 

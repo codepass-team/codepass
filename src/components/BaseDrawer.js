@@ -1,8 +1,8 @@
 import React from "react";
-import {Drawer} from 'antd';
+import { Drawer } from 'antd';
 import BaseComponent from "./BaseComponent"
-import {resetDrawer} from '../redux/actions/action';
-import {connect} from 'react-redux';
+import { resetDrawer } from '../redux/actions/action';
+import { connect } from 'react-redux';
 
 const mapStateToProps = state => ({
     title: state.drawerReducer.title,

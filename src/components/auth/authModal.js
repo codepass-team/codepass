@@ -47,8 +47,5 @@ class authModal extends BaseComponent {
 
 }
 
-
-const styles = {};
-
-export default (connect(mapStateToProps)(withRouter(authModal)))
+export default connect(mapStateToProps)(withRouter(authModal))
 

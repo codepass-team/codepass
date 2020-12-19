@@ -1,13 +1,10 @@
 import React from "react";
 import BaseComponent from '../../../components/BaseComponent'
-import {Col, Row, Skeleton} from 'antd';
+import { Col, Row, Skeleton } from 'antd';
 import ErrorPage from '../../../components/ErrorPage'
 import UCard from '../list/uCard'
 
 var keyword = null
-const mapStateToProps = state => ({
-    keyword: state.keywordReducer.keyword,
-})
 
 export class Search extends BaseComponent {
     constructor(props) {
@@ -27,40 +24,40 @@ export class Search extends BaseComponent {
 
     getResult = (keyword) => {
         var successAction = (result) => {
-            this.setState({loading: false, data: result.question})
+            this.setState({ loading: false, data: result.question })
         }
-        this.get("/question/search?keywords=" + keyword, successAction)
+        this.get("/api/question/search?keywords=" + keyword, successAction)
     }
 
     renderItem = (item) => {
         return (
-            <UCard data={item}/>
+            <UCard data={item} />
         );
     }
 
     renderList = () => {
         if (this.state.data.length > 0)
             return (
-                <Row type='flex' justify='center' style={{width: "100%"}}>
+                <Row type='flex' justify='center' style={{ width: "100%" }}>
 
-                    <Col lg={2} xs={1}/>
+                    <Col lg={2} xs={1} />
                     <Col lg={20} xs={22}>
                         {this.state.data.map(this.renderItem)}
                     </Col>
-                    <Col lg={2} xs={1}/>
+                    <Col lg={2} xs={1} />
                 </Row>
             )
         if (this.state.loading)
             return (
-                <Row type='flex' justify='center' style={{width: "100%"}}>
+                <Row type='flex' justify='center' style={{ width: "100%" }}>
                     <Col span={18}>
-                        <Skeleton active/>
+                        <Skeleton active />
                     </Col>
                 </Row>
             )
         else
             return (
-                <ErrorPage text={"No result found"}/>
+                <ErrorPage text={"No result found"} />
             )
     }
 
@@ -73,7 +70,7 @@ export class Search extends BaseComponent {
         if (!keyword)
             return (
                 <Row style={styles.container}>
-                    <ErrorPage text={"Access Failed. Please follow the instruction of the site."}/>
+                    <ErrorPage text={"Access Failed. Please follow the instruction of the site."} />
                 </Row>
             );
         else

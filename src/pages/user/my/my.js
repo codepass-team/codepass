@@ -17,7 +17,7 @@ export class My extends BaseComponent {
 
     componentWillMount() {
         var successAction = (result) => {
-            if (result.status == "ok") {
+            if (result.status === "ok") {
                 this.setState({ data: result.questions })
             } else {
                 this.pushNotification("warning", JSON.stringify(result));
@@ -32,21 +32,21 @@ export class My extends BaseComponent {
     }
 
     renderQCard = (data) => {
-        if (data.user != this.loadStorage("user"))
+        if (data.user !== this.loadStorage("user"))
             return (
                 <QCard data={data} />
             )
     }
 
     renderACard = (data) => {
-        if (data.user == this.loadStorage("user"))
+        if (data.user === this.loadStorage("user"))
             return (
                 <QCard data={data} />
             )
     }
 
     render() {
-        if (!this.loadStorage("user") || this.loadStorage("user") == "")
+        if (!this.loadStorage("user") || this.loadStorage("user") === "")
             return (
                 <Row type="flex" justify="center" style={{ marginTop: 200 }}>
                     <ErrorPage text={"You have not logged in."} />

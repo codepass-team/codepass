@@ -4,23 +4,32 @@ import { notification } from 'antd';
 let moment = require('moment');
 
 class BaseComponent extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            token: null
+        }
+    }
 
     ip = "http://katty.top:8000";
 
     post = (url, form, successAction, unsuccessAction, errorAction) => {
+        const token = localStorage.getItem("token")
         return fetch(this.ip + url, {
             method: 'POST',
             mode: 'cors',
             body: form,
             credentials: 'include',
-            header: { 'content-type': 'application/json' }
+            headers: {
+                ...(token ? { "Authorization": `Bearer ${token}` } : {})
+            }
         })
             .then((response) => (response.json()))
-            .catch((error) => {
-                console.error(error);
-            })
             .then((result) => {
                 this.handleResult(result, successAction, unsuccessAction, errorAction);
+            })
+            .catch((error) => {
+                console.error(error);
             });
     }
 
@@ -36,10 +45,14 @@ class BaseComponent extends Component {
     }
 
     getWithErrorAction = (url, successAction, unsuccessAction, errorAction) => {
+        const token = localStorage.getItem("token")
         return fetch(this.ip + url, {
             method: 'GET',
             mode: 'cors',
-            credentials: 'include'
+            credentials: 'include',
+            headers: {
+                ...(token ? { "Authorization": `Bearer ${token}` } : {})
+            }
         })
             .then((response) => (response.json()))
             .catch((error) => {

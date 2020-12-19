@@ -38,12 +38,12 @@ const PrivateRoute = function ({
             top: 80,
             duration: 4,
         });
-        if (kind == 'warning')
+        if (kind === 'warning')
             notification.warning({
                 message: reason,
                 description: "失败!",
             })
-        else if (kind == 'success')
+        else if (kind === 'success')
             notification.success({
                 message: reason,
                 description: "成功"

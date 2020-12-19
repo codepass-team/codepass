@@ -1,16 +1,13 @@
 import React from "react";
 import BaseComponent from '../../../components/BaseComponent'
-import {Card, Col, Input, Row, Typography} from 'antd';
+import { Card, Col, Row, Typography } from 'antd';
 import User from '../../../components/auth/user'
 import Description from '../../../components/markd/Description'
-import {withRouter} from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
-const {TextArea} = Input;
-const {Title, Paragraph} = Typography;
+const { Title, Paragraph } = Typography;
 
-const test = {}
 
-var columns = [];
 
 class UCard extends BaseComponent {
 
@@ -27,26 +24,26 @@ class UCard extends BaseComponent {
     renderTitle = (title, desp, user, time, qid) => {
         return (
             <Card
-                style={{width: "100%", marginBottom: 20}}
+                style={{ width: "100%", marginBottom: 20 }}
                 title={<Title level={3}>
                     {<a onClick={() => {
                         this.props.history.push({
                             pathname: "/user/detail",
-                            state: {qid, user, completed: true}
+                            state: { qid, user, completed: true }
                         })
                     }}>{title}</a>}</Title>}>
 
                 <Col span={24}>
                     <Row type="flex" justify="start" align="middle">
-                        <User user={user}/>
+                        <User user={user} />
                     </Row>
                 </Col>
                 <Col span={24}>
-                    <Paragraph style={{fontSize: 18, marginBottom: 5}}>{time}</Paragraph>
+                    <Paragraph style={{ fontSize: 18, marginBottom: 5 }}>{time}</Paragraph>
                 </Col>
-                <Row type="flex" justify="start" align="middle" style={{width: '100%'}}>
-                    <Paragraph style={{fontSize: 18, marginBottom: 5}}>
-                        <Description desp={desp}/>
+                <Row type="flex" justify="start" align="middle" style={{ width: '100%' }}>
+                    <Paragraph style={{ fontSize: 18, marginBottom: 5 }}>
+                        <Description desp={desp} />
                     </Paragraph>
                 </Row>
             </Card>
@@ -58,7 +55,7 @@ class UCard extends BaseComponent {
     }
 
     render() {
-        const {title, desp, user, time} = this.props.data
+        const { title, desp, user, time } = this.props.data
         const qid = this.props.data.qid
         return (
             this.renderTitle(title, desp, user, time, qid)
@@ -66,20 +63,6 @@ class UCard extends BaseComponent {
     }
 }
 
-const styles = {
-    container: {
-        marginBottom: "20px",
-        fontSize: 22
-    },
-    btn: {
-        padding: 5,
-        marginRight: 10
-    },
-    btn2: {
-        padding: 0,
-        marginLeft: 5
-    }
-}
 
 export default withRouter(UCard);
 
