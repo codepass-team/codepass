@@ -41,6 +41,7 @@ jobs:
           target_branch: gh-pages
           build_dir: build
           allow_empty_commit: false
+          fqdn: catji.top
           commit_message: Auto Deploy by Github Actions # optional
           jekyll: false # optional, default is true
         env:
