@@ -28,7 +28,7 @@ class BaseLayout extends BaseComponent {
     //   </Route>
     // )
     if (this.props.history.location.pathname.indexOf("/user") == -1)
-      return (<Redirect to={"/user/home"} />)
+      return (<Redirect to={"/user/home"} />)//这一行是找到首页面
     return null
   }
 
