@@ -18,19 +18,19 @@ class SignUp extends BaseComponent {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (values.username === '') {
-                this.pushNotification("danger", "Username is empty!", this.props.dispatch);
+                this.pushNotification("warning", "Username is empty!", this.props.dispatch);
                 return;
             }
             if (values.password === '') {
-                this.pushNotification("danger", "Password is empty!", this.props.dispatch);
+                this.pushNotification("warning", "Password is empty!", this.props.dispatch);
                 return;
             }
             if (values.passwordAgain !== values.password) {
-                this.pushNotification("danger", "The two passwords are not the same!", this.props.dispatch);
+                this.pushNotification("warning", "The two passwords are not the same!", this.props.dispatch);
                 return;
             }
             // if(values.name===''){
-            //     this.pushNotification("danger","姓名不能为空",this.props.dispatch);
+            //     this.pushNotification("warning","姓名不能为空",this.props.dispatch);
             // }
             if (!err) {
                 console.log("hey");
@@ -38,9 +38,8 @@ class SignUp extends BaseComponent {
             }
 
             let form = new FormData();
-            form.append('username', values.username);
-            form.append('password', md5(values.password));
-            // form.append('name',values.name);
+            form.append('email', values.username);
+            form.append('password', values.password);
 
             var successAction = (result) => {
                 localStorage.setItem('user', JSON.stringify(result.content));
@@ -49,10 +48,10 @@ class SignUp extends BaseComponent {
             }
 
             var unsuccessAction = (result) => {
-                this.pushNotification("danger", result.message);
+                this.pushNotification("warning", result.message);
             }
 
-            this.get("/signin?username=" + values.username + "&password=" + values.password, successAction)
+            this.post("/api/register", form, successAction)
 
         });
     }
@@ -60,7 +59,7 @@ class SignUp extends BaseComponent {
     renderLogo = () => {
         return (
             <Row type="flex" justify='center'>
-                <img style={styles.logo} src={require("./resource/logo.png")} />
+                <img style={styles.logo} src={require("@/assets/logo2.png")} />
             </Row>
         )
     }
@@ -74,7 +73,7 @@ class SignUp extends BaseComponent {
                 <Col>
                     <Row
                         style={styles.cardContainer}>
-                        <div style={styles.welcome}>Welcome to Bug Stranding</div>
+                        <div style={styles.welcome}>Welcome to CodePass</div>
                         <div style={styles.welcome2}>Sign up</div>
                         <Form onSubmit={this.handleSubmit} type='flex' justify='center'>
                             <Row style={{ width: "100%" }} type="flex" justify='center'>

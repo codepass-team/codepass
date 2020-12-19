@@ -59,7 +59,7 @@ class ACard extends BaseComponent {
         if (copy(dockerId + ""))
             this.pushNotification("success", "Docker-" + dockerId + " has been copied. Please open it in VS Code")
         else
-            this.pushNotification("danger", "Copy Failed")
+            this.pushNotification("warning", "Copy Failed")
     }
 
     componentWillMount() {
@@ -126,7 +126,7 @@ class ACard extends BaseComponent {
                     <Button
                         style={{marginTop: 10, marginLeft: 10}}
                         size="large"
-                        type="danger"
+                        type="warning"
                         onClick={this.end}
                     >Submit Solution</Button>
                 </Row>

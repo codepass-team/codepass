@@ -128,7 +128,7 @@ export default class QDetail extends BaseComponent {
                     <Button
                         style={{marginTop: 10, marginLeft: 10}}
                         size="large"
-                        type="danger"
+                        type="warning"
                         onClick={this.submit}
                     >Submit Question</Button>
                 </Row>
@@ -192,12 +192,12 @@ export default class QDetail extends BaseComponent {
                 this.pushNotification("success", "Update Succeeded")
                 this.setState({edit: false})
             } else {
-                this.pushNotification("danger", JSON.stringify(result));
+                this.pushNotification("warning", JSON.stringify(result));
             }
         }
 
         var errorAction = (result) => {
-            this.pushNotification("danger", "Update Failed");
+            this.pushNotification("warning", "Update Failed");
         }
         this.getWithErrorAction("/question/save?qid=" + qid + "&title=" + title + "&desp=" + escape(desp), successAction, errorAction)
     }
@@ -211,12 +211,12 @@ export default class QDetail extends BaseComponent {
                 this.pushNotification("success", "Submit Succeeded")
                 this.setState({submit: true, edit: false})
             } else {
-                this.pushNotification("danger", JSON.stringify(result));
+                this.pushNotification("warning", JSON.stringify(result));
             }
         }
 
         var errorAction = (result) => {
-            this.pushNotification("danger", "Submit Failed");
+            this.pushNotification("warning", "Submit Failed");
         }
 
         this.getWithErrorAction("/question/submit?qid=" + qid + "&title=" + title + "&desp=" + escape(desp), successAction, errorAction)

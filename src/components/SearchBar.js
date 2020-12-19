@@ -24,7 +24,7 @@ class SearchBar extends BaseComponent {
         const keyword = this.state.name
         this.props.dispatch(setKeyword(keyword))
         if (!keyword || keyword == "") {
-            this.pushNotification("danger", "Keyword shouldn't be empty.")
+            this.pushNotification("warning", "Keyword shouldn't be empty.")
             return
         }
         this.props.history.push({pathname: "/user/", state: {keyword}})

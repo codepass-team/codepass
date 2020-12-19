@@ -16,31 +16,31 @@ class SignIn extends BaseComponent {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (values.usrname === '') {
-                this.pushNotification("danger", "Username Empty", this.props.dispatch);
+                this.pushNotification("warning", "Username Empty", this.props.dispatch);
                 return;
             }
             if (values.pwd === '') {
-                this.pushNotification("danger", "Password Empty", this.props.dispatch);
+                this.pushNotification("warning", "Password Empty", this.props.dispatch);
                 return;
             }
 
-            // let form = new FormData();
-            // form.append('username', values.username);
-            // form.append('password', md5(values.password));
+            let form = new FormData();
+            form.append('email', values.username);
+            form.append('password', values.password);
 
             var successAction = (result) => {
                 if (result.status == "ok") {
                     this.handleSuccess(values.usrname);
                 } else {
-                    this.pushNotification("danger", "Username or Password Wrong");
+                    this.pushNotification("warning", "Username or Password Wrong");
                 }
             }
 
             var errorAction = (result) => {
-                this.pushNotification("danger", "Username or Password Wrong");
+                this.pushNotification("warning", "Username or Password Wrong");
             }
 
-            this.getWithErrorAction('/login?username=' + values.usrname + "&password=" + values.pwd, successAction, errorAction);
+            this.post('/api/login', form, successAction, errorAction);
 
         });
     }
@@ -55,7 +55,7 @@ class SignIn extends BaseComponent {
     renderLogo = () => {
         return (
             <Row type="flex" justify='center'>
-                <img style={styles.logo} src={require("./resource/logo.png")} />
+                <img style={styles.logo} src={require("@/assets/logo2.png")} />
             </Row>
         )
     }
@@ -70,7 +70,7 @@ class SignIn extends BaseComponent {
                     <Row
                         style={styles.cardContainer} type="flex" justify='center'>
                         <Row type="flex" justify="start" style={styles.welcome}>
-                            Welcome to Bug Stranding
+                            Welcome to CodePass
                         </Row>
                         <Row type="flex" justify="start" style={styles.welcome2}>
                             Sign In

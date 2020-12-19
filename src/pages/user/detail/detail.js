@@ -23,12 +23,12 @@ export class Detail extends BaseComponent {
             if (result.status == "ok") {
                 this.setState({question: result.question, found: true})
             } else {
-                this.pushNotification("danger", JSON.stringify(result));
+                this.pushNotification("warning", JSON.stringify(result));
             }
         }
 
         var errorAction = (result) => {
-            this.pushNotification("danger", "Question Not Found");
+            this.pushNotification("warning", "Question Not Found");
         }
 
         if (this.state.question == 0)

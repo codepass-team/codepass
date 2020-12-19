@@ -20,12 +20,12 @@ export class My extends BaseComponent {
             if (result.status == "ok") {
                 this.setState({ data: result.questions })
             } else {
-                this.pushNotification("danger", JSON.stringify(result));
+                this.pushNotification("warning", JSON.stringify(result));
             }
         }
 
         var errorAction = (result) => {
-            this.pushNotification("danger", "Connection Failed");
+            this.pushNotification("warning", "Connection Failed");
         }
 
         this.getWithErrorAction('/question/list?user=' + this.loadStorage("user"), successAction, errorAction);

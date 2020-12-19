@@ -5,7 +5,7 @@ let moment = require('moment');
 
 class BaseComponent extends Component {
 
-    ip = "http://localhost:3000";
+    ip = "http://katty.top:8000";
 
     post = (url, form, successAction, unsuccessAction, errorAction) => {
         return fetch(this.ip + url, {
@@ -13,7 +13,7 @@ class BaseComponent extends Component {
             mode: 'cors',
             body: form,
             credentials: 'include',
-            header: { 'content-type': 'multipart/form-data' }
+            header: { 'content-type': 'application/json' }
         })
             .then((response) => (response.json()))
             .catch((error) => {
@@ -27,7 +27,7 @@ class BaseComponent extends Component {
     get = (url, successAction) => {
         let unsuccessAvtion = (result) => {
             console.log(result)
-            this.pushNotification("danger", result.message);
+            this.pushNotification("warning", result.message);
         }
         let errorAction = () => {
             console.log("error")
@@ -60,7 +60,7 @@ class BaseComponent extends Component {
         if (!result) {
             console.log(result)
             if (errorAction) errorAction()
-            this.pushNotification("danger", "Connection Failure");
+            this.pushNotification("warning", "Connection Failure");
             return;
         }
 
@@ -113,7 +113,7 @@ class BaseComponent extends Component {
             top: 80,
             duration: 4,
         });
-        if (kind === 'danger')
+        if (kind === 'warning')
             notification.warning({
                 message: reason,
                 description: "Unsuccess",

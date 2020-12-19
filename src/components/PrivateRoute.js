@@ -38,7 +38,7 @@ const PrivateRoute = function ({
             top: 80,
             duration: 4,
         });
-        if (kind == 'danger')
+        if (kind == 'warning')
             notification.warning({
                 message: reason,
                 description: "失败!",
@@ -75,7 +75,7 @@ const PrivateRoute = function ({
             if (user || login || !auth) {
                 return <Component />
             } else {
-                pushNotification("danger", "请先登录再进行操作")
+                pushNotification("warning", "请先登录再进行操作")
                 dispatch(showSignIn())
                 dispatch(setOnCancel(jumpBack))
                 return null

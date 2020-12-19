@@ -39,13 +39,13 @@ class QuestionBar extends BaseComponent {
     request = () => {
         this.setState({ optVis: false })
         if (!this.loadStorage("user") || this.loadStorage("user") == "") {
-            this.pushNotification("danger", "Please Login First")
+            this.pushNotification("warning", "Please Login First")
             this.props.dispatch(showSignIn())
             return null;
         }
         const title = this.state.title
         if (title == "") {
-            this.pushNotification("danger", "Title Shouldn't Be Empty")
+            this.pushNotification("warning", "Title Shouldn't Be Empty")
             return null;
         }
         this.setState({ loading: true })
@@ -58,12 +58,12 @@ class QuestionBar extends BaseComponent {
                     this.setState({ loading2: false })
                 )
             } else {
-                this.pushNotification("danger", JSON.stringify(result));
+                this.pushNotification("warning", JSON.stringify(result));
             }
         }
 
         var errorAction = (result) => {
-            this.pushNotification("danger", "Request Failed");
+            this.pushNotification("warning", "Request Failed");
         }
         this.getWithErrorAction("/question/create?user=" + this.loadStorage("user") + "&title=" + title, successAction, errorAction)
 
@@ -86,12 +86,12 @@ class QuestionBar extends BaseComponent {
                     this.props.history.push({ pathname: "/user/detail", state: { qid, user, completed: false } })
                 )
             } else {
-                this.pushNotification("danger", JSON.stringify(result));
+                this.pushNotification("warning", JSON.stringify(result));
             }
         }
 
         var errorAction = (result) => {
-            this.pushNotification("danger", "Submit Failed");
+            this.pushNotification("warning", "Submit Failed");
         }
 
         this.getWithErrorAction("/question/save?qid=" + this.state.qid + "&title=" + title + "&desp=" + escape(desp), successAction, errorAction)

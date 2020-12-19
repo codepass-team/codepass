@@ -23,7 +23,7 @@ class Answer extends BaseComponent {
         if (copy(dockerId + ""))
             this.pushNotification("success", "Docker-" + dockerId + " has been copied. Please open it in VS Code")
         else
-            this.pushNotification("danger", "Copy Failed")
+            this.pushNotification("warning", "Copy Failed")
     }
 
     renderUser(user, time) {

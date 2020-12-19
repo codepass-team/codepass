@@ -148,7 +148,7 @@ class ADetail extends BaseComponent {
                     <Button
                         style={{ marginLeft: 10 }}
                         size="large"
-                        type="danger"
+                        type="warning"
                         onClick={this.submit}
                     >Submit</Button>
                 </Row>
@@ -197,7 +197,7 @@ class ADetail extends BaseComponent {
 
     offer = () => {
         if (!this.loadStorage("user") || this.loadStorage("user") == "") {
-            this.pushNotification("danger", "Please Login First")
+            this.pushNotification("warning", "Please Login First")
             this.props.dispatch(showSignIn())
             return null;
         }
@@ -209,12 +209,12 @@ class ADetail extends BaseComponent {
                 this.setState({ edit: true, loading: false, dockerId: result.dockerId, aid: result.aid })
                 this.pushNotification("success", "Docker has been setup!")
             } else {
-                this.pushNotification("danger", JSON.stringify(result));
+                this.pushNotification("warning", JSON.stringify(result));
             }
         }
 
         var e1 = () => {
-            this.pushNotification("danger", "Request Failed");
+            this.pushNotification("warning", "Request Failed");
         }
 
         this.getWithErrorAction(
@@ -224,7 +224,7 @@ class ADetail extends BaseComponent {
 
     save = () => {
         if (this.state.desp == null || this.state.desp == "") {
-            this.pushNotification("danger", "Describe your solution, less or more")
+            this.pushNotification("warning", "Describe your solution, less or more")
             return null;
         }
         const { aid, desp } = this.state
@@ -232,12 +232,12 @@ class ADetail extends BaseComponent {
             if (result.status == "ok") {
                 this.pushNotification("success", "Update Succeeded")
             } else {
-                this.pushNotification("danger", JSON.stringify(result));
+                this.pushNotification("warning", JSON.stringify(result));
             }
         }
 
         var errorAction = () => {
-            this.pushNotification("danger", "Update Failed");
+            this.pushNotification("warning", "Update Failed");
         }
 
         this.getWithErrorAction("/answer/save?aid=" + aid + "&desp=" + escape(desp), successAction, errorAction)
@@ -245,7 +245,7 @@ class ADetail extends BaseComponent {
 
     submit = () => {
         if (this.state.desp == null || this.state.desp == "") {
-            this.pushNotification("danger", "Describe your solution, less or more")
+            this.pushNotification("warning", "Describe your solution, less or more")
             return null;
         }
         const { aid, desp } = this.state
@@ -254,12 +254,12 @@ class ADetail extends BaseComponent {
                 this.pushNotification("success", "Submit Succeeded")
                 this.setState({ edit: false })
             } else {
-                this.pushNotification("danger", JSON.stringify(result));
+                this.pushNotification("warning", JSON.stringify(result));
             }
         }
 
         var errorAction = () => {
-            this.pushNotification("danger", "Submit Failed");
+            this.pushNotification("warning", "Submit Failed");
         }
 
         this.getWithErrorAction("/answer/submit?aid=" + aid + "&desp=" + escape(desp), successAction, errorAction)
