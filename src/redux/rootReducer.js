@@ -1,4 +1,4 @@
-import {combineReducers} from 'redux';
+import { combineReducers } from 'redux';
 
 import identityReducer from './reducers/identityReducer.js'
 import drawerReducer from './reducers/drawerReducer.js'
