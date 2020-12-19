@@ -1,0 +1,37 @@
+.each-div{
+    padding: 20px 0;
+    display: block;
+    height: 76px;
+}
+
+.title-div{
+    height: 36px;
+}
+
+.title{
+    line-height: 36px;
+    color:#444;
+    position: absolute;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 0;
+}
+
+.msg{
+    line-height: 36px;
+    display: block;
+}
+
+.msg-text{
+    font-size: 15px;
+    color: #121212;
+}
+
+.modify-btn{
+    font-size: 15px;
+    margin-left: 30px;
+}
+
+.operate-btn{
+    margin-left: 15px;
+}
