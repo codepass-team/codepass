@@ -42,3 +42,5 @@ jobs:
           allow_empty_commit: false
           commit_message: Auto Deploy by Github Actions # optional
           jekyll: false # optional, default is true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
