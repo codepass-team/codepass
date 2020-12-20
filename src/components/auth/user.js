@@ -48,7 +48,7 @@ const styles_s = {
     title2: {
         color: "black",
         fontSize: '18px',
-        marginLeft: 5
+        marginLeft:5
     },
     avatar: {
         marginRight: 20,
@@ -72,7 +72,6 @@ const styles_l = {
     title2: {
         color: "black",
         fontSize: '22px',
-        marginLeft: 5
     },
     avatar: {
         marginRight: 20,

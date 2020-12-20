@@ -15,7 +15,6 @@ export class List extends BaseComponent {
 
     componentWillMount() {
         var successAction = (result) => {
-            console.log(result)
             if (result.status === "ok") {
                 this.setState({ data: result.data })
             } else {
@@ -34,7 +33,7 @@ export class List extends BaseComponent {
         if (this.state.data !== 1)
             return (
                 <Row style={{ fontSize: 20, width: "100%" }} type="flex" justify="center">
-                    {this.state.data.map(this.renderUCard)}
+                    {this.state.data.content.map(this.renderUCard)}
                 </Row>
             )
         return null
@@ -69,7 +68,6 @@ export class List extends BaseComponent {
     // }
 
     render() {
-        console.log(this.state.data)
         return (
             <Row style={styles.container}>
                 <Col lg={6} xs={1} />

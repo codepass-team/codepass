@@ -54,7 +54,6 @@ class UCard extends BaseComponent {
 
     render() {
         const { title, content, nickname,questioner, raiseTime } = this.props.data
-        console.log(this.props.data)
         // const qid = this.props.data.qid
         return (
             this.renderTitle(title, content, nickname, raiseTime, questioner)
