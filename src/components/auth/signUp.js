@@ -37,7 +37,7 @@ class SignUp extends BaseComponent {
             }
 
             let form = new FormData();
-            form.append('email', values.username);
+            form.append('username', values.username);
             form.append('password', values.password);
 
             var successAction = (result) => {
