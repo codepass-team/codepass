@@ -49,10 +49,15 @@ class QuestionBar extends BaseComponent {
             return null;
         }
         this.setState({ loading: true })
+
+        let form = new FormData();
+        form.append('title', title);
+
         //request
         var successAction = (result) => {
             if (result.status === "ok") {
-                this.setState({ loading: false, dockerId: result.dockerId, qid: result.qid })
+                result = result.data
+                this.setState({ loading: false, dockerId: result.dockerId, qid: result.id })
                 this.pushNotification("success", "Docker is now being setup!")
                 this.timeout(600).then(() =>
                     this.setState({ loading2: false })
@@ -65,8 +70,7 @@ class QuestionBar extends BaseComponent {
         var errorAction = (result) => {
             this.pushNotification("warning", "Request Failed");
         }
-        this.getWithErrorAction("/api/question/create?user=" + this.loadStorage("user") + "&title=" + title, successAction, errorAction)
-
+        this.post("/api/question/create", form, successAction, errorAction)
     }
 
     redirectDocker = () => {
@@ -78,6 +82,11 @@ class QuestionBar extends BaseComponent {
     submit = () => {
         const { qid, title, desp } = this.state
         const user = this.loadStorage("user")
+
+        let form = new FormData();
+        form.append('title', title);
+        form.append('content', desp);
+
         var successAction = (result) => {
             if (result.status === "ok") {
                 this.setState({ loading: false, dockerId: result.dockerId, qid: result.qid })
@@ -94,7 +103,10 @@ class QuestionBar extends BaseComponent {
             this.pushNotification("warning", "Submit Failed");
         }
 
-        this.getWithErrorAction("/api/question/save?qid=" + this.state.qid + "&title=" + title + "&desp=" + escape(desp), successAction, errorAction)
+        this.post("/api/question/save/" + this.state.qid, form, successAction, errorAction)
+            .then(() => {
+                this.post("/api/question/submit/" + this.state.qid)
+            })
     }
 
     renderDocker = () => {
@@ -158,12 +170,12 @@ class QuestionBar extends BaseComponent {
             this.setState({ optVis: true })
         }
         if (value !== "")
-            this.get("/api/question/search?keywords=" + value + "&limit=3", result => {
-                var tt = result.question
+            this.get("/api/question/search?keywords=" + value, result => {
+                console.log(result.data)
+                var tt = result.data
                 var xx = tt.map(x => ({ title: x.title, description: x.desp, qid: x.qid }))
                 this.setState({
                     optData: xx
-
                 })
             })
     }
@@ -202,10 +214,7 @@ class QuestionBar extends BaseComponent {
         } else {
 
         }
-
-
     }
-
 
     renderInput = () => {
         let style = {}
