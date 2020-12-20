@@ -15,8 +15,9 @@ export class List extends BaseComponent {
 
     componentWillMount() {
         var successAction = (result) => {
+            console.log(result)
             if (result.status === "ok") {
-                this.setState({ data: result.questions })
+                this.setState({ data: result.data })
             } else {
                 this.pushNotification("warning", JSON.stringify(result));
             }
@@ -26,7 +27,7 @@ export class List extends BaseComponent {
             this.pushNotification("warning", "Connection Failed");
         }
 
-        this.getWithErrorAction('/question/list', successAction, errorAction);
+        this.getWithErrorAction('/api/question/listAll', successAction, errorAction);
     }
 
     renderUCards = () => {
@@ -68,6 +69,7 @@ export class List extends BaseComponent {
     // }
 
     render() {
+        console.log(this.state.data)
         return (
             <Row style={styles.container}>
                 <Col lg={6} xs={1} />

@@ -15,7 +15,6 @@ class SignIn extends BaseComponent {
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
-            console.log(values)
             if (values.usrname === '') {
                 this.pushNotification("warning", "Username Empty", this.props.dispatch);
                 return;

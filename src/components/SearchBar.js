@@ -37,13 +37,9 @@ class SearchBar extends BaseComponent {
     fetchAutoComplete = (value) => {
         var successAction = (result) => {
             const group = result.recommend
-            if (group && group.suggestionGroups.length) {
-                const jArr = group.suggestionGroups[0].searchSuggestions
-                var suggestions = []
-                for (var i = 0; i < jArr.length; i++) {
-                    suggestions.push(jArr[i].displayText)
-                }
-                this.setState({dataSource: suggestions});
+            console.log(group)
+            if (group && group.length) {
+                this.setState({dataSource: group});
             }
         }
         this.get('/api/question/searchRecommend?keywords=' + value, successAction)

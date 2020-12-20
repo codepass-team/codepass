@@ -24,7 +24,7 @@ class UCard extends BaseComponent {
     renderTitle = (title, desp, user, time, qid) => {
         return (
             <Card
-                style={{ width: "100%", marginBottom: 20 }}
+                style={{ width: "100%", marginBottom: 10 }}
                 title={<Title level={3}>
                     {<a onClick={() => {
                         this.props.history.push({
@@ -33,16 +33,14 @@ class UCard extends BaseComponent {
                         })
                     }}>{title}</a>}</Title>}>
 
-                <Col span={24}>
-                    <Row type="flex" justify="start" align="middle">
-                        <User user={user} />
-                    </Row>
+                <Col span={12}>
+                    <User user={user} />
                 </Col>
-                <Col span={24}>
-                    <Paragraph style={{ fontSize: 18, marginBottom: 5 }}>{time}</Paragraph>
+                <Col span={12}>
+                    <Paragraph style={{ fontSize: 18,paddingTop:3,float:'right' }}>{this.handleDate(time)+' '+this.handleTime(time)}</Paragraph>
                 </Col>
                 <Row type="flex" justify="start" align="middle" style={{ width: '100%' }}>
-                    <Paragraph style={{ fontSize: 18, marginBottom: 5 }}>
+                    <Paragraph style={{ fontSize: 14, fontWeight:400,marginBottom: 5}}>
                         <Description desp={desp} />
                     </Paragraph>
                 </Row>
@@ -55,10 +53,11 @@ class UCard extends BaseComponent {
     }
 
     render() {
-        const { title, desp, user, time } = this.props.data
-        const qid = this.props.data.qid
+        const { title, content, nickname,questioner, raiseTime } = this.props.data
+        console.log(this.props.data)
+        // const qid = this.props.data.qid
         return (
-            this.renderTitle(title, desp, user, time, qid)
+            this.renderTitle(title, content, nickname, raiseTime, questioner)
         );
     }
 }
