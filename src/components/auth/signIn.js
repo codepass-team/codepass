@@ -25,6 +25,10 @@ class SignIn extends BaseComponent {
                 return;
             }
 
+            let form = new FormData();
+            form.append('username', values.usrname);
+            form.append('password', values.pwd);
+
             var successAction = (result) => {
                 if (result.status === "ok") {
                     this.handleSuccess(values.usrname, result.data.token);
@@ -37,9 +41,7 @@ class SignIn extends BaseComponent {
                 this.pushNotification("warning", "Username or Password Wrong");
             }
 
-            let param = `?email=${values.usrname}&password=${values.pwd}`
-            this.post('/api/login' + param, null, successAction, errorAction);
-
+            this.post('/api/login', form, successAction, errorAction);
         });
     }
 
