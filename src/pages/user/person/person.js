@@ -58,6 +58,7 @@ class Person extends BaseComponent {
                 this.pushNotification("warning", JSON.stringify(result));
             }
         }
+        console.log(this.state.name.content,this.state.gender.content,this.state.job.content,this.state.tech.content,this.state.age.content)
 
         this.post('api/user?nickname='+this.state.name.content+'&gender='+this.state.gender.content+'&job='+this.state.job.content
                     +'&tech='+this.state.tech.content+'&age='+this.state.age.content,null,successAction)
