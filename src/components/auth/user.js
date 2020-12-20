@@ -1,5 +1,5 @@
 import React from "react";
-import {Row} from 'antd';
+import {Col} from 'antd';
 import {withRouter} from "react-router-dom";
 import BaseComponent from '../BaseComponent'
 import {Avatar, Typography} from '@material-ui/core';
@@ -12,6 +12,7 @@ class User extends BaseComponent {
     renderAvatar = () => {
         if (this.props.user === null)
             return null;
+        console.log(this.props.user)
         return (
             <Avatar size="small" shape="square" style={styles.avatar}>
                 {this.props.user.toUpperCase()[0]}
@@ -28,10 +29,10 @@ class User extends BaseComponent {
         styles = styles_l
         if (this.props.small) styles = styles_s
         return (
-            <Row type="flex" align='middle' justify="start" style={styles.container}>
-                {this.renderAvatar()}
+            <Col style={styles.container}>
+                {/* {this.renderAvatar()} */}
                 <Typography style={styles.title2}>{this.props.user}</Typography>
-            </Row>
+            </Col>
         )
     }
 }
@@ -47,7 +48,7 @@ const styles_s = {
     title2: {
         color: "black",
         fontSize: '18px',
-        marginLeft: 5
+        marginLeft:5
     },
     avatar: {
         marginRight: 20,
@@ -61,8 +62,8 @@ const styles_s = {
 const styles_l = {
     container: {
         backgroundColor: "rgba(0,0,0,0)",
-        marginBottom: 10,
-        marginTop: 10
+        // marginBottom: 10,
+        // marginTop: 10
     },
     title1: {
         color: "black",
@@ -71,7 +72,6 @@ const styles_l = {
     title2: {
         color: "black",
         fontSize: '22px',
-        marginLeft: 5
     },
     avatar: {
         marginRight: 20,

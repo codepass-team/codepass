@@ -27,8 +27,43 @@ class Person extends BaseComponent {
             age: {
                 name: '年龄',
                 content: null
+            },
+            data:null
+        }
+    }
+
+    componentWillMount() {
+        var successAction = (result) => {
+            if (result.status === "ok") {
+                this.setState({
+                    name:{name:'昵称',content:result.data.nickname},
+                    gender: {name: '性别',content: result.data.gender},
+                    job: {name: '职业',content: result.data.job},
+                    tech: {name: '所在行业',content: result.data.tech},
+                    age: {name: '年龄',content: result.data.age}
+                })
+            } else {
+                this.pushNotification("warning", JSON.stringify(result));
             }
         }
+
+        this.get('/api/user', successAction);
+    }
+
+    componentDidUpdate(){
+        var successAction = (result) => {
+            console.log(result);
+            if (result.status === "ok") {
+                console.log(1)  
+            } else {
+                this.pushNotification("warning", JSON.stringify(result));
+            }
+        }
+
+        console.log(this.state.tech.content)
+
+        this.post('/api/user?nickname='+this.state.name.content+'&gender='+this.state.gender.content+'&job='+this.state.job.content
+                    +'&tech='+this.state.tech.content+'&age='+this.state.age.content,null,successAction)
     }
 
     onChangeState = (state) => {

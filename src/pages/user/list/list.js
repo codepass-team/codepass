@@ -16,7 +16,7 @@ export class List extends BaseComponent {
     componentWillMount() {
         var successAction = (result) => {
             if (result.status === "ok") {
-                this.setState({ data: result.questions })
+                this.setState({ data: result.data })
             } else {
                 this.pushNotification("warning", JSON.stringify(result));
             }
@@ -26,14 +26,14 @@ export class List extends BaseComponent {
             this.pushNotification("warning", "Connection Failed");
         }
 
-        this.getWithErrorAction('/question/list', successAction, errorAction);
+        this.getWithErrorAction('/api/question/listAll', successAction, errorAction);
     }
 
     renderUCards = () => {
         if (this.state.data !== 1)
             return (
                 <Row style={{ fontSize: 20, width: "100%" }} type="flex" justify="center">
-                    {this.state.data.map(this.renderUCard)}
+                    {this.state.data.content.map(this.renderUCard)}
                 </Row>
             )
         return null

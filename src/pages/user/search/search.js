@@ -24,7 +24,7 @@ export class Search extends BaseComponent {
 
     getResult = (keyword) => {
         var successAction = (result) => {
-            this.setState({ loading: false, data: result.question })
+            this.setState({ loading: false, data: result.data })
         }
         this.get("/api/question/search?keywords=" + keyword, successAction)
     }

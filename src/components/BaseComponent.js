@@ -24,7 +24,9 @@ class BaseComponent extends Component {
                 ...(token ? { "Authorization": `Bearer ${token}` } : {})
             }
         })
-            .then((response) => (response.json()))
+            .then((response) => {
+                return response.json()
+            })
             .then((result) => {
                 this.handleResult(result, successAction, unsuccessAction, errorAction);
             })
@@ -35,7 +37,7 @@ class BaseComponent extends Component {
 
     get = (url, successAction) => {
         let unsuccessAvtion = (result) => {
-            console.log(result)
+            console.log(result.message)
             this.pushNotification("warning", result.message);
         }
         let errorAction = () => {
@@ -54,7 +56,9 @@ class BaseComponent extends Component {
                 ...(token ? { "Authorization": `Bearer ${token}` } : {})
             }
         })
-            .then((response) => (response.json()))
+            .then((response) => {
+                return response.json()
+            })
             .catch((error) => {
                 console.log(error);
             })

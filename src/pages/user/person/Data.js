@@ -139,7 +139,6 @@ export default class Data extends BaseComponent {
                     </Col>
                 )
             case ('职业'):
-                console.log('职业')
                 return (
                     <Col span={18}>
                         <Input
@@ -156,7 +155,6 @@ export default class Data extends BaseComponent {
                     </Col>
                 )
             case ('所在行业'):
-                console.log('所在行业')
                 return (
                     <Col span={18}>
                         <Select style={{ width: '50%' }}
