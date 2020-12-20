@@ -2,6 +2,7 @@ import React from "react"
 import BaseComponent from '../../../components/BaseComponent'
 import { Col, Row, Tabs } from 'antd'
 import QCard from './qCard'
+import ACard from './aCard'
 import ErrorPage from '../../../components/ErrorPage'
 
 const { TabPane } = Tabs;
@@ -17,8 +18,9 @@ export class My extends BaseComponent {
 
     componentWillMount() {
         var successAction = (result) => {
+            console.log(result.data)
             if (result.status === "ok") {
-                this.setState({ data: result.questions })
+                this.setState({ data: result.data })
             } else {
                 this.pushNotification("warning", JSON.stringify(result));
             }
@@ -28,10 +30,11 @@ export class My extends BaseComponent {
             this.pushNotification("warning", "Connection Failed");
         }
 
-        this.getWithErrorAction('/question/list?user=' + this.loadStorage("user"), successAction, errorAction);
+        this.getWithErrorAction('/api/question/list?userId=6', successAction, errorAction);//待更新后端接口和url
     }
 
     renderQCard = (data) => {
+        console.log(data.user)
         if (data.user !== this.loadStorage("user"))
             return (
                 <QCard data={data} />
@@ -39,9 +42,10 @@ export class My extends BaseComponent {
     }
 
     renderACard = (data) => {
+        console.log(data.user)
         if (data.user === this.loadStorage("user"))
             return (
-                <QCard data={data} />
+                <ACard data={data} />
             )
     }
 
@@ -58,10 +62,10 @@ export class My extends BaseComponent {
                     <Col lg={6} xs={1} />
                     <Col lg={12} xs={22}>
                         <Tabs defaultActiveKey="1">
-                            <TabPane tab="Answers" key="1">
+                            <TabPane tab="Questions" key="1">
                                 {this.state.data.map(this.renderQCard)}
                             </TabPane>
-                            <TabPane tab="Questions" key="2">
+                            <TabPane tab="Answers" key="2">
                                 {this.state.data.map(this.renderACard)}
                             </TabPane>
                         </Tabs>
