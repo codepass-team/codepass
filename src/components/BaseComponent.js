@@ -131,17 +131,17 @@ class BaseComponent extends Component {
         if (kind === 'warning')
             notification.warning({
                 message: reason,
-                description: "Unsuccess",
+                description: "失败了",
             })
         else if (kind === 'success')
             notification.success({
                 message: reason,
-                description: "Success"
+                description: "成功了"
             })
         else
             notification.open({
                 message: reason,
-                description: "Unknown Error"
+                description: "发生了未知错误"
             })
     }
 
@@ -159,9 +159,7 @@ class BaseComponent extends Component {
 
     sleep(delay) {
         let start = (new Date()).getTime();
-        while ((new Date()).getTime() - start < delay) {
-
-        }
+        while ((new Date()).getTime() - start < delay) {}
     }
 
     loadStorage(key) {
