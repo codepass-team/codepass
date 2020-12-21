@@ -49,7 +49,7 @@ class SearchBar extends BaseComponent {
     }
 
     autoOnChange = (value) => {
-        console.log(value)
+        var val = value.split(',')[0]
         this.setState({
             name: value
         })
@@ -57,7 +57,7 @@ class SearchBar extends BaseComponent {
             clearTimeout(this.timer);
         }
         this.timeout(500).then(() => {
-            this.fetchAutoComplete(value)
+            this.fetchAutoComplete(val)
         });
     }
 
@@ -71,9 +71,11 @@ class SearchBar extends BaseComponent {
             <AutoComplete
                 size="large"
                 style={style}
+                defaultActiveFirstOption={false}
                 dataSource={this.state.dataSource.map(item=>{
                     key = key + 1;
-                    return <Option key={key}>{item}</Option>
+                    var uqKey= item+','+key
+                    return <Option key={uqKey}>{item}</Option>
                 })}
                 onChange={this.autoOnChange}
                 placeholder="Search For An Existing QA">
