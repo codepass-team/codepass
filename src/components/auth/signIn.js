@@ -55,7 +55,7 @@ class SignIn extends BaseComponent {
     renderLogo = () => {
         return (
             <Row type="flex" justify='center'>
-                <img style={styles.logo} src={require("@/assets/logo2.png")} />
+                <img alt="" style={styles.logo} src={require("@/assets/logo2.png")} />
             </Row>
         )
     }

@@ -24,15 +24,16 @@ class BaseComponent extends Component {
                 ...(token ? { "Authorization": `Bearer ${token}` } : {})
             }
         })
-            .then((response) => {
-                return response.json()
+            .then(response => response.json())
+            .catch((error) => {
+                console.log(error);
             })
             .then((result) => {
                 this.handleResult(result, successAction, unsuccessAction, errorAction);
             })
-            .catch((error) => {
-                console.error(error);
-            });
+            .catch((reason) => {
+                console.error(reason)
+            })
     }
 
     get = (url, successAction) => {
@@ -56,9 +57,7 @@ class BaseComponent extends Component {
                 ...(token ? { "Authorization": `Bearer ${token}` } : {})
             }
         })
-            .then((response) => {
-                return response.json()
-            })
+            .then(response => response.json())
             .catch((error) => {
                 console.log(error);
             })
@@ -75,16 +74,15 @@ class BaseComponent extends Component {
 
     handleResult = (result, successAction, unsuccessAction, errorAction) => {
         if (!result) {
-            console.log(result)
             if (errorAction) errorAction()
             this.pushNotification("warning", "Connection Failure");
             return;
-        }
-
-        if (result.status === null) {
-            if (unsuccessAction)
-                unsuccessAction(result)
+        } else if (result.status === null) {
+            if (unsuccessAction) unsuccessAction(result)
             return;
+        }
+        if (result.status === 401) {
+            console.log("Token 失效")
         }
         successAction(result);
         return;

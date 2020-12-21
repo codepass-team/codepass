@@ -171,7 +171,6 @@ class QuestionBar extends BaseComponent {
         }
         if (value !== "")
             this.get("/api/question/search?keywords=" + value, result => {
-                console.log(result.data)
                 var tt = result.data
                 var xx = tt.map(x => ({ title: x.title, description: x.desp, qid: x.qid }))
                 this.setState({

@@ -126,7 +126,7 @@ class BaseHeader extends BaseComponent {
                 <Col sm={0} lg={10}>
                     {/* 当屏幕分辨率小于sm值时隐藏logo */}
                     <Row type="flex" justify='center'>
-                        <img style={styles.logo} src={require("../../../assets/logo2.png")} />
+                        <img alt="" style={styles.logo} src={require("../../../assets/logo2.png")} />
                     </Row>
                 </Col>
                 <Col sm={12} lg={10}>

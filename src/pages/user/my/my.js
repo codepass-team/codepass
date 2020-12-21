@@ -30,7 +30,7 @@ export class My extends BaseComponent {
             this.pushNotification("warning", "Connection Failed");
         }
 
-        this.getWithErrorAction('/api/question/list?userId=6', successAction, errorAction);//待更新后端接口和url
+        this.getWithErrorAction('/api/question/listMy', successAction, errorAction);
     }
 
     renderQCard = (data) => {

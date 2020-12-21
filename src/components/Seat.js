@@ -42,7 +42,7 @@ export default class Seat extends BaseComponent {
                 onClick={this.onClick}
                 disabled={seats === 0 || isLocked !== 0}
                 type="link">
-                <img style={styles.seat} src={seatType} />
+                <img alt="" style={styles.seat} src={seatType} />
             </Button>
         )
     }
