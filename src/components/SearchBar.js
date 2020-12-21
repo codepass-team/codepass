@@ -39,6 +39,7 @@ class SearchBar extends BaseComponent {
     }
 
     fetchAutoComplete = (value) => {
+        console.log(value)
         var successAction = (result) => {
             const group = result.data
             console.log(group)
@@ -48,6 +49,7 @@ class SearchBar extends BaseComponent {
     }
 
     autoOnChange = (value) => {
+        console.log(value)
         this.setState({
             name: value
         })
@@ -65,7 +67,6 @@ class SearchBar extends BaseComponent {
             style = {width: '100%', opacity: 1, fontFamily: "Georgia"}
         else
             style = {width: '100%', opacity: 0.4, fontFamily: "Georgia"}
-        console.log(key)
         return (
             <AutoComplete
                 size="large"
