@@ -18,6 +18,7 @@ export class Detail extends BaseComponent {
         const { qid } = this.props.location.state
         var successAction = (result) => {
             if (result.status === "ok") {
+                result = result.data
                 this.setState({ question: result.question, found: true })
             } else {
                 this.pushNotification("warning", JSON.stringify(result));
@@ -29,9 +30,7 @@ export class Detail extends BaseComponent {
         }
 
         if (this.state.question === 0)
-            this.getWithErrorAction('/question/get?user=' + this.loadStorage("user") + "&qid=" + qid, successAction, errorAction);
-
-
+            this.getWithErrorAction('/api/question/' + qid, successAction, errorAction);
     }
 
     render() {

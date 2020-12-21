@@ -15,7 +15,7 @@ export default class Description extends BaseComponent {
                 source={this.props.desp}
                 escapeHtml={false}
                 renderers={{
-                    paragraph: props => <paragraph {...props} style={{ marginBottom: 5 }} />
+                    paragraph: props => <p {...props} style={{ marginBottom: 5 }} />
                 }}
             />
         )

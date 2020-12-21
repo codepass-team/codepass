@@ -66,8 +66,10 @@ const PrivateRoute = function ({
             path = "/sales" + path
             break
         case 2:
+        default:
             login = admin
             path = "/admin" + path
+            break
     }
 
     return <Route {...props} path={path}

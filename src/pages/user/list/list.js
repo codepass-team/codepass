@@ -9,12 +9,14 @@ export class List extends BaseComponent {
     constructor(props) {
         super(props);
         this.state = {
-            data: 1,
+            data: {
+                content: []
+            },
         }
     };
 
     componentWillMount() {
-        var successAction = (result) => {
+        let successAction = (result) => {
             if (result.status === "ok") {
                 this.setState({ data: result.data })
             } else {
@@ -22,7 +24,7 @@ export class List extends BaseComponent {
             }
         }
 
-        var errorAction = () => {
+        let errorAction = () => {
             this.pushNotification("warning", "Connection Failed");
         }
 
@@ -30,22 +32,22 @@ export class List extends BaseComponent {
     }
 
     renderUCards = () => {
-        if (this.state.data !== 1)
-            return (
-                <Row style={{ fontSize: 20, width: "100%" }} type="flex" justify="center">
-                    {this.state.data.content.map(this.renderUCard)}
-                </Row>
-            )
-        return null
+        return (
+            <Row style={{ fontSize: 20, width: "100%" }} type="flex" justify="center">
+                {this.state.data.content ? this.state.data.content.map(this.renderUCard) : null}
+            </Row>
+        )
     }
 
-    renderUCard = (item) => {
-        if (item.status === 1)
+    renderUCard = (item, index) => {
+        if (item.status === 1) {
             return (
-                <UCard data={item} />
+                <UCard data={item} key={index} />
             )
-        else
+        }
+        else {
             return null
+        }
     }
 
     // renderCCards=()=>{
@@ -72,7 +74,7 @@ export class List extends BaseComponent {
             <Row style={styles.container}>
                 <Col lg={6} xs={1} />
                 <Col lg={12} xs={22}>
-                    <Row style={{ fontWeight: "bold", fontSize: 20 }}>Question List</Row>
+                    <Row style={{ fontWeight: "bold", fontSize: 20 }}>问题列表</Row>
                     <Divider style={{ marginTop: 5 }} />
                     {this.renderUCards()}
                 </Col>
