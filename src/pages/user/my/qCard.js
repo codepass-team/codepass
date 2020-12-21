@@ -2,7 +2,7 @@ import React from "react";
 import BaseComponent from '../../../components/BaseComponent'
 import { withRouter } from "react-router-dom";
 import User from '../../../components/auth/user'
-import { Card, Row, Typography } from 'antd';
+import { Card, Col, Icon, Row, Typography } from 'antd';
 import Description from '../../../components/markd/Description'
 
 const { Paragraph } = Typography;
@@ -10,18 +10,28 @@ const { Paragraph } = Typography;
 
 class QCard extends BaseComponent {
 
-    renderTitle = (title, desp, user, time, qid) => {
+    constructor(props){
+        super(props)
+        this.state={
+            LikeIconColor:'#1890ff'
+        }
+    }
+
+    changeLikeColor = ()=>{
+        if(this.state.LikeIconColor=='#33ff33'){
+            Icon.setTwoToneColor('#1890ff')
+            this.setState({LikeIconColor:'#1890ff'})
+        }
+        else{
+            Icon.setTwoToneColor('#33ff33')
+            this.setState({LikeIconColor:'#33ff33'})
+        }
+    }
+
+    renderTitle = (title, likeCount, user, time, qid) => {
         return (
             <Card style={{ marginTop: 8 }} bodyStyle={{ paddingTop: 12, paddingBottom: 12, margin: 0 }}>
-                <Row style={{ fontSize: 14, marginBottom: 5 }} type="flex" justify="start" align="middle">
-                    <Row style={{ width: "50%" }}>
-                        <User user={user} small />
-                    </Row>
-                    <Row style={{ width: "50%" }} type="flex" justify="end">
-                        {time}
-                    </Row>
-                </Row>
-                <Row type="flex" justify="start" align="middle" style={{ fontSize: 18, width: "100%", marginBottom: 3 }}>
+                <Col span={12}  style={{ fontSize: 18,paddingLeft:5,paddingTop:3 }}>
                     <a onClick={() => {
                         this.props.history.push({
                             pathname: "/user/detail",
@@ -30,10 +40,12 @@ class QCard extends BaseComponent {
                     }}>
                         {title}
                     </a>
-                </Row>
-                <Paragraph style={{ marginBottom: 0 }}>
-                    <Description desp={desp} />
-                </Paragraph>
+                    <Icon type="fire" style={{marginRight:5,marginLeft:5,fontSize:13}} onClick={this.changeLikeColor}/>
+                    <p style={{fontSize:13,display:'inline'}}>{likeCount}</p>
+                </Col>
+                <Col span={12}>
+                    <p style={{fontStyle:'Italic',marginBottom:0,float:'right',paddingTop:5}}>{this.handleDate(time)+' '+this.handleTime(time)}</p>
+                </Col>
             </Card>
         );
     }
@@ -42,9 +54,9 @@ class QCard extends BaseComponent {
     }
 
     render() {
-        const { desp, title, user, qid, time } = this.props.data
+        const { title, likeCount, user, qid, raiseTime } = this.props.data
         return (
-            this.renderTitle(title, desp, user, time, qid)  //title,desp,user,time,qid
+            this.renderTitle(title, likeCount, user, raiseTime, qid)  //title,desp,user,time,qid
         );
     }
 }

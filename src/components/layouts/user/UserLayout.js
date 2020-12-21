@@ -25,8 +25,8 @@ class UserLayout extends BaseComponent {
         this.state = {
             items: [
                 { key: "/user/home", name: "首页", icon: "home" },
-                { key: "/user/list", name: "问答列表", icon: "unordered-list" },
-                { key: "/user/my", name: "我的提问", icon: "user" }
+                { key: "/user/list", name: "发现", icon: "unordered-list" },
+                { key: "/user/my", name: "我的历史", icon: "user" }
             ],
         }
     }

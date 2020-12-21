@@ -53,8 +53,10 @@ class Person extends BaseComponent {
     }
 
     onChangeState = (state) => {
-        this.setState(state)
+        this.setState(state,this.modifyState)
+    }
 
+    modifyState = ()=>{
         var successAction = (result)=>{
             console.log(result)
             if(result.status=='ok'){
@@ -68,7 +70,6 @@ class Person extends BaseComponent {
             var keys = Object.keys(this.state)
             var values = Object.values(this.state)
             var val = values[values.length-1]
-            console.log(keys[val]+'='+values[val].content)
             this.post('/api/user?'+keys[val]+'='+values[val].content,null,successAction)
         }
     }
