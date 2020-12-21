@@ -9,6 +9,10 @@ const mapStateToProps = state => ({
     keyword: state.keywordReducer.keyword,
 })
 
+const { Option } = AutoComplete
+
+var key = 0
+
 class SearchBar extends BaseComponent {
 
     constructor(props) {
@@ -36,13 +40,11 @@ class SearchBar extends BaseComponent {
 
     fetchAutoComplete = (value) => {
         var successAction = (result) => {
-            const group = result.recommend
+            const group = result.data
             console.log(group)
-            if (group && group.length) {
-                this.setState({dataSource: group});
-            }
+            this.setState({dataSource: group});
         }
-        this.get('/api/question/searchRecommend?keywords=' + value, successAction)
+        this.get('/api/question/searchRecommend?keywords=' + value + '&limits=5', successAction)
     }
 
     autoOnChange = (value) => {
@@ -63,11 +65,15 @@ class SearchBar extends BaseComponent {
             style = {width: '100%', opacity: 1, fontFamily: "Georgia"}
         else
             style = {width: '100%', opacity: 0.4, fontFamily: "Georgia"}
+        console.log(key)
         return (
             <AutoComplete
                 size="large"
                 style={style}
-                dataSource={this.state.dataSource}
+                dataSource={this.state.dataSource.map(item=>{
+                    key = key + 1;
+                    return <Option key={key}>{item}</Option>
+                })}
                 onChange={this.autoOnChange}
                 placeholder="Search For An Existing QA">
                 <Input.Search
