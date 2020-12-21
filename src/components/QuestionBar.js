@@ -39,13 +39,13 @@ class QuestionBar extends BaseComponent {
     request = () => {
         this.setState({ optVis: false })
         if (!this.loadStorage("user") || this.loadStorage("user") === "") {
-            this.pushNotification("warning", "Please Login First")
+            this.pushNotification("warning", "请先登录")
             this.props.dispatch(showSignIn())
             return null;
         }
         const title = this.state.title
         if (title === "") {
-            this.pushNotification("warning", "Title Shouldn't Be Empty")
+            this.pushNotification("warning", "标题不能为空")
             return null;
         }
         this.setState({ loading: true })
@@ -58,7 +58,7 @@ class QuestionBar extends BaseComponent {
             if (result.status === "ok") {
                 result = result.data
                 this.setState({ loading: false, dockerId: result.dockerId, qid: result.id })
-                this.pushNotification("success", "Docker is now being setup!")
+                this.pushNotification("success", "Docker容器现在创建好了!")
                 this.timeout(600).then(() =>
                     this.setState({ loading2: false })
                 )
@@ -68,7 +68,7 @@ class QuestionBar extends BaseComponent {
         }
 
         var errorAction = (result) => {
-            this.pushNotification("warning", "Request Failed");
+            this.pushNotification("warning", "请求失败");
         }
         this.post("/api/question/create", form, successAction, errorAction)
     }
@@ -90,7 +90,7 @@ class QuestionBar extends BaseComponent {
         var successAction = (result) => {
             if (result.status === "ok") {
                 this.setState({ loading: false, dockerId: result.dockerId, qid: result.qid })
-                this.pushNotification("success", "Question saved.")
+                this.pushNotification("success", "问题已经保存")
                 this.timeout(600).then(() =>
                     this.props.history.push({ pathname: "/user/detail", state: { qid, user, completed: false } })
                 )
@@ -100,7 +100,7 @@ class QuestionBar extends BaseComponent {
         }
 
         var errorAction = (result) => {
-            this.pushNotification("warning", "Submit Failed");
+            this.pushNotification("warning", "提交失败");
         }
 
         this.post("/api/question/save/" + this.state.qid, form, successAction, errorAction)
@@ -128,9 +128,9 @@ class QuestionBar extends BaseComponent {
                             onChange={this.onChangeTitle}
                         />
                         <TextArea
-                            addonBefore="Description(Optional)"
+                            addonBefore="描述您的问题"
                             onChange={this.onChangeDesp}
-                            placeholder="(Optional) Add more detail to your Question to attract more helper"
+                            placeholder="请在这里附上更多问题描述以帮助您的问题收获更合适回答"
                             autosize={{ minRows: 2, maxRows: 5 }}
                         />
                         <Row style={{ width: "100%", fontSize: 14, marginTop: 7 }} type="flex" justify="end">
@@ -196,7 +196,7 @@ class QuestionBar extends BaseComponent {
                     renderItem={item => (
                         <List.Item>
                             <List.Item.Meta
-                                title={<a title={"Press to view the details of the question"}
+                                title={<a title={"请浏览问题的细节"}
                                     style={{ color: "white", fontSize: 22 }} onClick={() => {
                                         var tx = this.loadStorage("user")
                                         var qid = item.qid
