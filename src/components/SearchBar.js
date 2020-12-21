@@ -20,13 +20,13 @@ class SearchBar extends BaseComponent {
             isEnter: false,
             dataSource: [],
         }
-    };
+    }
 
     search = () => {
         const keyword = this.state.query
         this.props.dispatch(setKeyword(keyword))
         if (!keyword || keyword === "") {
-            this.pushNotification("warning", "Keyword shouldn't be empty.")
+            this.pushNotification("warning", "关键词不能为空")
             return
         }
         this.props.history.push({ pathname: "/user/", state: { keyword } })
