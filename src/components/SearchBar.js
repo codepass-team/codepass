@@ -34,6 +34,7 @@ class SearchBar extends BaseComponent {
     }
 
     fetchAutoComplete = (value) => {
+        console.log(value)
         var successAction = (result) => {
             const group = result.data
             this.setState({ dataSource: group });
@@ -42,6 +43,7 @@ class SearchBar extends BaseComponent {
     }
 
     autoOnChange = (value) => {
+        var val = value.split(',')[0]
         this.setState({
             query: value
         })
@@ -49,7 +51,7 @@ class SearchBar extends BaseComponent {
             clearTimeout(this.timer);
         }
         this.timeout(500).then(() => {
-            this.fetchAutoComplete(value)
+            this.fetchAutoComplete(val)
         });
     }
 
