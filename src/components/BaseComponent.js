@@ -83,9 +83,9 @@ class BaseComponent extends Component {
         }
         if (result.status === 401) {
             console.log("Token 失效")
+            localStorage.clear()
         }
         successAction(result);
-        return;
     }
 
     fromNow = (date) => {

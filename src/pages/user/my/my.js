@@ -12,41 +12,43 @@ export class My extends BaseComponent {
     constructor(props) {
         super(props);
         this.state = {
-            data: 1,
+            qdata: [],
+            adata: []
         }
     };
 
     componentWillMount() {
-        var successAction = (result) => {
-            console.log(result.data)
-            if (result.status === "ok") {
-                this.setState({ data: result.data })
-            } else {
-                this.pushNotification("warning", JSON.stringify(result));
-            }
-        }
-
-        var errorAction = (result) => {
+        let errorAction = (result) => {
             this.pushNotification("warning", "Connection Failed");
         }
 
-        this.getWithErrorAction('/api/question/listMy', successAction, errorAction);
+        this.getWithErrorAction('/api/question/listMy', (result) => {
+            if (result.status === "ok") {
+                this.setState({ qdata: result.data })
+            } else {
+                this.pushNotification("warning", JSON.stringify(result));
+            }
+        }, errorAction);
+
+        this.getWithErrorAction('/api/answer/listMy', (result) => {
+            if (result.status === "ok") {
+                this.setState({ adata: result.data })
+            } else {
+                this.pushNotification("warning", JSON.stringify(result));
+            }
+        }, errorAction);
     }
 
-    renderQCard = (data) => {
-        console.log(data.user)
-        if (data.user !== this.loadStorage("user"))
-            return (
-                <QCard data={data} />
-            )
+    renderQCard = (data, index) => {
+        return (
+            <QCard data={data} key={index} />
+        )
     }
 
-    renderACard = (data) => {
-        console.log(data.user)
-        if (data.user === this.loadStorage("user"))
-            return (
-                <ACard data={data} />
-            )
+    renderACard = (data, index) => {
+        return (
+            <ACard data={data} key={index} />
+        )
     }
 
     render() {
@@ -56,17 +58,28 @@ export class My extends BaseComponent {
                     <ErrorPage text={"You have not logged in."} />
                 </Row>)
 
-        if (this.state.data.length)
+        if (this.state.qdata.length || this.state.adata.length)
             return (
                 <Row style={styles.container}>
                     <Col lg={6} xs={1} />
                     <Col lg={12} xs={22}>
-                        <Tabs defaultActiveKey="1">
+                        <Tabs defaultActiveKey="1" >
                             <TabPane tab="Questions" key="1">
-                                {this.state.data.map(this.renderQCard)}
+                                {this.state.qdata.length === 0 ?
+                                    <Row style={styles.container} type="flex" justify="center">
+                                        <Row style={{ fontSize: 22, marginTop: 300 }}>
+                                            现在还没有提问...
+                                        </Row>
+                                    </Row> : this.state.qdata.map(this.renderQCard)}
                             </TabPane>
                             <TabPane tab="Answers" key="2">
-                                {this.state.data.map(this.renderACard)}
+                                {this.state.adata.length === 0
+                                    ? <Row style={styles.container} type="flex" justify="center">
+                                        <Row style={{ fontSize: 22, marginTop: 300 }}>
+                                            现在还没有回答...
+                                            </Row>
+                                    </Row>
+                                    : this.state.adata.map(this.renderACard)}
                             </TabPane>
                         </Tabs>
                     </Col>
@@ -74,13 +87,7 @@ export class My extends BaseComponent {
                 </Row>
             );
         else
-            return (
-                <Row style={styles.container} type="flex" justify="center">
-                    <Row style={{ fontSize: 22, marginTop: 300 }}>
-                        现在还没有提问...
-                    </Row>
-                </Row>
-            )
+            return null
 
     }
 }
