@@ -249,7 +249,7 @@ class ADetail extends BaseComponent {
         this.post("/api/answer/create?questionId=" + qid, null, s1, e1)
     }
 
-    save = () => {
+    save = (callback) => {
         if (this.state.desp === null || this.state.desp === "") {
             this.pushNotification("warning", "Describe your solution, less or more")
             return null;
@@ -261,6 +261,7 @@ class ADetail extends BaseComponent {
             } else {
                 this.pushNotification("warning", JSON.stringify(result));
             }
+            callback()
         }
 
         var errorAction = () => {
@@ -268,7 +269,7 @@ class ADetail extends BaseComponent {
         }
 
         let form = new FormData();
-        form.append('content', desp);
+        form.append('content', this.state.content);
 
         this.post("/api/answer/save/" + aid, form, successAction, errorAction)
     }
@@ -293,7 +294,7 @@ class ADetail extends BaseComponent {
         }
 
         // TODO: 先保存
-        this.post("/api/answer/submit/" + aid, new FormData(), successAction, errorAction)
+        this.save(()=>this.post("/api/answer/submit/" + aid, new FormData(), successAction, errorAction))
     }
 
     cancel = () => {

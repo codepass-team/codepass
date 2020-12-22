@@ -8,22 +8,10 @@ import Description from '../../../components/markd/Description'
 
 
 class QCard extends BaseComponent {
-
     constructor(props) {
         super(props)
         this.state = {
-            LikeIconColor: '#1890ff'
-        }
-    }
 
-    changeLikeColor = () => {
-        if (this.state.LikeIconColor == '#33ff33') {
-            Icon.setTwoToneColor('#1890ff')
-            this.setState({ LikeIconColor: '#1890ff' })
-        }
-        else {
-            Icon.setTwoToneColor('#33ff33')
-            this.setState({ LikeIconColor: '#33ff33' })
         }
     }
 
@@ -39,13 +27,14 @@ class QCard extends BaseComponent {
                     }}>
                         {title}
                     </a>
-                    <Icon type="fire" style={{ marginRight: 5, marginLeft: 5, fontSize: 13 }} onClick={this.changeLikeColor} />
-                    <p style={{ fontSize: 13, display: 'inline' }}>{likeCount}</p>
+                    <Icon type="fire" style={{ marginRight: 5, marginLeft: 5, fontSize: 13 }} />
+                    <p style={{ fontSize: 13, display: 'inline' }}>{likeCount==null?0:likeCount}</p>
                 </Col>
                 <Col span={12}>
-                    <Col span={2} offset={13}><Icon type="edit" style={{marginRight: 8,padding:10 }} /></Col>
-                    <Col span={2}><Icon type="delete" style={{paddingTop:10 }} /></Col>
-                    <Col span={7}>{this.renderStatus()}</Col>
+                    <Col span={2} style={{marginLeft:140}}>
+                        <Icon type="delete" style={{paddingTop:10}} onClick={()=>this.props.deleteQCard(this.props.index)} />
+                    </Col>
+                    <Col span={6}>{this.renderStatus()}</Col>
                 </Col>
             </Card>
         );
@@ -53,14 +42,15 @@ class QCard extends BaseComponent {
 
     renderStatus = () => {
         if (this.props.data.status == '1')
-            return <p style={{ fontStyle: 'Italic', marginBottom: 0, float: 'right', paddingTop: 7 }}>
+            return <p style={{ fontStyle: 'Italic', marginBottom: 0, paddingTop: 7 }}>
                 {this.handleDate(this.props.data.raiseTime) + ' ' + this.handleTime(this.props.data.raiseTime)}
             </p>
-        else return <p style={{ fontStyle: 'Italic', marginBottom: 0, float: 'right', paddingTop: 5 }}>已保存</p>
+        else return <p style={{ fontStyle: 'Italic', marginBottom: 0,paddingTop: 7 }}>已保存</p>
     }
 
     render() {
         const { id, title, likeCount, questioner } = this.props.data
+        console.log(this.props.data)
         return (
             this.renderTitle(title, likeCount, questioner.username, id)
         );
