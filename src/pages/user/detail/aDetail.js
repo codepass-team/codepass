@@ -35,8 +35,9 @@ class ADetail extends BaseComponent {
             loading2: false,
             comments: 0,
 
+            ufol: 0,
             ufollow: 0,
-            ulike: 0
+            ulike: 0,
         }
     }
 
@@ -92,7 +93,7 @@ class ADetail extends BaseComponent {
     }
 
     unlike = () => {
-        this.post('/api/question/unlike' + this.state.question.id, null, (res) => {
+        this.post('/api/question/unlike/' + this.state.question.id, null, (res) => {
             if (res.status === 'ok') {
                 this.setState({
                     ulike: false
@@ -261,7 +262,23 @@ class ADetail extends BaseComponent {
     }
 
     follow = () => {
+        this.post('/api/user/follow/' + this.state.question.questioner.id, null, (res) => {
+            if (res.status === 'ok') {
+                this.setState({
+                    ufol: false
+                })
+            }
+        })
+    }
 
+    unfollow = () => {
+        this.post('/api/user/unfollow/' + this.state.question.questioner.id, null, (res) => {
+            if (res.status === 'ok') {
+                this.setState({
+                    ufol: false
+                })
+            }
+        })
     }
 
     renderUser(user, time) {
@@ -275,8 +292,10 @@ class ADetail extends BaseComponent {
                 <Col span={18} style={{ padding: 2 }}>
                     <Row type="flex" align='middle' justify="start" style={{ width: "80%", fontSize: 20 }}>
                         <Col>{user}</Col>
-                        <Button onClick={this.follow(true)}>关注</Button>
-                        <Button onClick={this.follow(false)}>取消关注</Button>
+                        {!this.state.ufol ?
+                            <Button onClick={this.follow}>关注</Button>
+                            : <Button onClick={this.unfollow}>取消关注</Button>
+                        }
                     </Row>
                     <Row type="flex" align='middle' justify="start" style={{ width: "80%", fontSize: 16 }}>
                         {this.handleDate(time) + ' ' + this.handleDate(time)}
