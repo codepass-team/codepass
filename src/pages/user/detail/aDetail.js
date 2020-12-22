@@ -5,6 +5,7 @@ import Answer from './answer'
 import BaseComponent from '../../../components/BaseComponent'
 import Description from '../../../components/markd/Description'
 import { showSignIn } from "../../../redux/actions/action"
+import { HeartTwoTone } from '@ant-design/icons'
 
 const { Title, Paragraph } = Typography;
 const { TextArea } = Input;
@@ -55,7 +56,7 @@ class ADetail extends BaseComponent {
         return (
             <Row type="flex" justify="start" align="middle">
                 <Col span={24}>
-                    <Title level={1} style={{fontWeight:600,marginTop:12,marginBottom:12}}>{title}</Title>
+                    <Title level={1} style={{ fontWeight: 600, marginTop: 12, marginBottom: 12 }}>{title}</Title>
                 </Col>
                 <Col span={24}>
                     <Row type="flex" justify="start" align="middle">
@@ -88,7 +89,7 @@ class ADetail extends BaseComponent {
         if (answer.length === 0) {
             return (
                 <Row style={{ marginTop: 100 }} type="flex" justify="center">
-                    <Paragraph style={{ fontSize: 24 }}>Be the first hero.</Paragraph>
+                    <Paragraph style={{ fontSize: 24 }}>去做第一个英雄吧！</Paragraph>
                 </Row>)
         } else {
             return (
@@ -98,8 +99,21 @@ class ADetail extends BaseComponent {
             )
         }
     }
-    rendercheck(){
-
+    renderCheck = (likeCount) => {
+        if (!likeCount) {
+            return (
+                <Row style={{ width: "100%", marginLeft: 5, fontSize: 18 }}>
+                 该问题还没有人点赞哦！
+                 <HeartTwoTone twoToneColor="" />
+                </Row> 
+           )
+        } else {
+            return (
+                <Row style={{ width: "100%", marginLeft: 5, fontSize: 18 }}>
+                 <HeartTwoTone twoToneColor="" />
+                </Row>
+            )
+        }
     }
     renderNew() {
         if (!this.state.edit)
@@ -161,10 +175,10 @@ class ADetail extends BaseComponent {
                         onClick={this.submit}
                     >提交</Button>
                     <Button
-                    style={{ marginLeft: 10 }}
-                    size="large"
-                    type="warning"
-                    onClick={this.cancel}
+                        style={{ marginLeft: 10 }}
+                        size="large"
+                        type="warning"
+                        onClick={this.cancel}
                     >取消</Button>
                 </Row>
             )
@@ -184,7 +198,7 @@ class ADetail extends BaseComponent {
                         {user}
                     </Row>
                     <Row type="flex" align='middle' justify="start" style={{ width: "80%", fontSize: 16 }}>
-                        {this.handleDate(time)+' '+this.handleDate(time)}
+                        {this.handleDate(time) + ' ' + this.handleDate(time)}
                     </Row>
                 </Col>
             </Row>
@@ -192,12 +206,14 @@ class ADetail extends BaseComponent {
     }
 
     render() {
-        const { content, title, answer, raiseTime, questioner } = this.state.data
+        const { content, title, answer, raiseTime, questioner, likeCount } = this.state.data
+        console.log(this.state.data)
         return (
             <Row style={styles.container}>
                 <Col lg={4} xs={1} />
                 <Col lg={15} xs={22}>
                     {this.renderTitle(title, content, questioner.username, raiseTime)}
+                    {this.renderCheck(likeCount)}
                     <Row type="flex" justify="start" style={{ marginTop: 20 }}>
                         <Divider><Title level={3}>{answer.length + " 回答"}</Title></Divider>
                     </Row>
@@ -280,22 +296,22 @@ class ADetail extends BaseComponent {
         this.post("/api/answer/submit/" + aid, new FormData(), successAction, errorAction)
     }
 
-    cancel = ()=>{
+    cancel = () => {
         var successAction = (result) => {
-            if(result.status=='ok'){
+            if (result.status == 'ok') {
                 this.setState({
-                    edit:false,
-                    content:'',
-                    dockerId: '', 
+                    edit: false,
+                    content: '',
+                    dockerId: '',
                     aid: ''
                 })
             }
-            else{
+            else {
                 this.pushNotification("warning", JSON.stringify(result));
             }
         }
 
-        this.delete('/api/answer/' + this.state.aid,successAction)
+        this.delete('/api/answer/' + this.state.aid, successAction)
     }
 
     redirectDocker = (dockerId) => {
