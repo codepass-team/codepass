@@ -33,7 +33,10 @@ class ADetail extends BaseComponent {
 
             showComment: false,
             loading2: false,
-            comments: 0
+            comments: 0,
+
+            ufollow: 0,
+            ulike: 0
         }
     }
 
@@ -78,6 +81,26 @@ class ADetail extends BaseComponent {
         })
     }
 
+    like = () => {
+        this.post('/api/question/like/' + this.state.question.id, null, (res) => {
+            if (res.status === 'ok') {
+                this.setState({
+                    ulike: true
+                })
+            }
+        })
+    }
+
+    unlike = () => {
+        this.post('/api/question/unlike' + this.state.question.id, null, (res) => {
+            if (res.status === 'ok') {
+                this.setState({
+                    ulike: false
+                })
+            }
+        })
+    }
+
     /**
      * 渲染问题标题
      * @param {*} title 
@@ -103,6 +126,10 @@ class ADetail extends BaseComponent {
                 </Row>
                 {this.renderCheck(likeCount)}
                 <Col span={24}>
+                    {!this.state.ulike ?
+                        <Button onClick={this.like}>点赞</Button> :
+                        <Button onClick={this.unlike}>取消点赞</Button>
+                    }
                     {!this.state.showComment ?
                         <Button onClick={this.showComment}>评论</Button> :
                         <Button onClick={this.hideComment}>收起评论</Button>
@@ -261,8 +288,6 @@ class ADetail extends BaseComponent {
 
     render() {
         const { content, title, raiseTime, questioner, likeCount } = this.state.question
-        console.log(this.state.question)
-        console.log(this.state.answers)
         return (
             <Row style={styles.container}>
                 <Col lg={4} xs={1} />
