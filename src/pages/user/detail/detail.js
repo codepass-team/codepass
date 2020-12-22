@@ -9,7 +9,7 @@ export class Detail extends BaseComponent {
     constructor(props) {
         super(props);
         this.state = {
-            question: 0,
+            data: 0,
             found: false
         }
     }
@@ -19,7 +19,7 @@ export class Detail extends BaseComponent {
         var successAction = (result) => {
             if (result.status === "ok") {
                 result = result.data
-                this.setState({ question: result.question, found: true })
+                this.setState({ data: result.data, found: true })
             } else {
                 this.pushNotification("warning", JSON.stringify(result));
             }
@@ -29,7 +29,7 @@ export class Detail extends BaseComponent {
             this.pushNotification("warning", "Question Not Found");
         }
 
-        if (this.state.question === 0)
+        if (this.state.data === 0)
             this.getWithErrorAction('/api/question/' + qid, successAction, errorAction);
     }
 

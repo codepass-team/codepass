@@ -44,10 +44,20 @@ class QCard extends BaseComponent {
                     <p style={{fontSize:13,display:'inline'}}>{likeCount}</p>
                 </Col>
                 <Col span={12}>
-                    <p style={{fontStyle:'Italic',marginBottom:0,float:'right',paddingTop:5}}>{this.handleDate(time)+' '+this.handleTime(time)}</p>
+                    <Icon type="edit" style={{float:'right',marginRight:5}}/>
+                    <Icon type="delete" style={{float:'right',marginRight:5}}/>
+                    {this.renderStatus()}
                 </Col>
             </Card>
         );
+    }
+
+    renderStatus = ()=>{
+        if(this.props.data.status == '1')
+            return <p style={{fontStyle:'Italic',marginBottom:0,float:'right',paddingTop:5}}>
+                {this.handleDate(this.props.data.raiseTime)+' '+this.handleTime(this.props.data.raiseTime)}
+            </p>
+        else return <p style={{fontStyle:'Italic',marginBottom:0,float:'right',paddingTop:5}}>已保存</p>
     }
 
     componentWillMount() {
