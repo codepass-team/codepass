@@ -11,7 +11,7 @@ export class Detail extends BaseComponent {
     constructor(props) {
         super(props);
         this.state = {
-            data: 0,
+            question: 0,
             found: false
         }
     }
@@ -23,7 +23,7 @@ export class Detail extends BaseComponent {
         console.log(id)
         var successAction = (result) => {
             if (result.status === "ok") {
-                this.setState({ data: result.data, found: true })
+                this.setState({ question: result.data, found: true })
             } else {
                 this.pushNotification("warning", JSON.stringify(result));
             }
@@ -33,7 +33,7 @@ export class Detail extends BaseComponent {
             this.pushNotification("warning", "问题没找到！");
         }
 
-        if (this.state.data === 0)
+        if (this.state.question === 0)
             this.getWithErrorAction('/api/question/' + id, successAction, errorAction);
     }
 
@@ -48,14 +48,14 @@ export class Detail extends BaseComponent {
                     <Col lg={6} xs={1} />
                 </Row>
             )
-        else if (this.props.location.state && this.state.data &&  this.state.data.questioner.username === this.loadStorage("user")) {
+        else if (this.props.location.state && this.state.question && this.state.question.questioner.username === this.loadStorage("user")) {
             // 是自己提的问题
             return (
-                <QDetail data={this.state.data} />
+                <QDetail question={this.state.question} />
             )
         } else {
             return (
-                <ADetail data={this.state.data} />
+                <ADetail question={this.state.question} />
             )
         }
     }

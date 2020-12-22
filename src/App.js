@@ -11,7 +11,7 @@ class App extends Component {
         return (
             <Provider store={store}>
                 <Router history={createBrowserHistory()}>
-                    <Route path={'/'} component={withRouter(BaseLayout)} />
+                    <Route path={'/'} component={BaseLayout} />
                 </Router>
             </Provider>
         );
