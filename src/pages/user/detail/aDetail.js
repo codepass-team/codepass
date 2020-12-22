@@ -133,8 +133,8 @@ class ADetail extends BaseComponent {
         )
     }
 
-    renderAnswers = (answer) => {
-        if (answer.length === 0) {
+    renderAnswers = (answers) => {
+        if (answers.length === 0) {
             return (
                 <Row style={{ marginTop: 100 }} type="flex" justify="center">
                     <Paragraph style={{ fontSize: 24 }}>去做第一个英雄吧！</Paragraph>
@@ -142,7 +142,7 @@ class ADetail extends BaseComponent {
         } else {
             return (
                 <Row>
-                    {answer.map(this.renderAnswer)}
+                    {answers.map(this.renderAnswer)}
                 </Row>
             )
         }
@@ -350,7 +350,7 @@ class ADetail extends BaseComponent {
         }
 
         // TODO: 先保存
-        this.save(()=>this.post("/api/answer/submit/" + aid, new FormData(), successAction, errorAction))
+        this.save(() => this.post("/api/answer/submit/" + aid, new FormData(), successAction, errorAction))
     }
 
     cancel = () => {

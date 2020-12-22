@@ -74,7 +74,8 @@ export default class QDetail extends BaseComponent {
             <Row type="flex" justify="start" align="middle">
                 <Col span={18}>
                     <Col span={24}>
-                        <Title level={1} style={{ fontWeight: 600, marginTop: 12, marginBottom: 12 }}>{title}</Title>
+                        <Title level={1} style={{ fontWeight: 600, marginTop: 12, marginBottom: 12 }}>{title}
+                        </Title>
                     </Col>
                     <Row type="flex" justify="start" align="middle" style={{ width: '100%' }}>
                         {!edit ? (<Paragraph style={{ fontSize: 15, lineHeight: '25px', marginVertical: 5 }}>
