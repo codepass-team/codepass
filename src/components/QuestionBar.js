@@ -101,9 +101,9 @@ class QuestionBar extends BaseComponent {
             this.pushNotification("warning", "提交失败");
         }
 
-        this.post("/api/question/save/" + this.state.qid, form, successAction, errorAction)
+        this.post("/api/question/save/" + qid, form, successAction, errorAction)
             .then(() => {
-                this.post("/api/question/submit/" + this.state.qid)
+                this.post("/api/question/submit/" + qid)
             })
     }
 

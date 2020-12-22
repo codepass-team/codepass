@@ -22,6 +22,7 @@ class ADetail extends BaseComponent {
         this.state = {
             found: false,
             question: 0,
+            answers: 0,
             edit: false, // 我是否有回答
             content: "", // 我的回答内容
             dockerId: "",
@@ -46,7 +47,8 @@ class ADetail extends BaseComponent {
         //get my answer
         if (this.state.question === 0) {
             this.setState({
-                question: this.props.question
+                question: this.props.question,
+                answers: this.props.question.answer
             })
         }
     }
@@ -83,7 +85,7 @@ class ADetail extends BaseComponent {
      * @param {*} name 
      * @param {*} raiseTime 
      */
-    renderTitle = (title, desp, name, raiseTime) => {
+    renderTitle = (title, desp, name, raiseTime, likeCount) => {
         return (
             <Row type="flex" justify="start" align="middle">
                 <Col span={24}>
@@ -99,6 +101,7 @@ class ADetail extends BaseComponent {
                         <Description desp={desp} />
                     </Paragraph>
                 </Row>
+                {this.renderCheck(likeCount)}
                 <Col span={24}>
                     {!this.state.showComment ?
                         <Button onClick={this.showComment}>评论</Button> :
@@ -263,12 +266,11 @@ class ADetail extends BaseComponent {
             <Row style={styles.container}>
                 <Col lg={4} xs={1} />
                 <Col lg={15} xs={22}>
-                    {this.renderTitle(title, content, questioner.username, raiseTime)}
-                    {this.renderCheck(likeCount)}
+                    {this.renderTitle(title, content, questioner.username, raiseTime, likeCount)}
                     <Row type="flex" justify="start" style={{ marginTop: 20 }}>
                         <Divider><Title level={3}>{answer.length + " 回答"}</Title></Divider>
                     </Row>
-                    {this.renderAnswers(answer)}
+                    {this.renderAnswers(this.state.answer)}
                     {this.renderNew()}
                 </Col>
                 <Col lg={5} xs={1} />
@@ -309,6 +311,9 @@ class ADetail extends BaseComponent {
         var successAction = (result) => {
             if (result.status === "ok") {
                 this.pushNotification("success", "更新成功")
+                this.setState({
+                    answer: [...this.state.answer, result.data]
+                })
             } else {
                 this.pushNotification("warning", JSON.stringify(result));
             }

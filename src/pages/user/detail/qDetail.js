@@ -16,6 +16,7 @@ export default class QDetail extends BaseComponent {
         this.state = {
             found: false,
             question: 0,
+            answers: 0,
             submit: false,
             edit: true,
 
@@ -28,6 +29,7 @@ export default class QDetail extends BaseComponent {
     componentWillMount() {
         // this.props.data是detail传来的questionEntity对象
         this.state.question = this.props.question
+        this.state.answers = this.props.question.answer
         this.state.submit = this.props.question.status
         this.state.edit = !this.props.question.status
     }
@@ -187,8 +189,8 @@ export default class QDetail extends BaseComponent {
 
     renderAnswers = () => {
         if (this.state.submit) {
-            const { answer } = this.state.question
-            if (answer.length === 0) {
+            const answers = this.state.answers
+            if (answers.length === 0) {
                 return (
                     <Row style={{ marginTop: 100 }} type="flex" justify="center">
                         <Paragraph style={{ fontSize: 24 }}>Kept you waiting, huh?</Paragraph>
@@ -196,7 +198,7 @@ export default class QDetail extends BaseComponent {
             } else {
                 return (
                     <Row>
-                        {answer.map(this.renderAnswer)}
+                        {answers.map(this.renderAnswer)}
                     </Row>
                 )
             }
