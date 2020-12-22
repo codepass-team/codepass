@@ -17,76 +17,74 @@ class ADetail extends BaseComponent {
         super(props);
         this.state = {
             found: false,
-            data: 0,
-            edit: false,
-            content: "",
+            question: 0,
+
+            edit: false, // 我是否有回答
+            desp: "", // 我的回答内容
             dockerId: "",
             aid: "",
-            answerTime: "",
+            time: "",
+
             loading: false
         }
     }
 
     onChangeDesp = ({ target: { value } }) => {
         this.setState({
-            content: value
+            desp: value
         })
     };
 
     componentWillMount() {
         //get my answer
-        console.log(this.props.data)
-        if (this.state.data === 0) {
+        if (this.state.question === 0) {
             this.setState({
-                data: this.props.data
+                question: this.props.data
             })
         }
-        this.props.data.answer.map(item=>{
-            if(item.username==this.loadStorage('user')){
-                this.setState({found:true})
-            }
-        })
     }
 
-    renderTitle = (title, content) => {
-        const { raiseTime } = this.state.data
+    /**
+     * 渲染问题标题
+     * @param {*} title 
+     * @param {*} desp 
+     * @param {*} name 
+     * @param {*} raiseTime 
+     */
+    renderTitle = (title, desp, name, raiseTime) => {
         return (
             <Row type="flex" justify="start" align="middle">
-                <Col span={18}>
-                    <Col span={24}>
-                        <Title level={1} style={{fontWeight:600,marginTop:12,marginBottom:12}}>{title}</Title>
-                    </Col>
-                    <Col span={24}>
-                        <Row type="flex" justify="start" align="middle">
-                            {this.renderUser(this.state.data.questioner.username, raiseTime)}
-                        </Row>
-                    </Col>
-                    <Row type="flex" justify="start" align="middle" style={{ width: '100%' }}>
-                        <Paragraph style={{ fontSize: 18, marginBottom: 5 }}>
-                            <Description desp={content} />
-                        </Paragraph>
+                <Col span={24}>
+                    <Title level={2}>{title}</Title>
+                </Col>
+                <Col span={24}>
+                    <Row type="flex" justify="start" align="middle">
+                        {this.renderUser(name, raiseTime)}
                     </Row>
                 </Col>
-                
+                <Row type="flex" justify="start" align="middle" style={{ width: '100%' }}>
+                    <Paragraph style={{ fontSize: 18, marginBottom: 5 }}>
+                        <Description desp={desp} />
+                    </Paragraph>
+                </Row>
             </Row>
         )
     }
 
-    renderAnswer = (data) => {
-        if (data.status !== 0)
-            return (
-                <Answer data={data} />
-            )
-        else {
+    renderAnswer = (answer) => {
+        if (answer.answerer.username === this.loadStorage("user") && answer.status === 0) {
+            // 是我提出的回答, 而且还在编辑中
             if (!this.state.edit) {
-                this.setState({ edit: true, content: data.content, aid: data.id, answerTime: data.answerTime })
+                this.setState({ edit: true, desp: answer.content, aid: answer.id, time: answer.answerTime, dockerId: answer.dockerId })
             }
+            return null
         }
-        return null
+        return (
+            <Answer data={answer} />
+        )
     }
 
-    renderAnswers = () => {
-        const { answer } = this.state.data
+    renderAnswers = (answer) => {
         if (answer.length === 0) {
             return (
                 <Row style={{ marginTop: 100 }} type="flex" justify="center">
@@ -102,24 +100,24 @@ class ADetail extends BaseComponent {
     }
 
     renderNew() {
-        //get prev answer of user
         if (!this.state.edit)
             return (
                 <Row type="flex" justify="start" align="middle"
                     style={{ marginTop: 10, width: "100%" }}>
                     <Divider style={{ marginBottom: 10 }} />
                     <Row style={{ width: "100%", marginLeft: 5, fontSize: 18 }}>
-                        You have no new idea yet.
+                        You have no idea yet.
                     </Row>
                     <Button
                         loading={this.state.loading}
                         size="large"
                         type="primary"
-                        onClick={this.offer}
+                        onClick={() => this.offer(this.state.question.id)}
                     >Try out the problem! &gt;</Button>
                 </Row>
             )
         else {
+            // 找到了我的处于编辑中的回答
             return (
                 <Row type="flex" justify="start" align="middle"
                     style={{ marginTop: 10, width: "100%" }}>
@@ -131,7 +129,7 @@ class ADetail extends BaseComponent {
                     </Row>
                     <TextArea
                         onChange={this.onChangeDesp}
-                        defaultValue={this.state.content}
+                        defaultValue={this.state.desp}
                         placeholder="(Must) Describe your solution"
                         autosize={{ minRows: 2, maxRows: 5 }}
                     />
@@ -146,7 +144,7 @@ class ADetail extends BaseComponent {
                     <Button
                         size="large"
                         type="primary"
-                        onClick={this.redirectDocker}
+                        onClick={() => this.redirectDocker(this.state.dockerId)}
                     >Enter Docker</Button>
                     <Button
                         style={{ marginLeft: 10 }}
@@ -169,14 +167,16 @@ class ADetail extends BaseComponent {
         return (
             <Row type="flex" style={{ width: "100%" }}>
                 <Row type="flex" align='middle' justify="start">
-                    <Avatar shape='square' size={64} icon="user" />
+                    <Avatar shape="square" style={{ marginRight: 8, fontSize: 30 }} size={50}>
+                        {user.toUpperCase()}
+                    </Avatar>
                 </Row>
                 <Col span={18} style={{ padding: 2 }}>
                     <Row type="flex" align='middle' justify="start" style={{ width: "80%", fontSize: 20 }}>
                         {user}
                     </Row>
                     <Row type="flex" align='middle' justify="start" style={{ width: "80%", fontSize: 16 }}>
-                        {this.handleDate(time)+''+this.handleTime(time)}
+                        {time}
                     </Row>
                 </Col>
             </Row>
@@ -184,17 +184,16 @@ class ADetail extends BaseComponent {
     }
 
     render() {
-        this.state.data = this.props.data
-        const { content, title, answer } = this.state.data
+        const { content, title, answer, raiseTime, questioner } = this.state.question
         return (
             <Row style={styles.container}>
                 <Col lg={4} xs={1} />
                 <Col lg={15} xs={22}>
-                    {this.renderTitle(title, content)}
+                    {this.renderTitle(title, content, questioner.username, raiseTime)}
                     <Row type="flex" justify="start" style={{ marginTop: 20 }}>
                         <Divider><Title level={3}>{answer.length + " Answers"}</Title></Divider>
                     </Row>
-                    {this.renderAnswers()}
+                    {this.renderAnswers(answer)}
                     {this.renderNew()}
                 </Col>
                 <Col lg={5} xs={1} />
@@ -202,20 +201,16 @@ class ADetail extends BaseComponent {
         )
     }
 
-    offer = () => {
-        console.log(this.loadStorage('user'))
+    offer = (qid) => {
         if (!this.loadStorage("user") || this.loadStorage("user") === "") {
             this.pushNotification("warning", "Please Login First")
             this.props.dispatch(showSignIn())
             return null;
         }
         this.setState({ loading: true })
-        console.log(this.state.data)
-        const { id,content } = this.state.data
-        const user = this.loadStorage("user")
         var s1 = (result) => {
-            console.log(result)
             if (result.status === "ok") {
+                result = result.data
                 this.setState({ edit: true, loading: false, dockerId: result.dockerId, aid: result.id })
                 this.pushNotification("success", "Docker has been setup!")
             } else {
@@ -227,16 +222,15 @@ class ADetail extends BaseComponent {
             this.pushNotification("warning", "Request Failed");
         }
 
-        this.getWithErrorAction("/api/answer/create?questionId=" + id + "&content="+content
-            , s1, e1)
+        this.post("/api/answer/create?questionId=" + qid, null, s1, e1)
     }
 
     save = () => {
-        if (this.state.content === null || this.state.desp === "") {
+        if (this.state.desp === null || this.state.desp === "") {
             this.pushNotification("warning", "Describe your solution, less or more")
             return null;
         }
-        const { aid, content } = this.state
+        const { aid, desp } = this.state
         var successAction = (result) => {
             if (result.status === "ok") {
                 this.pushNotification("success", "Update Succeeded")
@@ -249,18 +243,18 @@ class ADetail extends BaseComponent {
             this.pushNotification("warning", "Update Failed");
         }
 
-        this.getWithErrorAction("/api/answer/save?answerId=" + aid + "&content=" + escape(content), successAction, errorAction)
+        this.post("/api/answer/save/" + aid + "?content=" + escape(desp), new FormData(), successAction, errorAction)
     }
 
     submit = () => {
-        if (this.state.content === null || this.state.content === "") {
+        if (this.state.desp === null || this.state.desp === "") {
             this.pushNotification("warning", "Describe your solution, less or more")
             return null;
         }
-        const { aid, content } = this.state
+        const { aid } = this.state
         var successAction = (result) => {
             if (result.status === "ok") {
-                this.pushNotification("success", "Submit Succeeded")
+                this.pushNotification("success", "提交成功!")
                 this.setState({ edit: false })
             } else {
                 this.pushNotification("warning", JSON.stringify(result));
@@ -268,14 +262,16 @@ class ADetail extends BaseComponent {
         }
 
         var errorAction = () => {
-            this.pushNotification("warning", "Submit Failed");
+            this.pushNotification("warning", "提交失败");
         }
 
-        this.getWithErrorAction("/api/answer/submit?answerId=" + aid + "&content=" + escape(content), successAction, errorAction)
+        // TODO: 先保存
+        this.post("/api/answer/submit/" + aid, new FormData(), successAction, errorAction)
     }
 
-    redirectDocker = () => {
-        window.open(this.ip + "/api/docker/" + this.state.dockerId, '_blank').focus();
+    redirectDocker = (dockerId) => {
+        console.log(this.state)
+        window.open(this.ip + "/api/docker/" + dockerId, '_blank').focus();
     }
 }
 
