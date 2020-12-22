@@ -34,24 +34,24 @@ class ACard extends BaseComponent {
     constructor(props) {
         super(props);
         this.state = {
-            LikeIconColor:'#1890ff'
+
         }
     };
 
-    getAnswer = (data) => {
-        for (var i = 0; i < data.length; i++) {
-            const item = data[i]
-            if (item.user === this.loadStorage("user")) {
-                return item
-            }
-        }
-    }
+    // getAnswer = (data) => {
+    //     for (var i = 0; i < data.length; i++) {
+    //         const item = data[i]
+    //         if (item.user === this.loadStorage("user")) {
+    //             return item
+    //         }
+    //     }
+    // }
 
-    onChangeDesp = ({target: {value}}) => {
-        this.setState({
-            desp: value
-        })
-    };
+    // onChangeDesp = ({target: {value}}) => {
+    //     this.setState({
+    //         desp: value
+    //     })
+    // };
 
     update = () => {
         this.pushNotification("", this.state.desp)
@@ -72,23 +72,12 @@ class ACard extends BaseComponent {
         this.props.history.push({pathname: '/user/detail', state: {qid, user}})
     }
 
-    changeLikeColor = ()=>{
-        if(this.state.LikeIconColor=='#33ff33'){
-            Icon.setTwoToneColor('#1890ff')
-            this.setState({LikeIconColor:'#1890ff'})
-        }
-        else{
-            Icon.setTwoToneColor('#33ff33')
-            this.setState({LikeIconColor:'#33ff33'})
-        }
-    }
-
     renderStatus = ()=>{
         if(this.props.data.status == '1')
-            return <p style={{fontStyle:'Italic',marginBottom:0,float:'right',paddingTop:5}}>
+            return <p style={{fontStyle:'Italic',marginBottom:0}}>
                 {this.handleDate(this.props.data.answerTime)+' '+this.handleTime(this.props.data.answerTime)}
             </p>        
-        else return <p style={{fontStyle:'Italic',marginBottom:0,float:'right',paddingTop:5}}>已保存</p>
+        else return <p style={{fontStyle:'Italic',marginBottom:0}}>已保存</p>
     }
 
     render() {
@@ -104,11 +93,12 @@ class ACard extends BaseComponent {
         return (
             <Card style={{ marginTop: 8 }} bodyStyle={{ paddingTop: 12, paddingBottom: 6, margin: 0 }}>
                 <Row style={{ fontSize: 14, marginBottom: 5 }} type="flex" justify="start" align="middle">
-                    <h2 style={{fontWeight:600}}>
+                    <h2 style={{fontWeight:600,marginBottom:0}}>
                         {questionTitle}
                     </h2>
+                    <Icon type="delete" style={{marginLeft:5,marginTop:3}} onClick={()=>this.props.deleteACard(this.props.index)}/>
                 </Row>
-                <Row type="flex" justify="start" align="middle" style={{ fontSize: 16, width: "100%", marginBottom: 3,marginTop:2,minHeight:25,textOverflow:'hidden' }}>
+                <Row type="flex" justify="start" align="middle" style={{ fontSize: 16, width: "100%",marginTop:2,minHeight:25,textOverflow:'hidden' }}>
                     <a onClick={() => {
                         this.props.history.push({
                             pathname: "/user/detail",
@@ -117,12 +107,10 @@ class ACard extends BaseComponent {
                     }}>
                         {content}
                     </a>
-                    <Icon type="edit" />
-                    <Icon type="delete" />
                 </Row>
-                <Row style={{ width: "100%",marginTop:15 }} type="flex" justify="start" align='middle'>
+                <Row style={{ width: "100%",marginTop:6,marginBottom:6 }} type="flex" justify="start" align='middle'>
                     <Col span={2}>
-                    <Icon type="fire" style={{marginRight:5,fontSize:13}} onClick={this.changeLikeColor}/>
+                    <Icon type="fire" style={{marginRight:5,fontSize:13}}/>
                         {likeCount}
                     </Col>
                     <Col span={12}>

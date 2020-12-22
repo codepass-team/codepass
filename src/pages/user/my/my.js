@@ -39,26 +39,45 @@ export class My extends BaseComponent {
         }, errorAction);
     }
 
-    renderQCard = (data, index) => {
-        return (
-            <QCard data={data} key={index} />
-        )
+    deleteQCard = (index)=>{
+        var successAction = (result)=>{
+            if(result.status=='ok'){
+                var qdata = this.state.qdata
+                qdata.splice(index,1)
+                this.setState({qdata:qdata})
+                console.log(this.state.qdata)
+            }
+            else {
+                this.pushNotification("warning", JSON.stringify(result));
+            }
+        }
+
+        this.delete('/api/question/' + this.state.qdata[index].id,successAction)
     }
 
-    renderACard = (data, index) => {
-        return (
-            <ACard data={data} key={index} />
-        )
+    deleteACard = (index)=>{
+        var successAction = (result)=>{
+            if(result.status=='ok'){
+                var adata = this.state.adata
+                adata.splice(index,1)
+                this.setState({adata:adata})
+                console.log(this.state.adata)
+            }
+            else {
+                this.pushNotification("warning", JSON.stringify(result));
+            }
+        }
+
+        this.delete('/api/answer/' + this.state.adata[index].id,successAction)
     }
 
     render() {
+        console.log(this.state.qdata,this.state.adata)
         if (!this.loadStorage("user") || this.loadStorage("user") === "")
             return (
                 <Row type="flex" justify="center" style={{ marginTop: 200 }}>
                     <ErrorPage text={"You have not logged in."} />
                 </Row>)
-
-        if (this.state.qdata.length || this.state.adata.length)
             return (
                 <Row style={styles.container}>
                     <Col lg={6} xs={1} />
@@ -86,9 +105,20 @@ export class My extends BaseComponent {
                     <Col lg={6} xs={1} />
                 </Row>
             );
-        else
-            return null
+    }
 
+    renderQCard = (data, index) => {
+        console.log(data,index)
+        return (
+            <QCard data={data} key={index} index={index} deleteQCard={this.deleteQCard}/>
+        )
+    }
+
+    renderACard = (data, index) => {
+        console.log(data,index)
+        return (
+            <ACard data={data} key={index} index={index} deleteACard={this.deleteACard}/>
+        )
     }
 }
 
