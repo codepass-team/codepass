@@ -23,7 +23,6 @@ export class My extends BaseComponent {
         }
 
         this.getWithErrorAction('/api/question/listMy', (result) => {
-            console.log(result)
             if (result.status === "ok") {
                 this.setState({ qdata: result.data })
             } else {
@@ -32,7 +31,6 @@ export class My extends BaseComponent {
         }, errorAction);
 
         this.getWithErrorAction('/api/answer/listMy', (result) => {
-            console.log(result)
             if (result.status === "ok") {
                 this.setState({ adata: result.data })
             } else {

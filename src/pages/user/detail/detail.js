@@ -11,7 +11,7 @@ export class Detail extends BaseComponent {
     constructor(props) {
         super(props);
         this.state = {
-            question: 0,
+            data: 0,
             found: false
         }
     }
@@ -19,11 +19,11 @@ export class Detail extends BaseComponent {
     componentWillMount() {
         // location由react-router注入
         // location.state可以用来存放临时信息
-        console.log(this.props.location.state)
-        const { qid } = this.props.location.state
+        const { id } = this.props.location.state
+        console.log(id)
         var successAction = (result) => {
             if (result.status === "ok") {
-                this.setState({ question: result.data, found: true })
+                this.setState({ data: result.data, found: true })
             } else {
                 this.pushNotification("warning", JSON.stringify(result));
             }
@@ -33,8 +33,8 @@ export class Detail extends BaseComponent {
             this.pushNotification("warning", "Question Not Found");
         }
 
-        if (this.state.question === 0)
-            this.getWithErrorAction('/api/question/' + qid, successAction, errorAction);
+        if (this.state.data === 0)
+            this.getWithErrorAction('/api/question/' + id, successAction, errorAction);
     }
 
     render() {
@@ -48,14 +48,14 @@ export class Detail extends BaseComponent {
                     <Col lg={6} xs={1} />
                 </Row>
             )
-        else if (this.props.location.state && this.state.question && this.state.question.questioner.username === this.loadStorage("user")) {
+        else if (this.props.location.state && this.state.data &&  this.state.data.questioner.username === this.loadStorage("user")) {
             // 是自己提的问题
             return (
-                <QDetail data={this.state.question} />
+                <QDetail data={this.state.data} />
             )
         } else {
             return (
-                <ADetail data={this.state.question} />
+                <ADetail data={this.state.data} />
             )
         }
     }

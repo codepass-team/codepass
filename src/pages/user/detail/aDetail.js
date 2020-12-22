@@ -17,10 +17,9 @@ class ADetail extends BaseComponent {
         super(props);
         this.state = {
             found: false,
-            question: 0,
-
+            data: 0,
             edit: false, // 我是否有回答
-            desp: "", // 我的回答内容
+            content: "", // 我的回答内容
             dockerId: "",
             aid: "",
             time: "",
@@ -31,15 +30,15 @@ class ADetail extends BaseComponent {
 
     onChangeDesp = ({ target: { value } }) => {
         this.setState({
-            desp: value
+            content: value
         })
     };
 
     componentWillMount() {
         //get my answer
-        if (this.state.question === 0) {
+        if (this.state.data === 0) {
             this.setState({
-                question: this.props.data
+                data: this.props.data
             })
         }
     }
@@ -55,7 +54,7 @@ class ADetail extends BaseComponent {
         return (
             <Row type="flex" justify="start" align="middle">
                 <Col span={24}>
-                    <Title level={2}>{title}</Title>
+                    <Title level={1} style={{fontWeight:600,marginTop:12,marginBottom:12}}>{title}</Title>
                 </Col>
                 <Col span={24}>
                     <Row type="flex" justify="start" align="middle">
@@ -75,7 +74,7 @@ class ADetail extends BaseComponent {
         if (answer.answerer.username === this.loadStorage("user") && answer.status === 0) {
             // 是我提出的回答, 而且还在编辑中
             if (!this.state.edit) {
-                this.setState({ edit: true, desp: answer.content, aid: answer.id, time: answer.answerTime, dockerId: answer.dockerId })
+                this.setState({ edit: true, content: answer.content, aid: answer.id, time: answer.answerTime, dockerId: answer.dockerId })
             }
             return null
         }
@@ -106,13 +105,13 @@ class ADetail extends BaseComponent {
                     style={{ marginTop: 10, width: "100%" }}>
                     <Divider style={{ marginBottom: 10 }} />
                     <Row style={{ width: "100%", marginLeft: 5, fontSize: 18 }}>
-                        You have no idea yet.
+                        You have no new idea yet.
                     </Row>
                     <Button
                         loading={this.state.loading}
                         size="large"
                         type="primary"
-                        onClick={() => this.offer(this.state.question.id)}
+                        onClick={() => this.offer(this.state.data.id)}
                     >Try out the problem! &gt;</Button>
                 </Row>
             )
@@ -158,6 +157,12 @@ class ADetail extends BaseComponent {
                         type="warning"
                         onClick={this.submit}
                     >Submit</Button>
+                    <Button
+                    style={{ marginLeft: 10 }}
+                    size="large"
+                    type="warning"
+                    onClick={this.cancel}
+                    >Cancel</Button>
                 </Row>
             )
         }
@@ -168,7 +173,7 @@ class ADetail extends BaseComponent {
             <Row type="flex" style={{ width: "100%" }}>
                 <Row type="flex" align='middle' justify="start">
                     <Avatar shape="square" style={{ marginRight: 8, fontSize: 30 }} size={50}>
-                        {user.toUpperCase()}
+                        {user}
                     </Avatar>
                 </Row>
                 <Col span={18} style={{ padding: 2 }}>
@@ -176,7 +181,7 @@ class ADetail extends BaseComponent {
                         {user}
                     </Row>
                     <Row type="flex" align='middle' justify="start" style={{ width: "80%", fontSize: 16 }}>
-                        {time}
+                        {this.handleDate(time)+' '+this.handleDate(time)}
                     </Row>
                 </Col>
             </Row>
@@ -184,7 +189,7 @@ class ADetail extends BaseComponent {
     }
 
     render() {
-        const { content, title, answer, raiseTime, questioner } = this.state.question
+        const { content, title, answer, raiseTime, questioner } = this.state.data
         return (
             <Row style={styles.container}>
                 <Col lg={4} xs={1} />
@@ -270,6 +275,24 @@ class ADetail extends BaseComponent {
 
         // TODO: 先保存
         this.post("/api/answer/submit/" + aid, new FormData(), successAction, errorAction)
+    }
+
+    cancel = ()=>{
+        var successAction = (result) => {
+            if(result.status=='ok'){
+                this.setState({
+                    edit:false,
+                    content:'',
+                    dockerId: '', 
+                    aid: ''
+                })
+            }
+            else{
+                this.pushNotification("warning", JSON.stringify(result));
+            }
+        }
+
+        this.delete('/api/answer/' + this.state.aid,successAction)
     }
 
     redirectDocker = (dockerId) => {
