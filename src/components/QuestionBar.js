@@ -74,8 +74,7 @@ class QuestionBar extends BaseComponent {
     }
 
     redirectDocker = () => {
-        var win = window.open(
-            this.ip + "/dockerId/in?user=" + this.loadStorage("user") + "&dockerId=" + this.state.dockerId, '_blank');
+        var win = window.open(this.ip + "/api/docker/" + this.state.dockerId, '_blank');
         win.focus()
     }
 
@@ -168,15 +167,16 @@ class QuestionBar extends BaseComponent {
             this.setState({ optVis: false })
         } else {
             this.setState({ optVis: true })
-        }
-        if (value !== "")
             this.get("/api/question/search?keywords=" + value, result => {
-                var tt = result.data
-                var xx = tt.map(x => ({ title: x.title, description: x.desp, qid: x.qid }))
-                this.setState({
-                    optData: xx
-                })
+                if (result.status === "ok") {
+                    var tt = result.data
+                    var xx = tt.map(x => ({ title: x.title, description: x.desp, qid: x.qid }))
+                    this.setState({
+                        optData: xx
+                    })
+                }
             })
+        }
     }
 
     onChangeDesp = ({ target: { value } }) => {
