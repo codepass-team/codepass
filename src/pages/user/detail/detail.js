@@ -9,7 +9,7 @@ export class Detail extends BaseComponent {
     constructor(props) {
         super(props);
         this.state = {
-            question: 0,
+            data: 0,
             found: false
         }
     }
@@ -19,9 +19,11 @@ export class Detail extends BaseComponent {
         // location.state可以用来存放临时信息
         console.log(this.props.location.state)
         const { qid } = this.props.location.state
+        console.log(qid)
         var successAction = (result) => {
+            console.log(result)
             if (result.status === "ok") {
-                this.setState({ question: result.data, found: true })
+                this.setState({ data: result.data, found: true })
             } else {
                 this.pushNotification("warning", JSON.stringify(result));
             }
@@ -46,7 +48,7 @@ export class Detail extends BaseComponent {
                     <Col lg={6} xs={1} />
                 </Row>
             )
-        else if (this.props.location.state && this.state.question && this.state.question.questioner.nickname === this.loadStorage("user")) {
+        else if (this.props.location.state && this.state.data && this.state.question.questioner.nickname === this.loadStorage("user")) {
             // 是自己提的问题
             return (
                 <QDetail data={this.state.question} />
