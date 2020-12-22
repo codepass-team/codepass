@@ -37,6 +37,7 @@ class ADetail extends BaseComponent {
     componentWillMount() {
         //get my answer
         if (this.state.data === 0) {
+            console.log(this.state.data)
             this.setState({
                 data: this.props.data
             })
@@ -97,7 +98,7 @@ class ADetail extends BaseComponent {
             )
         }
     }
-
+    
     renderNew() {
         if (!this.state.edit)
             return (
@@ -105,14 +106,14 @@ class ADetail extends BaseComponent {
                     style={{ marginTop: 10, width: "100%" }}>
                     <Divider style={{ marginBottom: 10 }} />
                     <Row style={{ width: "100%", marginLeft: 5, fontSize: 18 }}>
-                        You have no new idea yet.
+                        你还没有提出想法呢！
                     </Row>
                     <Button
                         loading={this.state.loading}
                         size="large"
                         type="primary"
                         onClick={() => this.offer(this.state.data.id)}
-                    >Try out the problem! &gt;</Button>
+                    >试着去解决问题吧！ &gt;</Button>
                 </Row>
             )
         else {
@@ -121,10 +122,10 @@ class ADetail extends BaseComponent {
                 <Row type="flex" justify="start" align="middle"
                     style={{ marginTop: 10, width: "100%" }}>
                     <Divider style={{ margin: 0 }} direction="left">
-                        <Title level={4}>My Answer</Title>
+                        <Title level={4}>我的回答</Title>
                     </Divider>
                     <Row style={{ width: "100%", marginLeft: 5, fontSize: 18 }}>
-                        Solution Brief:
+                        解决方案简明说明：
                     </Row>
                     <TextArea
                         onChange={this.onChangeDesp}
@@ -208,7 +209,7 @@ class ADetail extends BaseComponent {
 
     offer = (qid) => {
         if (!this.loadStorage("user") || this.loadStorage("user") === "") {
-            this.pushNotification("warning", "Please Login First")
+            this.pushNotification("warning", "请先登录")
             this.props.dispatch(showSignIn())
             return null;
         }
@@ -217,14 +218,14 @@ class ADetail extends BaseComponent {
             if (result.status === "ok") {
                 result = result.data
                 this.setState({ edit: true, loading: false, dockerId: result.dockerId, aid: result.id })
-                this.pushNotification("success", "Docker has been setup!")
+                this.pushNotification("success", "Docker容器已经被创建")
             } else {
                 this.pushNotification("warning", JSON.stringify(result));
             }
         }
 
         var e1 = () => {
-            this.pushNotification("warning", "Request Failed");
+            this.pushNotification("warning", "请求错误");
         }
 
         this.post("/api/answer/create?questionId=" + qid, null, s1, e1)
