@@ -83,6 +83,14 @@ class ACard extends BaseComponent {
         }
     }
 
+    renderStatus = ()=>{
+        if(this.props.data.status == '1')
+            return <p style={{fontStyle:'Italic',marginBottom:0,float:'right',paddingTop:5}}>
+                {this.handleDate(this.props.data.answerTime)+' '+this.handleTime(this.props.data.answerTime)}
+            </p>        
+        else return <p style={{fontStyle:'Italic',marginBottom:0,float:'right',paddingTop:5}}>已保存</p>
+    }
+
     render() {
         const {answerTime, content, likeCount, dockerId,status} = this.props.data
         // const my = this.getAnswer(test.answer)
@@ -107,66 +115,19 @@ class ACard extends BaseComponent {
                     }}>
                         {content}
                     </a>
+                    <Icon type="edit" />
+                    <Icon type="delete" />
                 </Row>
                 <Row style={{ width: "100%",marginTop:15 }} type="flex" justify="start" align='middle'>
                     <Col span={2}>
                     <Icon type="fire" style={{marginRight:5,fontSize:13}} onClick={this.changeLikeColor}/>
                         {likeCount}
                     </Col>
-                    <Col span={12}><p style={{fontStyle:'Italic',marginBottom:0}}>{this.handleDate(answerTime)+' '+this.handleTime(answerTime)}</p></Col>
+                    <Col span={12}>
+                        {this.renderStatus()}                        
+                    </Col>
                 </Row>
             </Card>
-            // <Card title={"Title: " + content}
-            //       extra={
-            //           <Button type="link" onClick={
-            //               () => this.getDetail(qid, user)
-            //           }>Question Detail</Button>}
-            //       style={styles.container}>
-            //     <Descriptions bordered>
-            //         <Item span={3} label="Description">
-            //             <Description desp={content}/>
-            //         </Item>
-            //         <Item span={1} label="Questioner">
-            //             <Row style={{height: 30}} type="flex" align='middle'>
-            //                 {user}
-            //             </Row>
-            //         </Item>
-            //         <Item span={2} label="Answer Docker">
-            //             <Row style={{height: 30}} type="flex" align='middle'>
-            //                 {dockerId}
-            //                 <Button
-            //                     style={styles.btn2}
-            //                     type="link"
-            //                     onClick={() => {
-            //                         this.handleCopy(my.dockerId)
-            //                     }}
-            //                 ><Icon type="copy"/></Button>
-            //             </Row>
-            //         </Item>
-            //         <Item span={3} label="Solution Brief" style={{padding: 5}}>
-            //             <TextArea
-            //                 onChange={this.onChangeDesp}
-            //                 defaultValue={content}
-            //                 placeholder="(Optional) Add more detail to your Question to attract more helper"
-            //                 autosize={{minRows: 2, maxRows: 5}}
-            //             />
-            //         </Item>
-            //     </Descriptions>
-            //     <Row type="flex" justify="end">
-            //         <Button
-            //             style={{marginTop: 10}}
-            //             size="large"
-            //             type="primary"
-            //             onClick={this.update}
-            //         >Update</Button>
-            //         <Button
-            //             style={{marginTop: 10, marginLeft: 10}}
-            //             size="large"
-            //             type="warning"
-            //             onClick={this.end}
-            //         >Submit Solution</Button>
-            //     </Row>
-            // </Card>
         );
     }
 }
