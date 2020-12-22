@@ -18,10 +18,8 @@ class UCard extends BaseComponent {
         }
     };
 
-    componentWillMount() {
-    }
-
     renderTitle = (title, desp, user, time, qid) => {
+        console.log(title, desp, user, time, qid)
         return (
             <Card
                 style={{ width: "100%", marginBottom: 10 }}
@@ -37,26 +35,22 @@ class UCard extends BaseComponent {
                     <User user={user} />
                 </Col>
                 <Col span={12}>
-                    <Paragraph style={{ fontSize: 18,paddingTop:3,float:'right' }}>{this.handleDate(time)+' '+this.handleTime(time)}</Paragraph>
+                    <Paragraph style={{ fontSize: 18, paddingTop: 3, float: 'right' }}>{this.handleDate(time) + ' ' + this.handleTime(time)}</Paragraph>
                 </Col>
                 <Row type="flex" justify="start" align="middle" style={{ width: '100%' }}>
-                    <Paragraph style={{ fontSize: 14, fontWeight:400,marginBottom: 5}}>
+                    <Paragraph style={{ fontSize: 14, fontWeight: 400, marginBottom: 5 }}>
                         <Description desp={desp} />
                     </Paragraph>
                 </Row>
             </Card>
-
-
         );
-
-
     }
 
     render() {
-        const { title, content, nickname,questioner, raiseTime } = this.props.data
-        // const qid = this.props.data.qid
+        console.log(this.props.data)
+        const { id, title, content, questioner, raiseTime } = this.props.data
         return (
-            this.renderTitle(title, content, nickname, raiseTime, questioner)
+            this.renderTitle(title, content, questioner.nickname, raiseTime, id)
         );
     }
 }

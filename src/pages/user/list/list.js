@@ -9,16 +9,16 @@ export class List extends BaseComponent {
     constructor(props) {
         super(props);
         this.state = {
-            data: {
-                content: []
-            },
+            items: [],
+            // page, etc
         }
     };
 
     componentWillMount() {
         let successAction = (result) => {
             if (result.status === "ok") {
-                this.setState({ data: result.data })
+                // TODO: 页码处理
+                this.setState({ items: result.data.content })
             } else {
                 this.pushNotification("warning", JSON.stringify(result));
             }
@@ -34,20 +34,16 @@ export class List extends BaseComponent {
     renderUCards = () => {
         return (
             <Row style={{ fontSize: 20, width: "100%" }} type="flex" justify="center">
-                {this.state.data.content ? this.state.data.content.map(this.renderUCard) : null}
+                {this.state.items.map(this.renderUCard)}
             </Row>
         )
     }
 
     renderUCard = (item, index) => {
-        if (item.status === 1) {
-            return (
-                <UCard data={item} key={index} />
-            )
-        }
-        else {
-            return null
-        }
+        // 只有自己提出的问题处在编辑状态, 后端才会返回
+        return (
+            <UCard data={item} key={index} />
+        )
     }
 
     // renderCCards=()=>{

@@ -221,6 +221,10 @@ export default class QDetail extends BaseComponent {
             this.pushNotification("warning", "提交失败");
         }
 
+        // TODO: 如果正在编辑状态, 先save一下
+        // if (this.state.edit) {
+        //     this.save()
+        // }
         this.post("/api/question/submit/" + id, new FormData(), successAction, errorAction)
     }
 }
