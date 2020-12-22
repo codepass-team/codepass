@@ -30,7 +30,7 @@ export class Detail extends BaseComponent {
         }
 
         var errorAction = () => {
-            this.pushNotification("warning", "Question Not Found");
+            this.pushNotification("warning", "问题没找到！");
         }
 
         if (this.state.question === 0)

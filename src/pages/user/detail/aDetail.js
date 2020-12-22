@@ -6,6 +6,7 @@ import BaseComponent from '../../../components/BaseComponent'
 import Description from '../../../components/markd/Description'
 import { showSignIn } from "../../../redux/actions/action"
 import QComment from './qComment'
+import { HeartTwoTone } from '@ant-design/icons'
 
 const { Title, Paragraph } = Typography;
 const { TextArea } = Input;
@@ -133,7 +134,7 @@ class ADetail extends BaseComponent {
         if (answer.length === 0) {
             return (
                 <Row style={{ marginTop: 100 }} type="flex" justify="center">
-                    <Paragraph style={{ fontSize: 24 }}>Be the first hero.</Paragraph>
+                    <Paragraph style={{ fontSize: 24 }}>去做第一个英雄吧！</Paragraph>
                 </Row>)
         } else {
             return (
@@ -143,7 +144,22 @@ class ADetail extends BaseComponent {
             )
         }
     }
-
+    renderCheck = (likeCount) => {
+        if (!likeCount) {
+            return (
+                <Row style={{ width: "100%", marginLeft: 5, fontSize: 18 }}>
+                    该问题还没有人点赞哦！
+                    <HeartTwoTone twoToneColor="" />
+                </Row>
+            )
+        } else {
+            return (
+                <Row style={{ width: "100%", marginLeft: 5, fontSize: 18 }}>
+                    <HeartTwoTone twoToneColor="" />
+                </Row>
+            )
+        }
+    }
     renderNew() {
         if (!this.state.edit)
             return (
@@ -151,14 +167,14 @@ class ADetail extends BaseComponent {
                     style={{ marginTop: 10, width: "100%" }}>
                     <Divider style={{ marginBottom: 10 }} />
                     <Row style={{ width: "100%", marginLeft: 5, fontSize: 18 }}>
-                        You have no new idea yet.
+                        你还没有提出想法呢！
                     </Row>
                     <Button
                         loading={this.state.loading}
                         size="large"
                         type="primary"
                         onClick={() => this.offer(this.state.question.id)}
-                    >Try out the problem! &gt;</Button>
+                    >试着去解决问题吧！ &gt;</Button>
                 </Row>
             )
         else {
@@ -167,20 +183,20 @@ class ADetail extends BaseComponent {
                 <Row type="flex" justify="start" align="middle"
                     style={{ marginTop: 10, width: "100%" }}>
                     <Divider style={{ margin: 0 }} direction="left">
-                        <Title level={4}>My Answer</Title>
+                        <Title level={4}>我的回答</Title>
                     </Divider>
                     <Row style={{ width: "100%", marginLeft: 5, fontSize: 18 }}>
-                        Solution Brief:
+                        解决方案简明说明：
                     </Row>
                     <TextArea
                         onChange={this.onChangeDesp}
                         defaultValue={this.state.desp}
-                        placeholder="(Must) Describe your solution"
+                        placeholder="必须描述你的问题"
                         autosize={{ minRows: 2, maxRows: 5 }}
                     />
                     <Row style={{ marginLeft: 5, width: "100%", marginBottom: 10 }} type="flex">
                         <Row style={{ width: "50%", fontSize: 16 }}>
-                            Last copy of answer recovered.
+                            最后对问题的复制被覆盖。
                         </Row>
                         <Row style={{ width: "50%", fontSize: 16 }} type="flex" justify="end">
                             {this.state.time}
@@ -190,26 +206,26 @@ class ADetail extends BaseComponent {
                         size="large"
                         type="primary"
                         onClick={() => this.redirectDocker(this.state.dockerId)}
-                    >Enter Docker</Button>
+                    >进入Docker容器</Button>
                     <Button
                         style={{ marginLeft: 10 }}
                         size="large"
                         type="default"
                         onClick={this.save}
-                    >Update Description</Button>
+                    >更新描述</Button>
                     <Button
                         style={{ marginLeft: 10 }}
                         size="large"
                         type="warning"
                         onClick={this.submit}
-                    >Submit</Button>
+                    >提交</Button>
                     <Button
                         style={{ marginLeft: 10 }}
                         size="large"
                         type="warning"
                         onClick={this.cancel}
-                    >Cancel</Button>
-                </Row>
+                    >取消</Button>
+                </Row >
             )
         }
     }
@@ -241,14 +257,16 @@ class ADetail extends BaseComponent {
     }
 
     render() {
-        const { content, title, answer, raiseTime, questioner } = this.state.question
+        const { content, title, answer, raiseTime, questioner, likeCount } = this.state.data
+        console.log(this.state.data)
         return (
             <Row style={styles.container}>
                 <Col lg={4} xs={1} />
                 <Col lg={15} xs={22}>
                     {this.renderTitle(title, content, questioner.username, raiseTime)}
+                    {this.renderCheck(likeCount)}
                     <Row type="flex" justify="start" style={{ marginTop: 20 }}>
-                        <Divider><Title level={3}>{answer.length + " Answers"}</Title></Divider>
+                        <Divider><Title level={3}>{answer.length + " 回答"}</Title></Divider>
                     </Row>
                     {this.renderAnswers(answer)}
                     {this.renderNew()}
@@ -260,7 +278,7 @@ class ADetail extends BaseComponent {
 
     offer = (qid) => {
         if (!this.loadStorage("user") || this.loadStorage("user") === "") {
-            this.pushNotification("warning", "Please Login First")
+            this.pushNotification("warning", "请先登录")
             this.props.dispatch(showSignIn())
             return null;
         }
@@ -269,14 +287,14 @@ class ADetail extends BaseComponent {
             if (result.status === "ok") {
                 result = result.data
                 this.setState({ edit: true, loading: false, dockerId: result.dockerId, aid: result.id })
-                this.pushNotification("success", "Docker has been setup!")
+                this.pushNotification("success", "Docker容器已经被创建")
             } else {
                 this.pushNotification("warning", JSON.stringify(result));
             }
         }
 
         var e1 = () => {
-            this.pushNotification("warning", "Request Failed");
+            this.pushNotification("warning", "请求错误");
         }
 
         this.post("/api/answer/create?questionId=" + qid, null, s1, e1)
@@ -308,7 +326,7 @@ class ADetail extends BaseComponent {
 
     submit = () => {
         if (this.state.desp === null || this.state.desp === "") {
-            this.pushNotification("warning", "Describe your solution, less or more")
+            this.pushNotification("warning", "请或多或少地描述你的问题")
             return null;
         }
         const { aid } = this.state
