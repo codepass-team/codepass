@@ -233,17 +233,20 @@ class ADetail extends BaseComponent {
         const { aid, desp } = this.state
         var successAction = (result) => {
             if (result.status === "ok") {
-                this.pushNotification("success", "Update Succeeded")
+                this.pushNotification("success", "更新成功")
             } else {
                 this.pushNotification("warning", JSON.stringify(result));
             }
         }
 
         var errorAction = () => {
-            this.pushNotification("warning", "Update Failed");
+            this.pushNotification("warning", "更新失败");
         }
 
-        this.post("/api/answer/save/" + aid + "?content=" + escape(desp), new FormData(), successAction, errorAction)
+        let form = new FormData();
+        form.append('content', desp);
+
+        this.post("/api/answer/save/" + aid, form, successAction, errorAction)
     }
 
     submit = () => {
@@ -270,7 +273,6 @@ class ADetail extends BaseComponent {
     }
 
     redirectDocker = (dockerId) => {
-        console.log(this.state)
         window.open(this.ip + "/api/docker/" + dockerId, '_blank').focus();
     }
 }
