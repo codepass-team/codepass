@@ -47,7 +47,6 @@ class Answer extends BaseComponent {
     }
 
     render() {
-        console.log(this.props.data)
         const { content, diff, time, answerer } = this.props.data
         return (
             <Card style={{ marginBottom: 15 }}>

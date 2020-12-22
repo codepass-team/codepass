@@ -47,6 +47,34 @@ class BaseComponent extends Component {
         this.getWithErrorAction(url, successAction, unsuccessAvtion, errorAction)
     }
 
+    delete = (url, successAction) => {
+        const token = localStorage.getItem("token")
+
+        let unsuccessAvtion = (result) => {
+            console.log(result.message)
+            this.pushNotification("warning", result.message);
+        }
+        let errorAction = () => {
+            console.log("error")
+        }
+
+        return fetch(this.ip + url, {
+            method: 'DELETE',
+            mode: 'cors',
+            credentials: 'include',
+            headers: {
+                ...(token ? { "Authorization": `Bearer ${token}` } : {})
+            }
+        })
+            .then(response => response.json())
+            .catch((error) => {
+                console.log(error);
+            })
+            .then((result) => {
+                this.handleResult(result, successAction, unsuccessAvtion, errorAction);
+            });
+    }
+
     getWithErrorAction = (url, successAction, unsuccessAction, errorAction) => {
         const token = localStorage.getItem("token")
         return fetch(this.ip + url, {
