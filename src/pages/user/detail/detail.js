@@ -46,7 +46,7 @@ export class Detail extends BaseComponent {
                     <Col lg={6} xs={1} />
                 </Row>
             )
-        else if (this.props.location.state && this.state.question && this.state.question.questioner.nickname === this.loadStorage("user")) {
+        else if (this.props.location.state && this.state.question && this.state.question.questioner.username === this.loadStorage("user")) {
             // 是自己提的问题
             return (
                 <QDetail data={this.state.question} />

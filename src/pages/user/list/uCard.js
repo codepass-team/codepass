@@ -50,7 +50,7 @@ class UCard extends BaseComponent {
         console.log(this.props.data)
         const { id, title, content, questioner, raiseTime } = this.props.data
         return (
-            this.renderTitle(title, content, questioner.nickname, raiseTime, id)
+            this.renderTitle(title, content, questioner.username, raiseTime, id)
         );
     }
 }

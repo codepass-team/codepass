@@ -38,7 +38,7 @@ class Person extends BaseComponent {
             console.log(result)
             if (result.status === "ok") {
                 this.setState({
-                    name:{name:'昵称',content:result.data.nickname},
+                    name:{name:'昵称',content:result.data.username},
                     gender: {name: '性别',content: result.data.gender},
                     job: {name: '职业',content: result.data.job},
                     tech: {name: '所在行业',content: result.data.tech},
