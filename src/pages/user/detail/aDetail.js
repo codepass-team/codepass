@@ -265,7 +265,7 @@ class ADetail extends BaseComponent {
     }
 
     redirectDocker = () => {
-        window.open(this.ip + "/dockerId/in?user=" + this.loadStorage("user") + "&dockerId=" + this.state.dockerId, '_blank').focus();
+        window.open(this.ip + "/api/docker/" + this.state.dockerId, '_blank').focus();
     }
 }
 

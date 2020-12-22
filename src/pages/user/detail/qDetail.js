@@ -19,6 +19,7 @@ export default class QDetail extends BaseComponent {
     }
 
     componentWillMount() {
+        // this.props.data是detail传来的questionEntity对象
         this.state.question = this.props.data
         this.state.submit = this.props.data.status
         this.state.edit = !this.props.data.status
@@ -42,7 +43,7 @@ export default class QDetail extends BaseComponent {
                 </Col>
                 <Col span={24}>
                     <Row type="flex" justify="start" align="middle">
-                        {this.renderUser(this.state.question.user, time)}
+                        {this.renderUser(this.state.question.questioner, time)}
                     </Row>
                 </Col>
                 <Row type="flex" justify="start" align="middle" style={{ width: '100%' }}>
@@ -62,23 +63,22 @@ export default class QDetail extends BaseComponent {
         )
     }
 
-    redirectDocker = () => {
-        var win = window.open(
-            this.ip + "/dockerId/in?user=" + this.loadStorage("user") + "&dockerId=" + this.state.dockerId, '_blank');
-        win.focus()
+    redirectDocker = (dockerId) => {
+        window.open(this.ip + "/api/docker/" + dockerId, '_blank').focus();
     }
 
     renderUser(user, time) {
+        const { nickname } = user
         return (
             <Row type="flex" style={{ width: "100%" }}>
                 <Row type="flex" align='middle' justify="start">
                     <Avatar shape="square" style={{ marginRight: 8, fontSize: 30 }} size={50}>
-                        {user.toUpperCase()[0]}
+                        {nickname.toUpperCase()[0]}
                     </Avatar>
                 </Row>
                 <Col span={18} style={{ padding: 2 }}>
                     <Row type="flex" align='middle' justify="start" style={{ width: "80%", fontSize: 20 }}>
-                        {user}
+                        {nickname}
                     </Row>
                     <Row type="flex" align='middle' justify="start" style={{ width: "80%", fontSize: 16 }}>
                         {time}
@@ -105,7 +105,7 @@ export default class QDetail extends BaseComponent {
                         style={{ marginTop: 10 }}
                         size="large"
                         type="primary"
-                        onClick={this.redirectDocker}
+                        onClick={() => this.redirectDocker(this.state.question.dockerId)}
                     >Enter Docker</Button>
                     {this.state.edit ? (
                         <Button
@@ -184,10 +184,10 @@ export default class QDetail extends BaseComponent {
     }
 
     save = () => {
-        const { qid, title, desp } = this.state.question
+        const { id, title, content } = this.state.question
         var successAction = (result) => {
             if (result.status === "ok") {
-                this.pushNotification("success", "Update Succeeded")
+                this.pushNotification("success", "问题已保存")
                 this.setState({ edit: false })
             } else {
                 this.pushNotification("warning", JSON.stringify(result));
@@ -197,15 +197,20 @@ export default class QDetail extends BaseComponent {
         var errorAction = () => {
             this.pushNotification("warning", "Update Failed");
         }
-        this.getWithErrorAction("/api/question/save?qid=" + qid + "&title=" + title + "&desp=" + escape(desp), successAction, errorAction)
+
+        let form = new FormData();
+        form.append('title', title);
+        form.append('content', content);
+
+        this.post("/api/question/save/" + id, form, successAction, errorAction)
     }
 
 
     submit = () => {
-        const { qid, title, desp } = this.state.question
+        const { id, title, content } = this.state.question
         var successAction = (result) => {
             if (result.status === "ok") {
-                this.pushNotification("success", "Submit Succeeded")
+                this.pushNotification("success", "问题已提交")
                 this.setState({ submit: true, edit: false })
             } else {
                 this.pushNotification("warning", JSON.stringify(result));
@@ -213,10 +218,10 @@ export default class QDetail extends BaseComponent {
         }
 
         var errorAction = () => {
-            this.pushNotification("warning", "Submit Failed");
+            this.pushNotification("warning", "提交失败");
         }
 
-        this.getWithErrorAction("/api/question/submit?qid=" + qid + "&title=" + title + "&desp=" + escape(desp), successAction, errorAction)
+        this.post("/api/question/submit/" + id, new FormData(), successAction, errorAction)
     }
 }
 

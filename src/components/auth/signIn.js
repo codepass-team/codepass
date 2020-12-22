@@ -30,7 +30,7 @@ class SignIn extends BaseComponent {
 
             var successAction = (result) => {
                 if (result.status === "ok") {
-                    this.handleSuccess(values.usrname, result.data.token);
+                    this.handleSuccess(values.usrname, result.data);
                 } else {
                     this.pushNotification("warning", "Username or Password Wrong");
                 }
@@ -44,10 +44,10 @@ class SignIn extends BaseComponent {
         });
     }
 
-    handleSuccess = (username, token) => {
-        this.props.dispatch(loginAsUser(username, token));
+    handleSuccess = (username, result) => {
+        this.props.dispatch(loginAsUser(username));
         localStorage.setItem('user', username);
-        localStorage.setItem('token', token);
+        localStorage.setItem('token', result.token);
         this.props.onCancel()
         this.pushNotification("success", "Sign In Successfully As " + username);
     }

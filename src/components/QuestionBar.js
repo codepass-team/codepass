@@ -23,8 +23,8 @@ class QuestionBar extends BaseComponent {
             dockerId: "",
             qid: 0,
             optData: [
-                { title: "CodePass 使用指南", description: "CodePass 使用指南" },
-                { title: "Hello world", description: "测试提问" },
+                // { title: "CodePass 使用指南", description: "CodePass 使用指南" },
+                // { title: "Hello world", description: "测试提问" },
             ],
             optVis: false,
         }
@@ -74,8 +74,7 @@ class QuestionBar extends BaseComponent {
     }
 
     redirectDocker = () => {
-        var win = window.open(this.ip + "/api/docker/" + this.state.dockerId, '_blank');
-        win.focus()
+        window.open(this.ip + "/api/docker/" + this.state.dockerId, '_blank').focus();
     }
 
     submit = () => {
@@ -169,10 +168,8 @@ class QuestionBar extends BaseComponent {
             this.setState({ optVis: true })
             this.get("/api/question/search?keywords=" + value, result => {
                 if (result.status === "ok") {
-                    var tt = result.data
-                    var xx = tt.map(x => ({ title: x.title, description: x.desp, qid: x.qid }))
                     this.setState({
-                        optData: xx
+                        optData: result.data
                     })
                 }
             })
@@ -188,6 +185,7 @@ class QuestionBar extends BaseComponent {
 
     renderOpt() {
         if (this.state.optVis) {
+            console.log(this.state.optData)
             return <div><span style={{ fontSize: 22 }}>您可能想问:</span>
                 <List
                     bordered={true}
@@ -198,8 +196,9 @@ class QuestionBar extends BaseComponent {
                             <List.Item.Meta
                                 title={<a title={"请浏览问题的细节"}
                                     style={{ color: "white", fontSize: 22 }} onClick={() => {
-                                        var tx = this.loadStorage("user")
-                                        var qid = item.qid
+                                        let tx = this.loadStorage("user")
+                                        let qid = item.id
+                                        // 页面跳转时传参数
                                         this.props.history.push({
                                             pathname: "/user/detail",
                                             state: { qid, tx, completed: true }
