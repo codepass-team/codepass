@@ -1,10 +1,11 @@
 import React from "react"
 import { connect } from 'react-redux'
-import { Avatar, Button, Col, Divider, Input, Row, Typography } from 'antd'
+import { Avatar, Button, Col, Divider, Input, Row, Skeleton, Typography } from 'antd'
 import Answer from './answer'
 import BaseComponent from '../../../components/BaseComponent'
 import Description from '../../../components/markd/Description'
 import { showSignIn } from "../../../redux/actions/action"
+import QComment from './qComment'
 
 const { Title, Paragraph } = Typography;
 const { TextArea } = Input;
@@ -14,17 +15,23 @@ const mapStateToProps = state => ({
 
 class ADetail extends BaseComponent {
     constructor(props) {
+        console.log("ADetail")
+        console.log(props)
         super(props);
         this.state = {
             found: false,
-            data: 0,
+            question: 0,
             edit: false, // 我是否有回答
             content: "", // 我的回答内容
             dockerId: "",
             aid: "",
             time: "",
 
-            loading: false
+            loading: false,
+
+            showComment: false,
+            loading2: false,
+            comments: 0
         }
     }
 
@@ -36,11 +43,36 @@ class ADetail extends BaseComponent {
 
     componentWillMount() {
         //get my answer
-        if (this.state.data === 0) {
+        if (this.state.question === 0) {
             this.setState({
-                data: this.props.data
+                question: this.props.question
             })
         }
+    }
+
+    showComment = () => {
+        this.setState({
+            showComment: true,
+        })
+        if (this.state.comments === 0) {
+            this.setState({
+                loading2: true,
+            })
+            this.get('/api/comment/question/' + this.state.question.id, (res) => {
+                if (res.status === 'ok') {
+                    this.setState({
+                        comments: res.data,
+                        loading2: false
+                    })
+                }
+            })
+        }
+    }
+
+    hideComment = () => {
+        this.setState({
+            showComment: false
+        })
     }
 
     /**
@@ -54,7 +86,7 @@ class ADetail extends BaseComponent {
         return (
             <Row type="flex" justify="start" align="middle">
                 <Col span={24}>
-                    <Title level={1} style={{fontWeight:600,marginTop:12,marginBottom:12}}>{title}</Title>
+                    <Title level={1} style={{ fontWeight: 600, marginTop: 12, marginBottom: 12 }}>{title}</Title>
                 </Col>
                 <Col span={24}>
                     <Row type="flex" justify="start" align="middle">
@@ -66,7 +98,21 @@ class ADetail extends BaseComponent {
                         <Description desp={desp} />
                     </Paragraph>
                 </Row>
-            </Row>
+                <Col span={24}>
+                    {!this.state.showComment ?
+                        <Button onClick={this.showComment}>评论</Button> :
+                        <Button onClick={this.hideComment}>收起评论</Button>
+                    }
+                </Col>
+                {this.state.showComment ?
+                    this.state.loading2 ?
+                        <Skeleton />
+                        :
+                        <Col span={24}>
+                            <QComment comments={this.state.comments} questionId={this.state.question.id} />
+                        </Col> : null
+                }
+            </Row >
         )
     }
 
@@ -111,7 +157,7 @@ class ADetail extends BaseComponent {
                         loading={this.state.loading}
                         size="large"
                         type="primary"
-                        onClick={() => this.offer(this.state.data.id)}
+                        onClick={() => this.offer(this.state.question.id)}
                     >Try out the problem! &gt;</Button>
                 </Row>
             )
@@ -158,30 +204,36 @@ class ADetail extends BaseComponent {
                         onClick={this.submit}
                     >Submit</Button>
                     <Button
-                    style={{ marginLeft: 10 }}
-                    size="large"
-                    type="warning"
-                    onClick={this.cancel}
+                        style={{ marginLeft: 10 }}
+                        size="large"
+                        type="warning"
+                        onClick={this.cancel}
                     >Cancel</Button>
                 </Row>
             )
         }
     }
 
+    follow = () => {
+
+    }
+
     renderUser(user, time) {
         return (
             <Row type="flex" style={{ width: "100%" }}>
-                <Row type="flex" align='middle' justify="start">
+                <Col type="flex" align='middle' justify="start">
                     <Avatar shape="square" style={{ marginRight: 8, fontSize: 30 }} size={50}>
                         {user}
                     </Avatar>
-                </Row>
+                </Col>
                 <Col span={18} style={{ padding: 2 }}>
                     <Row type="flex" align='middle' justify="start" style={{ width: "80%", fontSize: 20 }}>
-                        {user}
+                        <Col>{user}</Col>
+                        <Button onClick={this.follow(true)}>关注</Button>
+                        <Button onClick={this.follow(false)}>取消关注</Button>
                     </Row>
                     <Row type="flex" align='middle' justify="start" style={{ width: "80%", fontSize: 16 }}>
-                        {this.handleDate(time)+' '+this.handleDate(time)}
+                        {this.handleDate(time) + ' ' + this.handleDate(time)}
                     </Row>
                 </Col>
             </Row>
@@ -189,7 +241,7 @@ class ADetail extends BaseComponent {
     }
 
     render() {
-        const { content, title, answer, raiseTime, questioner } = this.state.data
+        const { content, title, answer, raiseTime, questioner } = this.state.question
         return (
             <Row style={styles.container}>
                 <Col lg={4} xs={1} />
@@ -277,22 +329,22 @@ class ADetail extends BaseComponent {
         this.post("/api/answer/submit/" + aid, new FormData(), successAction, errorAction)
     }
 
-    cancel = ()=>{
+    cancel = () => {
         var successAction = (result) => {
-            if(result.status=='ok'){
+            if (result.status == 'ok') {
                 this.setState({
-                    edit:false,
-                    content:'',
-                    dockerId: '', 
+                    edit: false,
+                    content: '',
+                    dockerId: '',
                     aid: ''
                 })
             }
-            else{
+            else {
                 this.pushNotification("warning", JSON.stringify(result));
             }
         }
 
-        this.delete('/api/answer/' + this.state.aid,successAction)
+        this.delete('/api/answer/' + this.state.aid, successAction)
     }
 
     redirectDocker = (dockerId) => {

@@ -1,49 +1,81 @@
 import React from "react";
 import BaseComponent from '../../../components/BaseComponent'
-import { Avatar, Button, Col, Divider, Icon, Input, Row, Typography } from 'antd';
+import { Avatar, Button, Col, Divider, Icon, Input, Row, Skeleton, Typography } from 'antd';
 import Answer from './answer'
 import Description from '../../../components/markd/Description'
+import QComment from "./qComment";
 
 const { Title, Paragraph } = Typography;
 const { TextArea } = Input;
 
 export default class QDetail extends BaseComponent {
     constructor(props) {
+        console.log("QDetail")
+        console.log(props)
         super(props);
         this.state = {
             found: false,
-            data: 0,
+            question: 0,
             submit: false,
-            edit: true
+            edit: true,
+
+            showComment: false,
+            loading2: false,
+            comments: 0
         }
     }
 
     componentWillMount() {
         // this.props.data是detail传来的questionEntity对象
-        this.state.data = this.props.data
-        this.state.submit = this.props.data.status
-        this.state.edit = !this.props.data.status
+        this.state.question = this.props.question
+        this.state.submit = this.props.question.status
+        this.state.edit = !this.props.question.status
     }
 
     onChangeDesp = ({ target: { value } }) => {
-        var q = this.state.data
+        var q = this.state.question
         q.content = value
         this.setState({
-            data: q
+            question: q
         })
     };
 
+    showComment = () => {
+        this.setState({
+            showComment: true,
+        })
+        if (this.state.comments === 0) {
+            this.setState({
+                loading2: true,
+            })
+            this.get('/api/comment/question/' + this.state.question.id, (res) => {
+                if (res.status === 'ok') {
+                    this.setState({
+                        comments: res.data,
+                        loading2: false
+                    })
+                }
+            })
+        }
+    }
+
+    hideComment = () => {
+        this.setState({
+            showComment: false
+        })
+    }
+
     renderTitle = (title, content) => {
         const { edit } = this.state
-        const { raiseTime } = this.state.data
+        const { raiseTime } = this.state.question
         return (
             <Row type="flex" justify="start" align="middle">
                 <Col span={18}>
                     <Col span={24}>
-                        <Title level={1} style={{fontWeight:600,marginTop:12,marginBottom:12}}>{title}</Title>
+                        <Title level={1} style={{ fontWeight: 600, marginTop: 12, marginBottom: 12 }}>{title}</Title>
                     </Col>
                     <Row type="flex" justify="start" align="middle" style={{ width: '100%' }}>
-                        {!edit ? (<Paragraph style={{ fontSize: 15,lineHeight:'25px',marginVertical: 5 }}>
+                        {!edit ? (<Paragraph style={{ fontSize: 15, lineHeight: '25px', marginVertical: 5 }}>
                             <Description desp={content} />
                         </Paragraph>) :
                             <TextArea
@@ -57,9 +89,23 @@ export default class QDetail extends BaseComponent {
                 </Col>
                 <Col span={6}>
                     <Row type="flex" justify="start" align="middle">
-                        {this.renderUser(this.state.data.questioner.username, raiseTime)}
+                        {this.renderUser(this.state.question.questioner.username, raiseTime)}
                     </Row>
                 </Col>
+                <Col span={24}>
+                    {!this.state.showComment ?
+                        <Button onClick={this.showComment}>评论</Button> :
+                        <Button onClick={this.hideComment}>收起评论</Button>
+                    }
+                </Col>
+                {this.state.showComment ?
+                    this.state.loading2 ?
+                        <Skeleton />
+                        :
+                        <Col span={24}>
+                            <QComment comments={this.state.comments} questionId={this.state.question.id} />
+                        </Col> : null
+                }
             </Row>
         )
     }
@@ -79,7 +125,7 @@ export default class QDetail extends BaseComponent {
                         {user}
                     </Row>
                     <Row type="flex" align='middle' justify="start" style={{ width: "80%", fontSize: 16 }}>
-                        {this.handleDate(time)+''+this.handleTime(time)}
+                        {this.handleDate(time) + '' + this.handleTime(time)}
                     </Row>
                 </Col>
             </Row>
@@ -95,7 +141,7 @@ export default class QDetail extends BaseComponent {
                     <Divider style={{ width: "100%", marginBottom: 3 }} />
                     {!this.state.submit ?
                         <Row type="flex" justify="start" align="middle" style={{ width: "100%" }}>
-                            <Typography style={{ fontSize: 18 }}>Docker-{this.state.data.dockerId} is
+                            <Typography style={{ fontSize: 18 }}>Docker-{this.state.question.dockerId} is
                                 running</Typography>
                             <Icon type="loading" style={{ marginLeft: 10 }} />
                         </Row> : null}
@@ -103,7 +149,7 @@ export default class QDetail extends BaseComponent {
                         style={{ marginTop: 10 }}
                         size="large"
                         type="primary"
-                        onClick={() => this.redirectDocker(this.state.data.dockerId)}
+                        onClick={() => this.redirectDocker(this.state.question.dockerId)}
                     >Enter Docker</Button>
                     {this.state.edit ? (
                         <Button
@@ -141,7 +187,7 @@ export default class QDetail extends BaseComponent {
 
     renderAnswers = () => {
         if (this.state.submit) {
-            const { answer } = this.state.data
+            const { answer } = this.state.question
             if (answer.length === 0) {
                 return (
                     <Row style={{ marginTop: 100 }} type="flex" justify="center">
@@ -164,7 +210,7 @@ export default class QDetail extends BaseComponent {
     }
 
     render() {
-        const { content, title, answer } = this.state.data
+        const { content, title, answer } = this.state.question
         return (
             <Row style={styles.container}>
                 <Col lg={4} xs={1} />
@@ -182,7 +228,7 @@ export default class QDetail extends BaseComponent {
     }
 
     save = () => {
-        const { id, title, content } = this.state.data
+        const { id, title, content } = this.state.question
         var successAction = (result) => {
             if (result.status === "ok") {
                 this.pushNotification("success", "问题已保存")
@@ -205,7 +251,7 @@ export default class QDetail extends BaseComponent {
 
 
     submit = () => {
-        const { id, title, content } = this.state.data
+        const { id, title, content } = this.state.question
         var successAction = (result) => {
             if (result.status === "ok") {
                 this.pushNotification("success", "问题已提交")
