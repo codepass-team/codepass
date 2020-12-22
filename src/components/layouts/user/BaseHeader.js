@@ -70,7 +70,7 @@ class BaseHeader extends BaseComponent {
                     theme="white"
                     mode="horizontal"
                     style={styles.menu}
-                    electedKeys={[this.state.index]}
+                    electedkeys={[this.state.index]}
                     onClick={this.handleClick}
                 >
                     {this.props.items.map(this.renderItems)}
