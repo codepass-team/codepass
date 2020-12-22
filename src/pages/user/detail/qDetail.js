@@ -68,17 +68,17 @@ export default class QDetail extends BaseComponent {
     }
 
     renderUser(user, time) {
-        const { nickname } = user
+        const { username } = user
         return (
             <Row type="flex" style={{ width: "100%" }}>
                 <Row type="flex" align='middle' justify="start">
                     <Avatar shape="square" style={{ marginRight: 8, fontSize: 30 }} size={50}>
-                        {nickname.toUpperCase()[0]}
+                        {username.toUpperCase()[0]}
                     </Avatar>
                 </Row>
                 <Col span={18} style={{ padding: 2 }}>
                     <Row type="flex" align='middle' justify="start" style={{ width: "80%", fontSize: 20 }}>
-                        {nickname}
+                        {username}
                     </Row>
                     <Row type="flex" align='middle' justify="start" style={{ width: "80%", fontSize: 16 }}>
                         {time}

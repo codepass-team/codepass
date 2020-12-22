@@ -19,7 +19,6 @@ class UCard extends BaseComponent {
     };
 
     renderTitle = (title, desp, user, time, qid) => {
-        console.log(title, desp, user, time, qid)
         return (
             <Card
                 style={{ width: "100%", marginBottom: 10 }}
@@ -47,10 +46,9 @@ class UCard extends BaseComponent {
     }
 
     render() {
-        console.log(this.props.data)
         const { id, title, content, questioner, raiseTime } = this.props.data
         return (
-            this.renderTitle(title, content, questioner.nickname, raiseTime, id)
+            this.renderTitle(title, content, questioner.username, raiseTime, id)
         );
     }
 }
