@@ -27,7 +27,7 @@ class QCard extends BaseComponent {
         }
     }
 
-    renderTitle = (title, likeCount, user, time, qid) => {
+    renderTitle = (title, likeCount, user, qid) => {
         return (
             <Card style={{ marginTop: 8 }} bodyStyle={{ paddingTop: 12, paddingBottom: 12, margin: 0 }}>
                 <Col span={12} style={{ fontSize: 18, paddingLeft: 5, paddingTop: 3 }}>
@@ -43,9 +43,9 @@ class QCard extends BaseComponent {
                     <p style={{ fontSize: 13, display: 'inline' }}>{likeCount}</p>
                 </Col>
                 <Col span={12}>
-                    <Icon type="edit" style={{ float: 'right', marginRight: 5 }} />
-                    <Icon type="delete" style={{ float: 'right', marginRight: 5 }} />
-                    {this.renderStatus()}
+                    <Col span={2} offset={13}><Icon type="edit" style={{marginRight: 8,padding:10 }} /></Col>
+                    <Col span={2}><Icon type="delete" style={{paddingTop:10 }} /></Col>
+                    <Col span={7}>{this.renderStatus()}</Col>
                 </Col>
             </Card>
         );
@@ -53,16 +53,16 @@ class QCard extends BaseComponent {
 
     renderStatus = () => {
         if (this.props.data.status == '1')
-            return <p style={{ fontStyle: 'Italic', marginBottom: 0, float: 'right', paddingTop: 5 }}>
+            return <p style={{ fontStyle: 'Italic', marginBottom: 0, float: 'right', paddingTop: 7 }}>
                 {this.handleDate(this.props.data.raiseTime) + ' ' + this.handleTime(this.props.data.raiseTime)}
             </p>
         else return <p style={{ fontStyle: 'Italic', marginBottom: 0, float: 'right', paddingTop: 5 }}>已保存</p>
     }
 
     render() {
-        const { id, title, content, questioner, raiseTime } = this.props.data
+        const { id, title, likeCount, questioner } = this.props.data
         return (
-            this.renderTitle(title, content, questioner.username, raiseTime, id)
+            this.renderTitle(title, likeCount, questioner.username, id)
         );
     }
 }

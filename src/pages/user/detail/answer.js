@@ -27,19 +27,20 @@ class Answer extends BaseComponent {
     }
 
     renderUser(user, time) {
+        console.log(user,time)
         return (
             <Row type="flex" style={{ width: "100%" }}>
-                <Row type="flex" align='middle' justify="start">
+                {/* <Row type="flex" align='middle' justify="start">
                     <Avatar shape="square" style={{ marginRight: 8, fontSize: 25 }} size={44}>
                         {user.toUpperCase()[0]}
                     </Avatar>
-                </Row>
+                </Row> */}
                 <Col span={18} style={{ padding: 2 }}>
                     <Row type="flex" align='middle' justify="start" style={{ width: "80%", fontSize: 16 }}>
                         {user}
                     </Row>
                     <Row type="flex" align='middle' justify="start" style={{ width: "80%", fontSize: 14 }}>
-                        {time}
+                        {this.handleDate(time)+''+this.handleTime(time)}
                     </Row>
                 </Col>
             </Row>
@@ -47,20 +48,21 @@ class Answer extends BaseComponent {
     }
 
     render() {
-        const { desp, diff, time, user } = this.props.data
+        console.log(this.props.data)
+        const { content,answerTime, answerer,likeCount } = this.props.data
         return (
             <Card style={{ marginBottom: 15 }}>
                 <Row style={{ width: "100%" }}>
-                    {this.renderUser(user, time)}
+                    {this.renderUser(answerer.username, answerTime)}
                 </Row>
                 <Paragraph style={{ fontSize: 22 }}>
-                    <Description desp={desp} />
+                    <Description desp={content} />
                 </Paragraph>
-                <Collapse defaultActiveKey={['1']}>
+                {/* <Collapse defaultActiveKey={['1']}>
                     <Panel header="Show me the code" key="1">
                         {this.renderDiff(diff)}
                     </Panel>
-                </Collapse>
+                </Collapse> */}
             </Card>
         )
     }
