@@ -98,7 +98,9 @@ class ADetail extends BaseComponent {
             )
         }
     }
-    
+    rendercheck(){
+
+    }
     renderNew() {
         if (!this.state.edit)
             return (
@@ -130,12 +132,12 @@ class ADetail extends BaseComponent {
                     <TextArea
                         onChange={this.onChangeDesp}
                         defaultValue={this.state.desp}
-                        placeholder="(Must) Describe your solution"
+                        placeholder="必须描述你的问题"
                         autosize={{ minRows: 2, maxRows: 5 }}
                     />
                     <Row style={{ marginLeft: 5, width: "100%", marginBottom: 10 }} type="flex">
                         <Row style={{ width: "50%", fontSize: 16 }}>
-                            Last copy of answer recovered.
+                            最后对问题的复制被覆盖。
                         </Row>
                         <Row style={{ width: "50%", fontSize: 16 }} type="flex" justify="end">
                             {this.state.time}
@@ -145,25 +147,25 @@ class ADetail extends BaseComponent {
                         size="large"
                         type="primary"
                         onClick={() => this.redirectDocker(this.state.dockerId)}
-                    >Enter Docker</Button>
+                    >进入Docker容器</Button>
                     <Button
                         style={{ marginLeft: 10 }}
                         size="large"
                         type="default"
                         onClick={this.save}
-                    >Update Description</Button>
+                    >更新描述</Button>
                     <Button
                         style={{ marginLeft: 10 }}
                         size="large"
                         type="warning"
                         onClick={this.submit}
-                    >Submit</Button>
+                    >提交</Button>
                     <Button
                     style={{ marginLeft: 10 }}
                     size="large"
                     type="warning"
                     onClick={this.cancel}
-                    >Cancel</Button>
+                    >取消</Button>
                 </Row>
             )
         }
@@ -197,7 +199,7 @@ class ADetail extends BaseComponent {
                 <Col lg={15} xs={22}>
                     {this.renderTitle(title, content, questioner.username, raiseTime)}
                     <Row type="flex" justify="start" style={{ marginTop: 20 }}>
-                        <Divider><Title level={3}>{answer.length + " Answers"}</Title></Divider>
+                        <Divider><Title level={3}>{answer.length + " 回答"}</Title></Divider>
                     </Row>
                     {this.renderAnswers(answer)}
                     {this.renderNew()}
@@ -257,7 +259,7 @@ class ADetail extends BaseComponent {
 
     submit = () => {
         if (this.state.desp === null || this.state.desp === "") {
-            this.pushNotification("warning", "Describe your solution, less or more")
+            this.pushNotification("warning", "请或多或少地描述你的问题")
             return null;
         }
         const { aid } = this.state
