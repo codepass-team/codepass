@@ -4,7 +4,9 @@ import { Col, Row } from 'antd';
 import QDetail from './qDetail'
 import ADetail from './aDetail'
 
-
+/**
+ * 问题/答案详情页
+ */
 export class Detail extends BaseComponent {
     constructor(props) {
         super(props);

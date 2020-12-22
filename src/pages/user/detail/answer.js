@@ -31,7 +31,7 @@ class Answer extends BaseComponent {
             <Row type="flex" style={{ width: "100%" }}>
                 <Row type="flex" align='middle' justify="start">
                     <Avatar shape="square" style={{ marginRight: 8, fontSize: 25 }} size={44}>
-                        {user.toUpperCase()[0]}
+                        {user.toUpperCase()}
                     </Avatar>
                 </Row>
                 <Col span={18} style={{ padding: 2 }}>
@@ -47,14 +47,15 @@ class Answer extends BaseComponent {
     }
 
     render() {
-        const { desp, diff, time, user } = this.props.data
+        console.log(this.props.data)
+        const { content, diff, time, answerer } = this.props.data
         return (
             <Card style={{ marginBottom: 15 }}>
                 <Row style={{ width: "100%" }}>
-                    {this.renderUser(user, time)}
+                    {this.renderUser(answerer.username, time)}
                 </Row>
                 <Paragraph style={{ fontSize: 22 }}>
-                    <Description desp={desp} />
+                    <Description desp={content} />
                 </Paragraph>
                 <Collapse defaultActiveKey={['1']}>
                     <Panel header="Show me the code" key="1">
