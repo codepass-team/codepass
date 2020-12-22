@@ -201,7 +201,7 @@ class QuestionBar extends BaseComponent {
                                         // 页面跳转时传参数
                                         this.props.history.push({
                                             pathname: "/user/detail",
-                                            state: { qid, tx, completed: true }
+                                            state: { id: qid, tx, completed: true }
                                         })
                                     }}>{item.title}</a>}
                                 description={<span style={{ color: "white" }}>{item.description}</span>}

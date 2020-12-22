@@ -1,13 +1,13 @@
 import React from "react";
 import BaseComponent from '../../../components/BaseComponent'
 import copy from 'copy-to-clipboard';
-import {withRouter} from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import Description from '../../../components/markd/Description'
-import {Button, Card, Col, Descriptions, Icon, Input, Row} from 'antd';
+import { Button, Card, Col, Descriptions, Icon, Input, Row } from 'antd';
 import like from '@ant-design/icons'
 import User from '../../../components/auth/user'
 
-const {TextArea} = Input;
+const { TextArea } = Input;
 const test = {
     "answer": [{
         "desp": "222",
@@ -69,21 +69,21 @@ class ACard extends BaseComponent {
     }
 
     getDetail = (qid, user) => {
-        this.props.history.push({pathname: '/user/detail', state: {qid, user}})
+        this.props.history.push({ pathname: '/user/detail', state: { id: qid, user } })
     }
 
-    renderStatus = ()=>{
-        if(this.props.data.status == '1')
-            return <p style={{fontStyle:'Italic',marginBottom:0}}>
-                {this.handleDate(this.props.data.answerTime)+' '+this.handleTime(this.props.data.answerTime)}
-            </p>        
-        else return <p style={{fontStyle:'Italic',marginBottom:0}}>已保存</p>
+    renderStatus = () => {
+        if (this.props.data.status == '1')
+            return <p style={{ fontStyle: 'Italic', marginBottom: 0 }}>
+                {this.handleDate(this.props.data.answerTime) + ' ' + this.handleTime(this.props.data.answerTime)}
+            </p>
+        else return <p style={{ fontStyle: 'Italic', marginBottom: 0 }}>已保存</p>
     }
 
     render() {
-        const {id,questioner, content, likeCount,questionContent,questionTitle, dockerId,status} = this.props.data
+        const { id, questioner, content, likeCount, questionContent, questionTitle, dockerId, status } = this.props.data
         let user = questioner.username
-        console.log(this.props.data,user)
+        console.log(this.props.data, user)
         // const my = this.getAnswer(test.answer)
         // if (!my || !my.dockerId) {
         //     return null
@@ -93,28 +93,28 @@ class ACard extends BaseComponent {
         return (
             <Card style={{ marginTop: 8 }} bodyStyle={{ paddingTop: 12, paddingBottom: 6, margin: 0 }}>
                 <Row style={{ fontSize: 14, marginBottom: 5 }} type="flex" justify="start" align="middle">
-                    <h2 style={{fontWeight:600,marginBottom:0}}>
+                    <h2 style={{ fontWeight: 600, marginBottom: 0 }}>
                         {questionTitle}
                     </h2>
-                    <Icon type="delete" style={{marginLeft:5,marginTop:3}} onClick={()=>this.props.deleteACard(this.props.index)}/>
+                    <Icon type="delete" style={{ marginLeft: 5, marginTop: 3 }} onClick={() => this.props.deleteACard(this.props.index)} />
                 </Row>
-                <Row type="flex" justify="start" align="middle" style={{ fontSize: 16, width: "100%",marginTop:2,minHeight:25,textOverflow:'hidden' }}>
+                <Row type="flex" justify="start" align="middle" style={{ fontSize: 16, width: "100%", marginTop: 2, minHeight: 25, textOverflow: 'hidden' }}>
                     <a onClick={() => {
                         this.props.history.push({
                             pathname: "/user/detail",
-                            state: { id,user, completed: true }
+                            state: { id, user, completed: true }
                         })
                     }}>
                         {content}
                     </a>
                 </Row>
-                <Row style={{ width: "100%",marginTop:6,marginBottom:6 }} type="flex" justify="start" align='middle'>
+                <Row style={{ width: "100%", marginTop: 6, marginBottom: 6 }} type="flex" justify="start" align='middle'>
                     <Col span={2}>
-                    <Icon type="fire" style={{marginRight:5,fontSize:13}}/>
+                        <Icon type="fire" style={{ marginRight: 5, fontSize: 13 }} />
                         {likeCount}
                     </Col>
                     <Col span={12}>
-                        {this.renderStatus()}                        
+                        {this.renderStatus()}
                     </Col>
                 </Row>
             </Card>

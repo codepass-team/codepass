@@ -22,17 +22,17 @@ class QCard extends BaseComponent {
                     <a onClick={() => {
                         this.props.history.push({
                             pathname: "/user/detail",
-                            state: { qid, user, completed: true }
+                            state: { id: qid, user, completed: true }
                         })
                     }}>
                         {title}
                     </a>
                     <Icon type="fire" style={{ marginRight: 5, marginLeft: 5, fontSize: 13 }} />
-                    <p style={{ fontSize: 13, display: 'inline' }}>{likeCount==null?0:likeCount}</p>
+                    <p style={{ fontSize: 13, display: 'inline' }}>{likeCount == null ? 0 : likeCount}</p>
                 </Col>
                 <Col span={12}>
-                    <Col span={2} style={{marginLeft:140}}>
-                        <Icon type="delete" style={{paddingTop:10}} onClick={()=>this.props.deleteQCard(this.props.index)} />
+                    <Col span={2} style={{ marginLeft: 140 }}>
+                        <Icon type="delete" style={{ paddingTop: 10 }} onClick={() => this.props.deleteQCard(this.props.index)} />
                     </Col>
                     <Col span={6}>{this.renderStatus()}</Col>
                 </Col>
@@ -45,7 +45,7 @@ class QCard extends BaseComponent {
             return <p style={{ fontStyle: 'Italic', marginBottom: 0, paddingTop: 7 }}>
                 {this.handleDate(this.props.data.raiseTime) + ' ' + this.handleTime(this.props.data.raiseTime)}
             </p>
-        else return <p style={{ fontStyle: 'Italic', marginBottom: 0,paddingTop: 7 }}>已保存</p>
+        else return <p style={{ fontStyle: 'Italic', marginBottom: 0, paddingTop: 7 }}>已保存</p>
     }
 
     render() {
