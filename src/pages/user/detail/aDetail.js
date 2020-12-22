@@ -22,8 +22,8 @@ class ADetail extends BaseComponent {
         this.state = {
             found: false,
             question: 0,
-            answers: 0,
             edit: false, // 我是否有回答
+            answers: 0,
             content: "", // 我的回答内容
             dockerId: "",
             aid: "",
@@ -260,17 +260,18 @@ class ADetail extends BaseComponent {
     }
 
     render() {
-        const { content, title, answer, raiseTime, questioner, likeCount } = this.state.question
+        const { content, title, raiseTime, questioner, likeCount } = this.state.question
         console.log(this.state.question)
+        console.log(this.state.answers)
         return (
             <Row style={styles.container}>
                 <Col lg={4} xs={1} />
                 <Col lg={15} xs={22}>
                     {this.renderTitle(title, content, questioner.username, raiseTime, likeCount)}
                     <Row type="flex" justify="start" style={{ marginTop: 20 }}>
-                        <Divider><Title level={3}>{answer.length + " 回答"}</Title></Divider>
+                        <Divider><Title level={3}>{this.state.answers.length + " 回答"}</Title></Divider>
                     </Row>
-                    {this.renderAnswers(this.state.answer)}
+                    {this.renderAnswers(this.state.answers)}
                     {this.renderNew()}
                 </Col>
                 <Col lg={5} xs={1} />
@@ -302,22 +303,18 @@ class ADetail extends BaseComponent {
         this.post("/api/answer/create?questionId=" + qid, null, s1, e1)
     }
 
-    save = (callback) => {
-        if (this.state.desp === null || this.state.desp === "") {
+    save = () => {
+        if (this.state.content === null || this.state.content === "") {
             this.pushNotification("warning", "Describe your solution, less or more")
             return null;
         }
-        const { aid, desp } = this.state
+        const { aid, content } = this.state
         var successAction = (result) => {
             if (result.status === "ok") {
                 this.pushNotification("success", "更新成功")
-                this.setState({
-                    answer: [...this.state.answer, result.data]
-                })
             } else {
                 this.pushNotification("warning", JSON.stringify(result));
             }
-            callback()
         }
 
         var errorAction = () => {
@@ -325,9 +322,9 @@ class ADetail extends BaseComponent {
         }
 
         let form = new FormData();
-        form.append('content', this.state.content);
+        form.append('content', content);
 
-        this.post("/api/answer/save/" + aid, form, successAction, errorAction)
+        return this.post("/api/answer/save/" + aid, form, successAction, errorAction)
     }
 
     submit = () => {
@@ -339,7 +336,10 @@ class ADetail extends BaseComponent {
         var successAction = (result) => {
             if (result.status === "ok") {
                 this.pushNotification("success", "提交成功!")
-                this.setState({ edit: false })
+                this.setState({
+                    edit: false,
+                    answers: [...this.state.answers, result.data]
+                })
             } else {
                 this.pushNotification("warning", JSON.stringify(result));
             }
@@ -350,7 +350,8 @@ class ADetail extends BaseComponent {
         }
 
         // TODO: 先保存
-        this.save(() => this.post("/api/answer/submit/" + aid, new FormData(), successAction, errorAction))
+        this.save()
+            .then(() => this.post("/api/answer/submit/" + aid, null, successAction, errorAction))
     }
 
     cancel = () => {
