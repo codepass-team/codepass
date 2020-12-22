@@ -18,7 +18,7 @@ class UCard extends BaseComponent {
         }
     };
 
-    renderTitle = (title, desp, user, time, qid) => {
+    renderTitle = (title, desp, user, time, id) => {
         return (
             <Card
                 style={{ width: "100%", marginBottom: 10 }}
@@ -26,7 +26,7 @@ class UCard extends BaseComponent {
                     {<a onClick={() => {
                         this.props.history.push({
                             pathname: "/user/detail",
-                            state: { qid, user, completed: true }
+                            state: { id, user, completed: true }
                         })
                     }}>{title}</a>}</Title>}>
 

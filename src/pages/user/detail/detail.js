@@ -19,7 +19,8 @@ export class Detail extends BaseComponent {
     componentWillMount() {
         // location由react-router注入
         // location.state可以用来存放临时信息
-        const { qid } = this.props.location.state
+        const { id } = this.props.location.state
+        console.log(id)
         var successAction = (result) => {
             if (result.status === "ok") {
                 this.setState({ data: result.data, found: true })
@@ -33,7 +34,7 @@ export class Detail extends BaseComponent {
         }
 
         if (this.state.data === 0)
-            this.getWithErrorAction('/api/question/' + qid, successAction, errorAction);
+            this.getWithErrorAction('/api/question/' + id, successAction, errorAction);
     }
 
     render() {

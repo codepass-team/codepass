@@ -92,7 +92,9 @@ class ACard extends BaseComponent {
     }
 
     render() {
-        const {answerTime, content, likeCount, dockerId,status} = this.props.data
+        const {id,questioner, content, likeCount,questionContent,questionTitle, dockerId,status} = this.props.data
+        let user = questioner.username
+        console.log(this.props.data,user)
         // const my = this.getAnswer(test.answer)
         // if (!my || !my.dockerId) {
         //     return null
@@ -101,17 +103,17 @@ class ACard extends BaseComponent {
         //     this.state.desp = my.desp
         return (
             <Card style={{ marginTop: 8 }} bodyStyle={{ paddingTop: 12, paddingBottom: 6, margin: 0 }}>
-                <Row style={{ fontSize: 14, marginBottom: 5 }} type="flex" justify="start" align="start">
+                <Row style={{ fontSize: 14, marginBottom: 5 }} type="flex" justify="start" align="middle">
                     <h2 style={{fontWeight:600}}>
-                        {content}
+                        {questionTitle}
                     </h2>
                 </Row>
                 <Row type="flex" justify="start" align="middle" style={{ fontSize: 16, width: "100%", marginBottom: 3,marginTop:2,minHeight:25,textOverflow:'hidden' }}>
                     <a onClick={() => {
-                        // this.props.history.push({
-                        //     pathname: "/user/detail",
-                        //     state: { qid, user, completed: true }
-                        // })
+                        this.props.history.push({
+                            pathname: "/user/detail",
+                            state: { id,user, completed: true }
+                        })
                     }}>
                         {content}
                     </a>
