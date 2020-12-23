@@ -73,9 +73,24 @@ const mainRoutes = [//默认路由（其实是第二层，第一层在隔壁inde
                 component: wrap(Pages.Admin.Home),
             },
             {
-                path: "/collect",
-                icon: 'collect',
-                component: wrap(Collect)
+                path: "/question",
+                icon: 'question',
+                component: wrap(Pages.Admin.Question)
+            },
+            {
+                path: "/answer",
+                icon: 'answer',
+                component: wrap(Pages.Admin.Answer)
+            },
+            {
+                path: "/user",
+                icon: 'user',
+                component: wrap(Pages.Admin.User)
+            },
+            {
+                path: "/docker",
+                icon: 'docker',
+                component: wrap(Pages.Admin.Docker)
             },
         ]
     }
