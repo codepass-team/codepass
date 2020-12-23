@@ -42,6 +42,26 @@ export default class QDetail extends BaseComponent {
         })
     };
 
+    like = () => {
+        this.post('/api/question/like/' + this.state.question.id, null, (res) => {
+            if (res.status === 'ok') {
+                this.setState({
+                    ulike: true
+                })
+            }
+        })
+    }
+
+    unlike = () => {
+        this.post('/api/question/unlike/' + this.state.question.id, null, (res) => {
+            if (res.status === 'ok') {
+                this.setState({
+                    ulike: false
+                })
+            }
+        })
+    }
+
     showComment = () => {
         this.setState({
             showComment: true,
@@ -85,7 +105,7 @@ export default class QDetail extends BaseComponent {
                                 style={{ fontSize: 18 }}
                                 onChange={this.onChangeDesp}
                                 // defaultValue={this.state.question.desp}
-                                placeholder="(Optional) Add more detail to your Question to attract more helper"
+                                placeholder="(可选) 添加问题描述"
                                 autosize={{ minRows: 2, maxRows: 5 }}
                             />}
                     </Row>
@@ -96,6 +116,10 @@ export default class QDetail extends BaseComponent {
                     </Row>
                 </Col>
                 <Col span={24}>
+                    {!this.state.ulike ?
+                        <Button onClick={this.like}>点赞</Button> :
+                        <Button onClick={this.unlike}>取消点赞</Button>
+                    }
                     {!this.state.showComment ?
                         <Button onClick={this.showComment}>评论</Button> :
                         <Button onClick={this.hideComment}>收起评论</Button>
@@ -153,14 +177,14 @@ export default class QDetail extends BaseComponent {
                         size="large"
                         type="primary"
                         onClick={() => this.redirectDocker(this.state.question.dockerId)}
-                    >Enter Docker</Button>
+                    >进入Docker容器</Button>
                     {this.state.edit ? (
                         <Button
                             style={{ marginTop: 10, marginLeft: 10 }}
                             size="large"
                             type="default"
                             onClick={this.save}
-                        >Save Description</Button>
+                        >保存问题描述</Button>
                     ) : (
                             <Button
                                 style={{ marginTop: 10, marginLeft: 10 }}
@@ -169,14 +193,14 @@ export default class QDetail extends BaseComponent {
                                 onClick={() => {
                                     this.setState({ edit: true })
                                 }}
-                            >Edit Content</Button>
+                            >编辑问题描述</Button>
                         )}
                     <Button
                         style={{ marginTop: 10, marginLeft: 10 }}
                         size="large"
                         type="warning"
                         onClick={this.submit}
-                    >Submit Question</Button>
+                    >提交问题</Button>
                 </Row>
             )
         }

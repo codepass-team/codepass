@@ -108,7 +108,6 @@ export class My extends BaseComponent {
     }
 
     renderQCard = (data, index) => {
-        console.log(data, index)
         return (
             <QCard data={data} key={index} index={index} deleteQCard={this.deleteQCard} />
         )

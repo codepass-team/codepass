@@ -123,7 +123,7 @@ class QuestionBar extends BaseComponent {
                         <Input
                             style={{ marginBottom: 3, fontWeight: "bold" }}
                             defaultValue={this.state.title}
-                            onChange={this.onChangeTitle}
+                            onChange={(e) => this.onChangeTitle(e, false)}
                         />
                         <TextArea
                             addonBefore="描述您的问题"
@@ -158,21 +158,23 @@ class QuestionBar extends BaseComponent {
         }
     }
 
-    onChangeTitle = (value) => {
+    onChangeTitle = (value, search) => {
         this.setState({
             title: value
         })
-        if (value === "") {
-            this.setState({ optVis: false })
-        } else {
-            this.setState({ optVis: true })
-            this.get("/api/question/search?keywords=" + value, result => {
-                if (result.status === "ok") {
-                    this.setState({
-                        optData: result.data
-                    })
-                }
-            })
+        if (search) {
+            if (value === "") {
+                this.setState({ optVis: false })
+            } else {
+                this.setState({ optVis: true })
+                this.get("/api/question/search?keywords=" + value, result => {
+                    if (result.status === "ok") {
+                        this.setState({
+                            optData: result.data
+                        })
+                    }
+                })
+            }
         }
     }
 
@@ -224,7 +226,7 @@ class QuestionBar extends BaseComponent {
             <AutoComplete
                 size="large"
                 style={style}
-                onChange={this.onChangeTitle}
+                onChange={(e) => this.onChangeTitle(e, true)}
                 disabled={this.state.dockerId !== ""}
                 placeholder="描述您遇到的问题">
                 <Input
