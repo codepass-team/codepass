@@ -11,7 +11,7 @@ const mapStateToProps = state => ({
 })
 
 var wrap = (component) => {
-    return Form.create()(connect(mapStateToProps)(withRouter(component)))
+    return connect(mapStateToProps)(withRouter(component))
 }
 
 const mainRoutes = [//默认路由（其实是第二层，第一层在隔壁index.jsx用来加载外层layout

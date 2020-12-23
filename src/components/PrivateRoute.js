@@ -6,16 +6,17 @@ import { notification } from 'antd';
 
 const mapStateToProps = state => ({
     user_redux: state.identityReducer.user,
-    admin: state.identityReducer.admin,
-    sales: state.identityReducer.sales,
+    admin_redux: state.identityReducer.admin,
+    sales_redux: state.identityReducer.sales,
 })
 
 const PrivateRoute = function ({
+    // 解构赋值 将 props 里面的 component 赋值给 Component
     component: Component,
     user,//传入观察值
     user_redux,
-    sales,
-    admin,
+    admin_redux,
+    sales_redux,
     location,
     history,
     dispatch,
@@ -24,8 +25,6 @@ const PrivateRoute = function ({
     auth,//是否需要授权
     ...props
 }) {
-    // 解构赋值 将 props 里面的 component 赋值给 Component
-
     const jumpBack = (_user) => {
         if (!_user || !_user.id)
             history.replace('/user/home')
@@ -55,34 +54,41 @@ const PrivateRoute = function ({
             })
     }
 
-    let login = false
+    let islogin = false
     switch (role) {
         case 0:
-            login = user_redux
+            islogin = user_redux
             path = "/user" + path
             break
         case 1:
-            login = sales
-            path = "/sales" + path
+            islogin = admin_redux
+            path = "/admin" + path
             break
         case 2:
+            islogin = sales_redux
+            path = "/sales" + path
+            break
         default:
-            login = admin
-            path = "/admin" + path
+            islogin = true
             break
     }
 
-    return <Route {...props} path={path}
-        render={(p) => {
-            if (user || login || !auth) {
-                return <Component />
-            } else {
-                pushNotification("warning", "请先登录再进行操作")
-                dispatch(showSignIn())
-                dispatch(setOnCancel(jumpBack))
-                return null
-            }
-        }} />
+    return (
+        <Route {...props}
+            path={path}
+            render={(p) => {
+                // 传了user参数 或者 redux中有登录信息 或者 该页面不需要鉴权
+                // 正常渲染
+                if (user || islogin || !auth) {
+                    return <Component />
+                } else {
+                    pushNotification("warning", "请先登录再进行操作")
+                    dispatch(showSignIn())
+                    dispatch(setOnCancel(jumpBack))
+                    return null
+                }
+            }} />
+    )
 }
 
 PrivateRoute.defaultProps = {

@@ -5,7 +5,9 @@ import BaseComponent from '../../../components/BaseComponent';
 import { Menu,Icon,Col, Row,Table } from 'antd'
 
 export class Home extends BaseComponent {
-    constructor(props){
+    constructor(props) {
+        console.log("Home")
+        console.log(props)
         super(props)
         this.state = {
             current:null,
