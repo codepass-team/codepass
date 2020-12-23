@@ -89,7 +89,7 @@ export class Home extends BaseComponent {
 
     render() {
         return (
-            <Row>
+            <Row style={{marginTop:20}} type='flex' align='middle' justify='center'>
                 <Col span='5'>
                     <Menu
                     onClick = {this.handleClick}
