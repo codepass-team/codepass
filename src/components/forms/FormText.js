@@ -46,7 +46,7 @@ export class FormText extends Component {
                         },
                         {
                             required: this.props.required,
-                            message: (message === "" ? '请输入您的' + this.props.label + ' !' : message),
+                            message: (message === "" ? '请输入您的' + this.props.name1 + ' !' : message),
                         }
                     ],
                     initialValue: this.props.defaultValue
