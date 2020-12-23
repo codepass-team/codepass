@@ -140,7 +140,7 @@ class QuestionBar extends BaseComponent {
                                 size="large"
                                 type="primary"
                                 onClick={this.redirectDocker}
-                            >现在打开你的Docker容器来给我们展示你的代码吧！</Button>
+                            >现在打开您的Docker容器来给我们展示你的代码吧！</Button>
                         </Row>
                         <Row style={{ width: "100%" }} type="flex" justify="end">
                             <Button
