@@ -31,6 +31,10 @@ class UserPopover extends BaseComponent {
         this.props.history.push('/user/person')
     }
 
+    collections = () => {
+        this.props.history.push('/user/collect')
+    }
+
     // payRecord=()=>{
     //     this.props.dispatch(showDrawer("历史消费记录",<PayRecord/>))
     // }
@@ -40,10 +44,13 @@ class UserPopover extends BaseComponent {
         return (
             <List component="nav">
                 <ListItem button onClick={this.personalData}>
-                    <Typography>Personal Data</Typography>
+                    <Typography>个人资料</Typography>
+                </ListItem>
+                <ListItem button onClick={this.collections}>
+                    <Typography>收藏夹</Typography>
                 </ListItem>
                 <ListItem button onClick={this.signOut}>
-                    <Typography>Sign Out</Typography>
+                    <Typography>注销</Typography>
                 </ListItem>
             </List>
         )

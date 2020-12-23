@@ -98,7 +98,7 @@ class QComment extends BaseComponent {
                 <Comment
                     avatar={
                         <Avatar
-                            src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                            icon='user'
                             alt="Han Solo"
                         />
                     }

@@ -1,9 +1,10 @@
 import * as Pages from '../pages'
 import UserLayout from '../components/layouts/user/UserLayout'
+import AdminLayout from '../components/layouts/admin/AdminLayout'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { Form } from 'antd'
-import AdminLayout from '../components/layouts/admin/AdminLayout'
+import { Collect } from '../pages/user/collect'
 
 const mapStateToProps = state => ({
     user: state.identityReducer.user,
@@ -70,6 +71,11 @@ const mainRoutes = [//默认路由（其实是第二层，第一层在隔壁inde
                 path: "/home",
                 icon: 'home',
                 component: wrap(Pages.Admin.Home),
+            },
+            {
+                path: "/collect",
+                icon: 'collect',
+                component: wrap(Collect)
             },
         ]
     }
