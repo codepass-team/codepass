@@ -6,6 +6,7 @@ import { Form } from 'antd'
 import Person from '../pages/user/person/person'
 import User from '../pages/user/user'
 import { Playground } from '../pages/user/playground'
+import { Collect } from '../pages/user/collect'
 
 const mapStateToProps = state => ({
     user: state.identityReducer.user,
@@ -60,6 +61,11 @@ const mainRoutes = [//默认路由（其实是第二层，第一层在隔壁inde
                 path: "/playground",
                 icon: 'playground',
                 component: wrap(Playground)
+            },
+            {
+                path: "/collect",
+                icon: 'collect',
+                component: wrap(Collect)
             },
         ]
     }
