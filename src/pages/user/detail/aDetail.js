@@ -381,7 +381,7 @@ class ADetail extends BaseComponent {
     save = () => {
         if (this.state.content === null || this.state.content === "") {
             this.pushNotification("warning", "Describe your solution, less or more")
-            return null;
+            return Promise.reject();
         }
         const { aid, content } = this.state
         var successAction = (result) => {
