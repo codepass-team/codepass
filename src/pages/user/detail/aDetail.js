@@ -34,7 +34,7 @@ class ADetail extends BaseComponent {
             showComment: false,
             loading2: false,
             comments: 0,
-            likeCount:0,
+            likeCount: 0,
             ufol: 0,
             ufollow: 0,
             ulike: 0,
@@ -52,7 +52,8 @@ class ADetail extends BaseComponent {
         if (this.state.question === 0) {
             this.setState({
                 question: this.props.question,
-                answers: this.props.question.answer
+                answers: this.props.question.answer,
+                likeCount: this.props.question.likeCount,
             })
         }
     }
@@ -89,7 +90,7 @@ class ADetail extends BaseComponent {
      * @param {*} name 
      * @param {*} raiseTime 
      */
-    renderTitle = (title, desp, name, raiseTime, likeCount) => {
+    renderTitle = (title, desp, name, raiseTime) => {
         return (
             <Row type="flex" justify="start" align="middle">
                 <Col span={24}>
@@ -105,7 +106,7 @@ class ADetail extends BaseComponent {
                         <Description desp={desp} />
                     </Paragraph>
                 </Row>
-                {this.renderCheck(1,this.state.ulike)}
+                {this.renderCheck()}
                 <Col span={24}>
                     {!this.state.showComment ?
                         <Button onClick={this.showComment}>评论</Button> :
@@ -151,7 +152,8 @@ class ADetail extends BaseComponent {
             )
         }
     }
-    renderCheck = (likeCount, ulike) => {
+    renderCheck = () => {
+        const { likeCount, ulike } = this.state
         console.log(ulike)
         console.log(likeCount)
         if (!likeCount) {
@@ -159,7 +161,7 @@ class ADetail extends BaseComponent {
                 <Row style={{ width: "100%", marginLeft: 5, fontSize: 18 }}>
                     该问题还没有人点赞哦！
                     <HeartTwoTone twoToneColor="#1890ff"
-                    onClick={()=>this.check(0, 1)}
+                        onClick={() => this.check(1)}
                     />
                 </Row>
             )
@@ -167,9 +169,9 @@ class ADetail extends BaseComponent {
             if (ulike === false) {
                 return (
                     <Row style={{ width: "100%", marginLeft: 5, fontSize: 18 }}>
-                        
+
                         <HeartTwoTone twoToneColor="#1890ff"
-                            onClick={()=>this.check(likeCount, 1)}
+                            onClick={() => this.check(1)}
                         />
                         X
                         {likeCount}
@@ -180,9 +182,9 @@ class ADetail extends BaseComponent {
                     <Row style={{ width: "100%", marginLeft: 5, fontSize: 18 }}>
 
                         <HeartTwoTone twoToneColor="#cf1322"
-                            onClick={()=>this.check(likeCount, 0)}
+                            onClick={() => this.check(0)}
                         />
-                        X                    
+                        X
                         {likeCount}
                     </Row>
                 )
@@ -270,7 +272,7 @@ class ADetail extends BaseComponent {
         })
     }
 
-    check = (item, bool1) => {
+    check = (bool1) => {
         if (bool1 === 1) {
             this.post('/api/question/like/' + this.state.question.id, null, (res) => {
                 if (res.status === 'ok') {
@@ -284,12 +286,12 @@ class ADetail extends BaseComponent {
             })
             var successAction = (result) => {
                 if (result.status === "ok") {
-                    this.setState({ likeCount:item+1 })
+                    this.setState({ likeCount: this.state.likeCount + 1 })
                 } else {
                     this.pushNotification("warning", JSON.stringify(result));
                 }
             }
-    
+
             var errorAction = () => {
                 this.pushNotification("warning", "点赞失败");
             }
@@ -307,18 +309,18 @@ class ADetail extends BaseComponent {
             })
             var successAction1 = (result) => {
                 if (result.status === "ok") {
-                    this.setState({ likeCount:item-1 })
+                    this.setState({ likeCount: this.state.likeCount - 1 })
                 } else {
                     this.pushNotification("warning", JSON.stringify(result));
                 }
             }
-    
+
             var errorAction1 = () => {
                 this.pushNotification("warning", "点赞失败");
             }
             this.getWithErrorAction('/api/question/' + this.state.question.id, successAction1, errorAction1)
         }
-    } 
+    }
     unfollow = () => {
         this.post('/api/user/unfollow/' + this.state.question.questioner.id, null, (res) => {
             if (res.status === 'ok') {
@@ -354,12 +356,12 @@ class ADetail extends BaseComponent {
     }
 
     render() {
-        const { content, title, raiseTime, questioner, likeCount } = this.state.question
+        const { content, title, raiseTime, questioner } = this.state.question
         return (
             <Row style={styles.container}>
                 <Col lg={4} xs={1} />
                 <Col lg={15} xs={22}>
-                    {this.renderTitle(title, content, questioner.username, raiseTime, likeCount)}
+                    {this.renderTitle(title, content, questioner.username, raiseTime)}
                     <Row type="flex" justify="start" style={{ marginTop: 20 }}>
                         <Divider><Title level={3}>{this.state.answers.length + " 回答"}</Title></Divider>
                     </Row>
