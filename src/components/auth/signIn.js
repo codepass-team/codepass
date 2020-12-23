@@ -16,11 +16,11 @@ class SignIn extends BaseComponent {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (values.usrname === '') {
-                this.pushNotification("warning", "Username Empty", this.props.dispatch);
+                this.pushNotification("warning", "用户名不能为空", this.props.dispatch);
                 return;
             }
             if (values.pwd === '') {
-                this.pushNotification("warning", "Password Empty", this.props.dispatch);
+                this.pushNotification("warning", "密码不能为空", this.props.dispatch);
                 return;
             }
 
@@ -32,12 +32,12 @@ class SignIn extends BaseComponent {
                 if (result.status === "ok") {
                     this.handleSuccess(values.usrname, result.data);
                 } else {
-                    this.pushNotification("warning", "Username or Password Wrong");
+                    this.pushNotification("warning", "用户名或密码错误");
                 }
             }
 
             var errorAction = (result) => {
-                this.pushNotification("warning", "Username or Password Wrong");
+                this.pushNotification("warning", "用户名或密码错误");
             }
 
             this.post('/api/login', form, successAction, errorAction);
@@ -49,7 +49,7 @@ class SignIn extends BaseComponent {
         localStorage.setItem('user', username);
         localStorage.setItem('token', result.token);
         this.props.onCancel()
-        this.pushNotification("success", "Sign In Successfully As " + username);
+        this.pushNotification("success", "欢迎" + username + "回到CodePass");
     }
 
     renderLogo = () => {

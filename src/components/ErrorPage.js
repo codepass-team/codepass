@@ -13,7 +13,7 @@ export default class ErrorPage extends BaseComponent {
             <Row style={styles.rows}>
                 <Col span={24} style={styles.rows}>
                     <Row type='flex' justify='center'>
-                        <img alt="" style={styles.pic} src={require('./resource/error.png')}/>
+                        <img alt="" style={styles.pic} src={require('@/assets/error.png')}/>
                     </Row>
                 </Col>
                 <Col span={24} style={styles.rows}>
