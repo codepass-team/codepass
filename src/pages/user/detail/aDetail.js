@@ -53,6 +53,7 @@ class ADetail extends BaseComponent {
             this.setState({
                 question: this.props.question,
                 answers: this.props.question.answer,
+                ulike:this.props.question.ulike,
                 likeCount: this.props.question.likeCount,
             })
         }
@@ -277,48 +278,28 @@ class ADetail extends BaseComponent {
             this.post('/api/question/like/' + this.state.question.id, null, (res) => {
                 if (res.status === 'ok') {
                     this.setState({
-                        ulike: true
+                        ulike: true,
+                        likeCount:this.state.likeCount+1
                     })
                     this.pushNotification("success", "点赞成功")
                 } else {
                     this.pushNotification("danger", "点赞失败")
                 }
             })
-            var successAction = (result) => {
-                if (result.status === "ok") {
-                    this.setState({ likeCount: this.state.likeCount + 1 })
-                } else {
-                    this.pushNotification("warning", JSON.stringify(result));
-                }
-            }
-
-            var errorAction = () => {
-                this.pushNotification("warning", "点赞失败");
-            }
-            this.getWithErrorAction('/api/question/' + this.state.question.id, successAction, errorAction)
+            
         } else {
-            this.post('/api/question/like/' + this.state.question.id, null, (res) => {
+            this.post('/api/question/unlike/' + this.state.question.id, null, (res) => {
                 if (res.status === 'ok') {
                     this.setState({
-                        ulike: false
+                        ulike: false,
+                        likeCount:this.state.likeCount-1
                     })
                     this.pushNotification("success", "取消点赞成功")
                 } else {
                     this.pushNotification("danger", "取消点赞失败")
                 }
             })
-            var successAction1 = (result) => {
-                if (result.status === "ok") {
-                    this.setState({ likeCount: this.state.likeCount - 1 })
-                } else {
-                    this.pushNotification("warning", JSON.stringify(result));
-                }
-            }
-
-            var errorAction1 = () => {
-                this.pushNotification("warning", "点赞失败");
-            }
-            this.getWithErrorAction('/api/question/' + this.state.question.id, successAction1, errorAction1)
+           
         }
     }
     unfollow = () => {
