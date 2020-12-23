@@ -17,15 +17,15 @@ class SignUp extends BaseComponent {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (values.username === '') {
-                this.pushNotification("warning", "Username is empty!", this.props.dispatch);
+                this.pushNotification("warning", "用户名是空的！", this.props.dispatch);
                 return;
             }
             if (values.password === '') {
-                this.pushNotification("warning", "Password is empty!", this.props.dispatch);
+                this.pushNotification("warning", "密码是空的!", this.props.dispatch);
                 return;
             }
             if (values.passwordAgain !== values.password) {
-                this.pushNotification("warning", "The two passwords are not the same!", this.props.dispatch);
+                this.pushNotification("warning", "两次输入的密码不一致!", this.props.dispatch);
                 return;
             }
             // if(values.name===''){
@@ -43,7 +43,7 @@ class SignUp extends BaseComponent {
             var successAction = (result) => {
                 localStorage.setItem('user', JSON.stringify(result.content));
                 this.props.switch()
-                this.pushNotification("success", "Sign up succesfully! Please sign in!");
+                this.pushNotification("success", "注册成功！现在可以登录啦！");
             }
 
             var unsuccessAction = (result) => {
@@ -71,34 +71,37 @@ class SignUp extends BaseComponent {
                 <Col>
                     <Row
                         style={styles.cardContainer}>
-                        <div style={styles.welcome}>Welcome to CodePass</div>
-                        <div style={styles.welcome2}>Sign up</div>
+                        <div style={styles.welcome}>欢迎来到CodePass</div>
+                        <div style={styles.welcome2}></div>
                         <Form onSubmit={this.handleSubmit} type='flex' justify='center'>
                             <Row style={{ width: "100%" }} type="flex" justify='center'>
+                            <Row style={{ width: "100%", marginLeft: "80px", color: '#AAAAAA', fontSize: 15 }}
+                                    type="flex" justify='start'>请输入你的用户名:</Row>
                                 <FormText form={this.props.form}
                                     name='username' required={true} icon="user" />
-
+                                <Row style={{ width: "100%", marginLeft: "80px", color: '#AAAAAA', fontSize: 15 }}
+                                    type="flex" justify='start'>请输入你的密码:</Row>
                                 <FormText form={this.props.form} style={{ marginBottom: "10px" }}
                                     name='password' required={true} icon="lock"
                                     inputType="password" />
                                 <Row style={{ width: "100%", marginLeft: "80px", color: '#AAAAAA', fontSize: 15 }}
-                                    type="flex" justify='start'>Repeat:</Row>
+                                    type="flex" justify='start'>重复你的密码:</Row>
                                 <FormText form={this.props.form}
                                     name="passwordAgain" required={true} icon='lock'
                                     inputType='password' />
                             </Row>
                             <Row type='flex' justify='center'>
                                 <Col>
-                                    <FormButton form={this.props.form} label="Sign up" style={styles.button} />
+                                    <FormButton form={this.props.form} label="注册" style={styles.button} />
                                     <Button style={styles.button2} onClick={this.props.onCancel}>
-                                        Cancel
+                                        取消
                                     </Button>
                                 </Col>
                             </Row>
                         </Form>
                         <Row type='flex' justify='center'>
                             <Col>
-                                Already a member? <Button onClick={this.props.switch} type="link">Sign in now</Button>
+                                已经有账号了?<Button onClick={this.props.switch} type="link">现在登录吧！</Button>
                             </Col>
                         </Row>
                     </Row>
