@@ -53,7 +53,7 @@ class ADetail extends BaseComponent {
             this.setState({
                 question: this.props.question,
                 answers: this.props.question.answer,
-                ulike:this.props.question.ulike,
+                ulike: this.props.question.ulike,
                 likeCount: this.props.question.likeCount,
             })
         }
@@ -279,27 +279,27 @@ class ADetail extends BaseComponent {
                 if (res.status === 'ok') {
                     this.setState({
                         ulike: true,
-                        likeCount:this.state.likeCount+1
+                        likeCount: this.state.likeCount + 1
                     })
                     this.pushNotification("success", "点赞成功")
                 } else {
                     this.pushNotification("danger", "点赞失败")
                 }
             })
-            
+
         } else {
             this.post('/api/question/unlike/' + this.state.question.id, null, (res) => {
                 if (res.status === 'ok') {
                     this.setState({
                         ulike: false,
-                        likeCount:this.state.likeCount-1
+                        likeCount: this.state.likeCount - 1
                     })
                     this.pushNotification("success", "取消点赞成功")
                 } else {
                     this.pushNotification("danger", "取消点赞失败")
                 }
             })
-           
+
         }
     }
     unfollow = () => {

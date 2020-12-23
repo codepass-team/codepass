@@ -23,8 +23,8 @@ class QuestionBar extends BaseComponent {
             dockerId: "",
             qid: 0,
             optData: [
-                // { title: "CodePass 使用指南", description: "CodePass 使用指南" },
-                // { title: "Hello world", description: "测试提问" },
+                { title: "CodePass 使用指南", content: "CodePass 使用指南" },
+                { title: "Hello world", content: "测试提问" },
             ],
             optVis: false,
         }
@@ -90,7 +90,7 @@ class QuestionBar extends BaseComponent {
                 this.setState({ loading: false, dockerId: result.dockerId, qid: result.qid })
                 this.pushNotification("success", "问题已经保存")
                 this.timeout(600).then(() =>
-                    this.props.history.push({ pathname: "/user/detail", state: { qid, user, completed: false } })
+                    this.props.history.push({ pathname: "/user/detail", state: { id: qid, user, completed: false } })
                 )
             } else {
                 this.pushNotification("warning", JSON.stringify(result));

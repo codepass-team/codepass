@@ -113,7 +113,7 @@ class BaseComponent extends Component {
             this.pushNotification("warning", "登录过期, 请重新登录");
             localStorage.clear()
         }
-        successAction(result);
+        if (successAction) successAction(result);
     }
 
     fromNow = (date) => {
