@@ -1,3 +1,5 @@
 import * as User from './user'
+import * as Admin from './admin'
+import * as Playground from './playground'
 
-export { User }
+export { User, Admin, Playground }

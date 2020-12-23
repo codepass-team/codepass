@@ -3,7 +3,7 @@ import BaseComponent from '../../../components/BaseComponent'
 import { Col, Row } from 'antd';
 import { connect } from "react-redux";
 
-class User extends BaseComponent {
+export class User extends BaseComponent {
     constructor(props) {
         super(props)
 
@@ -16,5 +16,3 @@ class User extends BaseComponent {
     }
 
 }
-
-export default User

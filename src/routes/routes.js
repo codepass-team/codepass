@@ -3,9 +3,7 @@ import UserLayout from '../components/layouts/user/UserLayout'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { Form } from 'antd'
-import Person from '../pages/user/person/person'
-import User from '../pages/user/user'
-import { Playground } from '../pages/user/playground'
+import AdminLayout from '../components/layouts/admin/AdminLayout'
 
 const mapStateToProps = state => ({
     user: state.identityReducer.user,
@@ -49,17 +47,29 @@ const mainRoutes = [//默认路由（其实是第二层，第一层在隔壁inde
             {
                 path: "/person",
                 icon: 'person',
-                component: wrap(Person)
+                component: wrap(Pages.User.Person)
             },
             {
                 path: "/user",
                 icon: 'user',
-                component: wrap(User)
+                component: wrap(Pages.User.User)
             },
             {
                 path: "/playground",
                 icon: 'playground',
-                component: wrap(Playground)
+                component: wrap(Pages.Playground)
+            },
+        ]
+    },
+    {
+        path: "/admin",
+        icon: 'admin',
+        component: AdminLayout,
+        children: [
+            {
+                path: "/home",
+                icon: 'home',
+                component: wrap(Pages.Admin.Home),
             },
         ]
     }

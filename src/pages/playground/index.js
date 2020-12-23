@@ -1,9 +1,8 @@
 import React from "react";
 import { Row, Col } from "antd";
-import BaseComponent from "../../../components/BaseComponent";
+import BaseComponent from "@/components/BaseComponent";
 
 export class Playground extends BaseComponent {
-
 
     render() {
         return (

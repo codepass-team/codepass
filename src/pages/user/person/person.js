@@ -4,7 +4,7 @@ import React from 'react'
 import BaseComponent from '../../../components/BaseComponent';
 import Data from './Data';
 
-class Person extends BaseComponent {
+export class Person extends BaseComponent {
     constructor(props) {
         super(props)
         this.state = {
@@ -112,4 +112,3 @@ class Person extends BaseComponent {
     }
 }
 
-export default Person
