@@ -1,20 +1,22 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import BaseComponent from '@/components/BaseComponent';
-import { Menu,Icon,Col } from 'antd'
+import { Menu, Icon, Col } from 'antd'
 
 export class Home extends BaseComponent {
-    constructor(props){
+    constructor(props) {
+        console.log("Home")
+        console.log(props)
         super(props)
         this.state = {
-            current:null
+            current: null
         }
     }
 
     handleClick = (e) => {
-        console.log('click',e)
+        console.log('click', e)
         this.setState({
-            current:e.key
+            current: e.key
         })
     }
 
@@ -22,10 +24,10 @@ export class Home extends BaseComponent {
         return (
             <Col span='5'>
                 <Menu
-                onClick = {this.handleClick}
-                selectedKeys={[this.state.current]}
-                mode='vertical'
-                theme='dark'
+                    onClick={this.handleClick}
+                    selectedKeys={[this.state.current]}
+                    mode='vertical'
+                    theme='dark'
                 >
                     <Menu.Item key='User'>
                         <Icon type="star" theme="twoTone" />
