@@ -75,7 +75,7 @@ class SignUp extends BaseComponent {
                         <div style={styles.welcome2}></div>
                         <Form onSubmit={this.handleSubmit} type='flex' justify='center'>
                             <Row style={{ width: "100%" }} type="flex" justify='center'>
-                            <Row style={{ width: "100%", marginLeft: "80px", color: '#AAAAAA', fontSize: 15 }}
+                             <Row style={{ width: "100%", marginLeft: "80px", color: '#AAAAAA', fontSize: 15 }}
                                     type="flex" justify='start'>请输入你的用户名:</Row>
                                 <FormText form={this.props.form}
                                     name='username' required={true} icon="user" />

@@ -70,28 +70,30 @@ class SignIn extends BaseComponent {
                     <Row
                         style={styles.cardContainer} type="flex" justify='center'>
                         <Row type="flex" justify="start" style={styles.welcome}>
-                            Welcome to CodePass
+                            欢迎来到CodePass
                         </Row>
                         <Row type="flex" justify="start" style={styles.welcome2}>
-                            Sign In
                         </Row>
                         <Form onSubmit={this.handleSubmit} type='flex' justify='center'>
                             <Row type="flex" justify='center'>
+                                <Row style={{ width: "100%", marginLeft: "80px", color: '#AAAAAA', fontSize: 15 }}
+                                    type="flex" justify='start'>请输入你的用户名:</Row>
                                 <FormText form={this.props.form}
                                     label='' name='usrname' required={true} icon="user" />
-
+                                <Row style={{ width: "100%", marginLeft: "80px", color: '#AAAAAA', fontSize: 15 }}
+                                    type="flex" justify='start'>请输入你的密码:</Row>
                                 <FormText form={this.props.form}
                                     label='' name='pwd' required={true} icon="lock"
                                     inputType="password" />
-                                <FormButton form={this.props.form} label="SignIn" style={styles.button} />
+                                <FormButton form={this.props.form} label="登陆" style={styles.button} />
                                 <Button style={styles.button2} onClick={this.props.onCancel}>
-                                    Cancel
+                                    取消
                                 </Button>
                             </Row>
                         </Form>
                         <Row type='flex' justify='center'>
                             <Col>
-                                Not a member yet? <Button onClick={this.props.switch} type="link">Sign Up</Button>
+                                还没有账号? <Button onClick={this.props.switch} type="link">点击这里注册</Button>
                             </Col>
                         </Row>
                     </Row>
