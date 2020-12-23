@@ -1,6 +1,6 @@
 import React from "react";
 import BaseComponent from '../../../components/BaseComponent'
-import { Card, Col, Row, Typography } from 'antd';
+import { Avatar, Card, Col, Row, Typography } from 'antd';
 import User from '../../../components/auth/user'
 import Description from '../../../components/markd/Description'
 import { withRouter } from "react-router-dom";
@@ -12,13 +12,15 @@ const { Title, Paragraph } = Typography;
 class UCard extends BaseComponent {
 
     constructor(props) {
+        console.log("UCard")
+        console.log(props)
         super(props);
         this.state = {
             desp: 1,
         }
     };
 
-    renderTitle = (title, desp, user, time, id) => {
+    renderTitle = (title, desp, user, time, id, likeCount, collectCount, commentCount) => {
         return (
             <Card
                 style={{ width: "100%", marginBottom: 10 }}
@@ -30,25 +32,35 @@ class UCard extends BaseComponent {
                         })
                     }}>{title}</a>}</Title>}>
 
-                <Col span={12}>
+                <Col span={2}>
+                    <Avatar shape="square">{user}</Avatar>
+                </Col>
+                <Col span={5}>
                     <User user={user} />
                 </Col>
-                <Col span={12}>
+                <Col span={9}></Col>
+                <Col span={8}>
                     <Paragraph style={{ fontSize: 18, paddingTop: 3, float: 'right' }}>{this.handleDate(time) + ' ' + this.handleTime(time)}</Paragraph>
                 </Col>
                 <Row type="flex" justify="start" align="middle" style={{ width: '100%' }}>
                     <Paragraph style={{ fontSize: 14, fontWeight: 400, marginBottom: 5 }}>
-                        <Description desp={desp} />
+                        <Description desp={'问题描述: ' + desp || '提问者没有填写问题描述'} />
                     </Paragraph>
+                </Row>
+                <Row type="flex" justify="start" align="middle" style={{ width: '100%' }}>
+                    <Col span={4}>{likeCount || 0} 点赞</Col>
+                    <Col span={4}>{collectCount || 0} 关注</Col>
+                    <Col span={4}>{commentCount || 0} 评论</Col>
+                    <Col span={12}></Col>
                 </Row>
             </Card>
         );
     }
 
     render() {
-        const { id, title, content, questioner, raiseTime } = this.props.data
+        const { id, title, content, questioner, raiseTime, likeCount, collectCount, commentCount } = this.props.data
         return (
-            this.renderTitle(title, content, questioner.username, raiseTime, id)
+            this.renderTitle(title, content, questioner.username, raiseTime, id, likeCount, collectCount, commentCount)
         );
     }
 }

@@ -1,6 +1,6 @@
 import React from "react";
 import BaseComponent from '../../../components/BaseComponent'
-import { Col, Divider, Row } from 'antd';
+import { Col, Divider, Row, Skeleton } from 'antd';
 import UCard from './uCard'
 
 
@@ -10,31 +10,32 @@ export class List extends BaseComponent {
         super(props);
         this.state = {
             items: [],
+            loading: false,
             // page, etc
         }
     };
 
     componentWillMount() {
-        let successAction = (result) => {
+
+        this.setState({ loading: true })
+
+        this.getWithErrorAction('/api/question/listAll', (result) => {
             if (result.status === "ok") {
                 // TODO: 页码处理
-                this.setState({ items: result.data.content })
+                this.setState({ items: result.data.content, loading: false })
             } else {
                 this.pushNotification("warning", JSON.stringify(result));
             }
-        }
-
-        let errorAction = () => {
+        }, () => {
             this.pushNotification("warning", "Connection Failed");
-        }
-
-        this.getWithErrorAction('/api/question/listAll', successAction, errorAction);
+        });
     }
 
     renderUCards = () => {
         return (
             <Row style={{ fontSize: 20, width: "100%" }} type="flex" justify="center">
-                {this.state.items.map(this.renderUCard)}
+                {this.state.items.length ? this.state.items.map(this.renderUCard) :
+                    <Col span={24}>现在还没有问题...</Col>}
             </Row>
         )
     }
@@ -72,7 +73,7 @@ export class List extends BaseComponent {
                 <Col lg={12} xs={22}>
                     <Row style={{ fontWeight: "bold", fontSize: 20 }}>问题列表</Row>
                     <Divider style={{ marginTop: 5 }} />
-                    {this.renderUCards()}
+                    {this.state.loading ? <Col span={24}><Skeleton /><Skeleton /><Skeleton /><Skeleton /></Col> : this.renderUCards()}
                 </Col>
                 <Col lg={6} xs={1} />
             </Row>

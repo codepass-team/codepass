@@ -16,6 +16,7 @@ export default class QDetail extends BaseComponent {
         this.state = {
             found: false,
             question: 0,
+            answers: 0,
             submit: false,
             edit: true,
 
@@ -28,6 +29,7 @@ export default class QDetail extends BaseComponent {
     componentWillMount() {
         // this.props.data是detail传来的questionEntity对象
         this.state.question = this.props.question
+        this.state.answers = this.props.question.answer
         this.state.submit = this.props.question.status
         this.state.edit = !this.props.question.status
     }
@@ -39,6 +41,26 @@ export default class QDetail extends BaseComponent {
             question: q
         })
     };
+
+    like = () => {
+        this.post('/api/question/like/' + this.state.question.id, null, (res) => {
+            if (res.status === 'ok') {
+                this.setState({
+                    ulike: true
+                })
+            }
+        })
+    }
+
+    unlike = () => {
+        this.post('/api/question/unlike/' + this.state.question.id, null, (res) => {
+            if (res.status === 'ok') {
+                this.setState({
+                    ulike: false
+                })
+            }
+        })
+    }
 
     showComment = () => {
         this.setState({
@@ -72,7 +94,8 @@ export default class QDetail extends BaseComponent {
             <Row type="flex" justify="start" align="middle">
                 <Col span={18}>
                     <Col span={24}>
-                        <Title level={1} style={{ fontWeight: 600, marginTop: 12, marginBottom: 12 }}>{title}</Title>
+                        <Title level={1} style={{ fontWeight: 600, marginTop: 12, marginBottom: 12 }}>{title}
+                        </Title>
                     </Col>
                     <Row type="flex" justify="start" align="middle" style={{ width: '100%' }}>
                         {!edit ? (<Paragraph style={{ fontSize: 15, lineHeight: '25px', marginVertical: 5 }}>
@@ -82,7 +105,7 @@ export default class QDetail extends BaseComponent {
                                 style={{ fontSize: 18 }}
                                 onChange={this.onChangeDesp}
                                 // defaultValue={this.state.question.desp}
-                                placeholder="(Optional) Add more detail to your Question to attract more helper"
+                                placeholder="(可选) 添加问题描述"
                                 autosize={{ minRows: 2, maxRows: 5 }}
                             />}
                     </Row>
@@ -93,6 +116,10 @@ export default class QDetail extends BaseComponent {
                     </Row>
                 </Col>
                 <Col span={24}>
+                    {!this.state.ulike ?
+                        <Button onClick={this.like}>点赞</Button> :
+                        <Button onClick={this.unlike}>取消点赞</Button>
+                    }
                     {!this.state.showComment ?
                         <Button onClick={this.showComment}>评论</Button> :
                         <Button onClick={this.hideComment}>收起评论</Button>
@@ -150,14 +177,14 @@ export default class QDetail extends BaseComponent {
                         size="large"
                         type="primary"
                         onClick={() => this.redirectDocker(this.state.question.dockerId)}
-                    >Enter Docker</Button>
+                    >进入Docker容器</Button>
                     {this.state.edit ? (
                         <Button
                             style={{ marginTop: 10, marginLeft: 10 }}
                             size="large"
                             type="default"
                             onClick={this.save}
-                        >Save Description</Button>
+                        >保存问题描述</Button>
                     ) : (
                             <Button
                                 style={{ marginTop: 10, marginLeft: 10 }}
@@ -166,14 +193,14 @@ export default class QDetail extends BaseComponent {
                                 onClick={() => {
                                     this.setState({ edit: true })
                                 }}
-                            >Edit Content</Button>
+                            >编辑问题描述</Button>
                         )}
                     <Button
                         style={{ marginTop: 10, marginLeft: 10 }}
                         size="large"
                         type="warning"
                         onClick={this.submit}
-                    >Submit Question</Button>
+                    >提交问题</Button>
                 </Row>
             )
         }
@@ -187,8 +214,8 @@ export default class QDetail extends BaseComponent {
 
     renderAnswers = () => {
         if (this.state.submit) {
-            const { answer } = this.state.question
-            if (answer.length === 0) {
+            const answers = this.state.answers
+            if (answers.length === 0) {
                 return (
                     <Row style={{ marginTop: 100 }} type="flex" justify="center">
                         <Paragraph style={{ fontSize: 24 }}>Kept you waiting, huh?</Paragraph>
@@ -196,7 +223,7 @@ export default class QDetail extends BaseComponent {
             } else {
                 return (
                     <Row>
-                        {answer.map(this.renderAnswer)}
+                        {answers.map(this.renderAnswer)}
                     </Row>
                 )
             }
