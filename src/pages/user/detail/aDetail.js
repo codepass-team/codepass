@@ -34,7 +34,7 @@ class ADetail extends BaseComponent {
             showComment: false,
             loading2: false,
             comments: 0,
-
+            likeCount:0,
             ufol: 0,
             ufollow: 0,
             ulike: 0,
@@ -82,26 +82,6 @@ class ADetail extends BaseComponent {
         })
     }
 
-    like = () => {
-        this.post('/api/question/like/' + this.state.question.id, null, (res) => {
-            if (res.status === 'ok') {
-                this.setState({
-                    ulike: true
-                })
-            }
-        })
-    }
-
-    unlike = () => {
-        this.post('/api/question/unlike/' + this.state.question.id, null, (res) => {
-            if (res.status === 'ok') {
-                this.setState({
-                    ulike: false
-                })
-            }
-        })
-    }
-
     /**
      * 渲染问题标题
      * @param {*} title 
@@ -125,12 +105,8 @@ class ADetail extends BaseComponent {
                         <Description desp={desp} />
                     </Paragraph>
                 </Row>
-                {this.renderCheck(likeCount)}
+                {this.renderCheck(1,this.state.ulike)}
                 <Col span={24}>
-                    {!this.state.ulike ?
-                        <Button onClick={this.like}>点赞</Button> :
-                        <Button onClick={this.unlike}>取消点赞</Button>
-                    }
                     {!this.state.showComment ?
                         <Button onClick={this.showComment}>评论</Button> :
                         <Button onClick={this.hideComment}>收起评论</Button>
@@ -175,20 +151,43 @@ class ADetail extends BaseComponent {
             )
         }
     }
-    renderCheck = (likeCount) => {
+    renderCheck = (likeCount, ulike) => {
+        console.log(ulike)
+        console.log(likeCount)
         if (!likeCount) {
             return (
                 <Row style={{ width: "100%", marginLeft: 5, fontSize: 18 }}>
                     该问题还没有人点赞哦！
-                    <HeartTwoTone twoToneColor="" />
+                    <HeartTwoTone twoToneColor="#1890ff"
+                    onClick={()=>this.check(0, 1)}
+                    />
                 </Row>
             )
         } else {
-            return (
-                <Row style={{ width: "100%", marginLeft: 5, fontSize: 18 }}>
-                    <HeartTwoTone twoToneColor="" />
-                </Row>
-            )
+            if (ulike === false) {
+                return (
+                    <Row style={{ width: "100%", marginLeft: 5, fontSize: 18 }}>
+                        
+                        <HeartTwoTone twoToneColor="#1890ff"
+                            onClick={()=>this.check(likeCount, 1)}
+                        />
+                        X
+                        {likeCount}
+                    </Row>
+                )
+            } else {
+                return (
+                    <Row style={{ width: "100%", marginLeft: 5, fontSize: 18 }}>
+
+                        <HeartTwoTone twoToneColor="#cf1322"
+                            onClick={()=>this.check(likeCount, 0)}
+                        />
+                        X                    
+                        {likeCount}
+                    </Row>
+                )
+            }
+
         }
     }
     renderNew() {
@@ -271,6 +270,55 @@ class ADetail extends BaseComponent {
         })
     }
 
+    check = (item, bool1) => {
+        if (bool1 === 1) {
+            this.post('/api/question/like/' + this.state.question.id, null, (res) => {
+                if (res.status === 'ok') {
+                    this.setState({
+                        ulike: true
+                    })
+                    this.pushNotification("success", "点赞成功")
+                } else {
+                    this.pushNotification("danger", "点赞失败")
+                }
+            })
+            var successAction = (result) => {
+                if (result.status === "ok") {
+                    this.setState({ likeCount:item+1 })
+                } else {
+                    this.pushNotification("warning", JSON.stringify(result));
+                }
+            }
+    
+            var errorAction = () => {
+                this.pushNotification("warning", "点赞失败");
+            }
+            this.getWithErrorAction('/api/question/' + this.state.question.id, successAction, errorAction)
+        } else {
+            this.post('/api/question/like/' + this.state.question.id, null, (res) => {
+                if (res.status === 'ok') {
+                    this.setState({
+                        ulike: false
+                    })
+                    this.pushNotification("success", "取消点赞成功")
+                } else {
+                    this.pushNotification("danger", "取消点赞失败")
+                }
+            })
+            var successAction1 = (result) => {
+                if (result.status === "ok") {
+                    this.setState({ likeCount:item-1 })
+                } else {
+                    this.pushNotification("warning", JSON.stringify(result));
+                }
+            }
+    
+            var errorAction1 = () => {
+                this.pushNotification("warning", "点赞失败");
+            }
+            this.getWithErrorAction('/api/question/' + this.state.question.id, successAction1, errorAction1)
+        }
+    } 
     unfollow = () => {
         this.post('/api/user/unfollow/' + this.state.question.questioner.id, null, (res) => {
             if (res.status === 'ok') {
