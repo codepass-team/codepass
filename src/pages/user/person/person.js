@@ -83,7 +83,7 @@ class Person extends BaseComponent {
                 <Col span={18} offset={3}>
                     <Divider orientation='left'><h2 style={{ fontWeight: 600 }}>个人资料</h2></Divider>
                 </Col>
-                <Col span={16} offset='5'>
+                <Col span={16} offset={5}>
                     <Col span={6}>
                         <div>
                             <Avatar shape="square" size={128}><UserOutlined style={{ fontSize: '128px', color: '#08c' }} /></Avatar>
