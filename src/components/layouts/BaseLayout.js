@@ -22,17 +22,18 @@ class BaseLayout extends BaseComponent {
   }
 
   getDefaultRoute() {
-    if (this.props.history.location.pathname.indexOf("/user") === -1)
+    if (this.props.history.location.pathname.indexOf("/user") === -1&&this.props.history.location.pathname.indexOf("/admin")===-1)
       return (<Redirect to={"/user/home"} />)//这一行是找到首页面
     return null
   }
 
   createRoutes(routes) {
-    return routes.map((prop, key) => (
-      prop.auth === true
-        ? <PrivateRoute role={-1} path={prop.path} component={prop.component} key={key} user={this.props.user} />
-        : <Route path={prop.path} component={prop.component} key={key} />
-    ));
+    return routes.map((prop, key) => {
+      // prop.auth === true
+      //   ? <PrivateRoute role={-1} path={prop.path} component={prop.component} key={key} user={this.props.user} />
+      //   :
+      return <Route path={prop.path} component={prop.component} key={key} />
+    });
   }
 
   refreshUser() {
