@@ -79,12 +79,12 @@ class SignIn extends BaseComponent {
                                 <Row style={{ width: "100%", marginLeft: "80px", color: '#AAAAAA', fontSize: 15 }}
                                     type="flex" justify='start'>请输入你的用户名:</Row>
                                 <FormText form={this.props.form}
-                                    label='' name='usrname' required={true} icon="user" />
+                                    label='' name='usrname' required={true} icon="user" name1='用户名' />
                                 <Row style={{ width: "100%", marginLeft: "80px", color: '#AAAAAA', fontSize: 15 }}
                                     type="flex" justify='start'>请输入你的密码:</Row>
                                 <FormText form={this.props.form}
                                     label='' name='pwd' required={true} icon="lock"
-                                    inputType="password" />
+                                    inputType="password" name1='密码'/>
                                 <FormButton form={this.props.form} label="登陆" style={styles.button} />
                                 <Button style={styles.button2} onClick={this.props.onCancel}>
                                     取消

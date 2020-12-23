@@ -78,17 +78,17 @@ class SignUp extends BaseComponent {
                              <Row style={{ width: "100%", marginLeft: "80px", color: '#AAAAAA', fontSize: 15 }}
                                     type="flex" justify='start'>请输入你的用户名:</Row>
                                 <FormText form={this.props.form}
-                                    name='username' required={true} icon="user" />
+                                    name='username' required={true} icon="user" name1='用户名'/>
                                 <Row style={{ width: "100%", marginLeft: "80px", color: '#AAAAAA', fontSize: 15 }}
                                     type="flex" justify='start'>请输入你的密码:</Row>
                                 <FormText form={this.props.form} style={{ marginBottom: "10px" }}
                                     name='password' required={true} icon="lock"
-                                    inputType="password" />
+                                    inputType="password" name1='密码'/>
                                 <Row style={{ width: "100%", marginLeft: "80px", color: '#AAAAAA', fontSize: 15 }}
                                     type="flex" justify='start'>重复你的密码:</Row>
                                 <FormText form={this.props.form}
                                     name="passwordAgain" required={true} icon='lock'
-                                    inputType='password' />
+                                    inputType='password' name1='密码进行二次确认'/>
                             </Row>
                             <Row type='flex' justify='center'>
                                 <Col>
