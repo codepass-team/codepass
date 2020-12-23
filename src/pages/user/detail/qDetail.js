@@ -4,7 +4,7 @@ import { Avatar, Button, Col, Divider, Icon, Input, Row, Skeleton, Typography } 
 import Answer from './answer'
 import Description from '../../../components/markd/Description'
 import QComment from "./qComment";
-
+import { HeartTwoTone } from '@ant-design/icons'
 const { Title, Paragraph } = Typography;
 const { TextArea } = Input;
 
@@ -19,7 +19,8 @@ export default class QDetail extends BaseComponent {
             answers: 0,
             submit: false,
             edit: true,
-
+            unlike: false,
+            likeCount: 0,
             showComment: false,
             loading2: false,
             comments: 0
@@ -32,6 +33,8 @@ export default class QDetail extends BaseComponent {
         this.state.answers = this.props.question.answer
         this.state.submit = this.props.question.status
         this.state.edit = !this.props.question.status
+        this.state.ulike = this.props.question.ulike
+        this.state.likeCount = this.props.question.likeCount
     }
 
     onChangeDesp = ({ target: { value } }) => {
@@ -42,25 +45,7 @@ export default class QDetail extends BaseComponent {
         })
     };
 
-    like = () => {
-        this.post('/api/question/like/' + this.state.question.id, null, (res) => {
-            if (res.status === 'ok') {
-                this.setState({
-                    ulike: true
-                })
-            }
-        })
-    }
-
-    unlike = () => {
-        this.post('/api/question/unlike/' + this.state.question.id, null, (res) => {
-            if (res.status === 'ok') {
-                this.setState({
-                    ulike: false
-                })
-            }
-        })
-    }
+    
 
     showComment = () => {
         this.setState({
@@ -115,11 +100,8 @@ export default class QDetail extends BaseComponent {
                         {this.renderUser(this.state.question.questioner.username, raiseTime)}
                     </Row>
                 </Col>
+                {this.renderCheck()}
                 <Col span={24}>
-                    {!this.state.ulike ?
-                        <Button onClick={this.like}>点赞</Button> :
-                        <Button onClick={this.unlike}>取消点赞</Button>
-                    }
                     {!this.state.showComment ?
                         <Button onClick={this.showComment}>评论</Button> :
                         <Button onClick={this.hideComment}>收起评论</Button>
@@ -245,7 +227,7 @@ export default class QDetail extends BaseComponent {
                     {this.renderTitle(title, content)}
                     {this.renderConfirm()}
                     <Row type="flex" justify="start" style={{ marginTop: 20 }}>
-                        <Divider><Title level={3}>{answer.length + " Answers"}</Title></Divider>
+                        <Divider><Title level={3}>{answer.length + " 回答"}</Title></Divider>
                     </Row>
                     {this.renderAnswers()}
                 </Col>
@@ -253,7 +235,75 @@ export default class QDetail extends BaseComponent {
             </Row>
         )
     }
+    renderCheck = () => {
+        const { likeCount, ulike } = this.state
+        console.log(ulike)
+        console.log(likeCount)
+        if (!likeCount) {
+            return (
+                <Row style={{ width: "100%", marginLeft: 5, fontSize: 18 }}>
+                    该问题还没有人点赞哦！
+                    <HeartTwoTone twoToneColor="#1890ff"
+                        onClick={() => this.check(1)}
+                    />
+                </Row>
+            )
+        } else {
+            if (ulike === false) {
+                return (
+                    <Row style={{ width: "100%", marginLeft: 5, fontSize: 18 }}>
 
+                        <HeartTwoTone twoToneColor="#1890ff"
+                            onClick={() => this.check(1)}
+                        />
+                        X
+                        {likeCount}
+                    </Row>
+                )
+            } else {
+                return (
+                    <Row style={{ width: "100%", marginLeft: 5, fontSize: 18 }}>
+
+                        <HeartTwoTone twoToneColor="#cf1322"
+                            onClick={() => this.check(0)}
+                        />
+                        X
+                        {likeCount}
+                    </Row>
+                )
+            }
+
+        }
+    }
+    check = (bool1) => {
+        if (bool1 === 1) {
+            this.post('/api/question/like/' + this.state.question.id, null, (res) => {
+                if (res.status === 'ok') {
+                    this.setState({
+                        ulike: true,
+                        likeCount: this.state.likeCount + 1
+                    })
+                    this.pushNotification("success", "点赞成功")
+                } else {
+                    this.pushNotification("danger", "点赞失败")
+                }
+            })
+
+        } else {
+            this.post('/api/question/unlike/' + this.state.question.id, null, (res) => {
+                if (res.status === 'ok') {
+                    this.setState({
+                        ulike: false,
+                        likeCount: this.state.likeCount - 1
+                    })
+                    this.pushNotification("success", "取消点赞成功")
+                } else {
+                    this.pushNotification("danger", "取消点赞失败")
+                }
+            })
+
+        }
+    }
     save = () => {
         const { id, title, content } = this.state.question
         var successAction = (result) => {
@@ -266,7 +316,7 @@ export default class QDetail extends BaseComponent {
         }
 
         var errorAction = () => {
-            this.pushNotification("warning", "Update Failed");
+            this.pushNotification("warning", "更新失败");
         }
 
         let form = new FormData();
