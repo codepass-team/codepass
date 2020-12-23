@@ -1,6 +1,6 @@
 import React from "react"
 import BaseComponent from '../../../components/BaseComponent'
-import { Col, Row, Tabs } from 'antd'
+import { Col, Row, Skeleton, Tabs } from 'antd'
 import QCard from './qCard'
 import ACard from './aCard'
 import ErrorPage from '../../../components/ErrorPage'
@@ -13,7 +13,9 @@ export class My extends BaseComponent {
         super(props);
         this.state = {
             qdata: [],
-            adata: []
+            adata: [],
+            loading1: false,
+            loading2: false
         }
     };
 
@@ -22,9 +24,11 @@ export class My extends BaseComponent {
             this.pushNotification("warning", "Connection Failed");
         }
 
+        this.setState({ loading1: true, loading2: true })
+
         this.getWithErrorAction('/api/question/listMy', (result) => {
             if (result.status === "ok") {
-                this.setState({ qdata: result.data })
+                this.setState({ qdata: result.data, loading1: false })
             } else {
                 this.pushNotification("warning", JSON.stringify(result));
             }
@@ -32,7 +36,7 @@ export class My extends BaseComponent {
 
         this.getWithErrorAction('/api/answer/listMy', (result) => {
             if (result.status === "ok") {
-                this.setState({ adata: result.data })
+                this.setState({ adata: result.data, loading2: false })
             } else {
                 this.pushNotification("warning", JSON.stringify(result));
             }
@@ -84,26 +88,51 @@ export class My extends BaseComponent {
                 <Col lg={12} xs={22}>
                     <Tabs defaultActiveKey="1" >
                         <TabPane tab="Questions" key="1">
-                            {this.state.qdata.length === 0 ?
+                            {this.state.loading1 ? <div><Skeleton /><Skeleton /><Skeleton /></div> : this.state.qdata.length === 0 ?
                                 <Row style={styles.container} type="flex" justify="center">
-                                    <Row style={{ fontSize: 22, marginTop: 300 }}>
-                                        现在还没有提问...
-                                        </Row>
+                                    <Row style={{ fontSize: 22, marginTop: 200 }}>
+                                        <Col span={24}>
+                                            <Row type="flex" justify='center'>
+                                                <Col>现在还没有问题...</Col>
+                                            </Row>
+                                            <Row type="flex" justify='center' style={{ marginTop: 20 }}>
+                                                <Col>
+                                                    <a onClick={() => {
+                                                        this.props.history.push({
+                                                            pathname: "/user/list",
+                                                        })
+                                                    }}>去发现页看看</a>
+                                                </Col>
+                                            </Row>
+                                        </Col>
+                                    </Row>
                                 </Row> : this.state.qdata.map(this.renderQCard)}
                         </TabPane>
                         <TabPane tab="Answers" key="2">
-                            {this.state.adata.length === 0
+                            {this.state.loading2 ? <div><Skeleton /><Skeleton /><Skeleton /></div> : this.state.adata.length === 0
                                 ? <Row style={styles.container} type="flex" justify="center">
-                                    <Row style={{ fontSize: 22, marginTop: 300 }}>
-                                        现在还没有回答...
+                                    <Row style={{ fontSize: 22, marginTop: 200 }}>
+                                        <Col span={24}>
+                                            <Row type="flex" justify='center'>
+                                                <Col>现在还没有回答...</Col>
                                             </Row>
-                                </Row>
-                                : this.state.adata.map(this.renderACard)}
+                                            <Row type="flex" justify='center' style={{ marginTop: 20 }}>
+                                                <Col>
+                                                    <a onClick={() => {
+                                                        this.props.history.push({
+                                                            pathname: "/user/list",
+                                                        })
+                                                    }}>去发现页看看</a>
+                                                </Col>
+                                            </Row>
+                                        </Col>
+                                    </Row>
+                                </Row> : this.state.adata.map(this.renderACard)}
                         </TabPane>
                     </Tabs>
                 </Col>
                 <Col lg={6} xs={1} />
-            </Row>
+            </Row >
         );
     }
 

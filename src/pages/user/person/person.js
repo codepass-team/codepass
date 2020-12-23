@@ -72,7 +72,7 @@ class Person extends BaseComponent {
         if (this.state.change != -1) {
             var keys = Object.keys(this.state)
             var values = Object.values(this.state)
-            var val = values[values.length - 1]
+            var val = this.state.change
             this.post('/api/user?' + keys[val] + '=' + values[val].content, null, successAction)
         }
     }
@@ -83,7 +83,7 @@ class Person extends BaseComponent {
                 <Col span={18} offset={3}>
                     <Divider orientation='left'><h2 style={{ fontWeight: 600 }}>个人资料</h2></Divider>
                 </Col>
-                <Col span={14} offset='5'>
+                <Col span={16} offset='5'>
                     <Col span={6}>
                         <div>
                             <Avatar shape="square" size={128}><UserOutlined style={{ fontSize: '128px', color: '#08c' }} /></Avatar>
@@ -91,15 +91,20 @@ class Person extends BaseComponent {
                     </Col>
                     <Col span={18} style={{ position: 'relative', top: '25px' }}>
                         {this.state.loading ? <Skeleton /> : <Data {...this.state.name} onChangeState={this.onChangeState}></Data>
-                        }<Divider></Divider>
+                        }
+                        <Divider></Divider>
                         {this.state.loading ? <Skeleton /> : <Data {...this.state.gender} onChangeState={this.onChangeState}></Data>
-                        }<Divider></Divider>
+                        }
+                        <Divider></Divider>
                         {this.state.loading ? <Skeleton /> : <Data {...this.state.job} onChangeState={this.onChangeState}></Data>
-                        }<Divider></Divider>
+                        }
+                        <Divider></Divider>
                         {this.state.loading ? <Skeleton /> : <Data {...this.state.tech} onChangeState={this.onChangeState}></Data>
-                        }<Divider></Divider>
+                        }
+                        <Divider></Divider>
                         {this.state.loading ? <Skeleton /> : <Data {...this.state.age} onChangeState={this.onChangeState}></Data>
-                        }<Divider></Divider>
+                        }
+                        <Divider></Divider>
                     </Col>
                 </Col>
             </Row>
