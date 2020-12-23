@@ -28,7 +28,7 @@ class SearchBar extends BaseComponent {
         const keyword = this.state.name
         this.props.dispatch(setKeyword(keyword))
         if (!keyword || keyword === "") {
-            this.pushNotification("warning", "Keyword shouldn't be empty.")
+            this.pushNotification("warning", "关键词不能为空。")
             return
         }
         this.props.history.push({ pathname: "/user/", state: { keyword } })
@@ -80,7 +80,7 @@ class SearchBar extends BaseComponent {
                     return <Option key={uqKey}>{item}</Option>
                 })}
                 onChange={this.autoOnChange}
-                placeholder="Search For An Existing QA">
+                placeholder="请输入你要搜索的问题关键词">
                 <Input.Search
                     size="large"
                     onSearch={this.search}

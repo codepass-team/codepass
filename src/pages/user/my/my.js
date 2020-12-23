@@ -21,7 +21,7 @@ export class My extends BaseComponent {
 
     componentWillMount() {
         let errorAction = (result) => {
-            this.pushNotification("warning", "Connection Failed");
+            this.pushNotification("warning", "连接失败");
         }
 
         this.setState({ loading1: true, loading2: true })
@@ -80,14 +80,14 @@ export class My extends BaseComponent {
         if (!this.loadStorage("user") || this.loadStorage("user") === "")
             return (
                 <Row type="flex" justify="center" style={{ marginTop: 200 }}>
-                    <ErrorPage text={"You have not logged in."} />
+                    <ErrorPage text={"您还没有登录"} />
                 </Row>)
         return (
             <Row style={styles.container}>
                 <Col lg={6} xs={1} />
                 <Col lg={12} xs={22}>
                     <Tabs defaultActiveKey="1" >
-                        <TabPane tab="Questions" key="1">
+                        <TabPane tab="问题" key="1">
                             {this.state.loading1 ? <div><Skeleton /><Skeleton /><Skeleton /></div> : this.state.qdata.length === 0 ?
                                 <Row style={styles.container} type="flex" justify="center">
                                     <Row style={{ fontSize: 22, marginTop: 200 }}>
@@ -95,7 +95,7 @@ export class My extends BaseComponent {
                                             <Row type="flex" justify='center'>
                                                 <Col>现在还没有问题...</Col>
                                             </Row>
-                                            <Row type="flex" justify='center' style={{ marginTop: 20 }}>
+                                            <Row type="flex" justify='center' style={{ marginTop: 1 }}>
                                                 <Col>
                                                     <a onClick={() => {
                                                         this.props.history.push({
@@ -108,7 +108,7 @@ export class My extends BaseComponent {
                                     </Row>
                                 </Row> : this.state.qdata.map(this.renderQCard)}
                         </TabPane>
-                        <TabPane tab="Answers" key="2">
+                        <TabPane tab="回答" key="2">
                             {this.state.loading2 ? <div><Skeleton /><Skeleton /><Skeleton /></div> : this.state.adata.length === 0
                                 ? <Row style={styles.container} type="flex" justify="center">
                                     <Row style={{ fontSize: 22, marginTop: 200 }}>
@@ -116,9 +116,10 @@ export class My extends BaseComponent {
                                             <Row type="flex" justify='center'>
                                                 <Col>现在还没有回答...</Col>
                                             </Row>
-                                            <Row type="flex" justify='center' style={{ marginTop: 20 }}>
+                                            <Row type="flex" justify='center' style={{ marginTop: 15 }}>
                                                 <Col>
                                                     <a onClick={() => {
+                                                        this.state.banner.slickGoTo(1)
                                                         this.props.history.push({
                                                             pathname: "/user/list",
                                                         })
