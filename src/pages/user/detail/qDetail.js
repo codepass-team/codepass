@@ -249,7 +249,7 @@ export default class QDetail extends BaseComponent {
                 </Row>
             )
         } else {
-            if (ulike === false) {
+            if (!ulike) {
                 return (
                     <Row style={{ width: "100%", marginLeft: 5, fontSize: 18 }}>
 
