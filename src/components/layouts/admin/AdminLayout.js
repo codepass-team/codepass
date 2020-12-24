@@ -24,11 +24,11 @@ class AdminLayout extends BaseComponent {
         super(props);
         this.state = {
             items: [
-                { key: "home", path: "/admin/home", name: "首页", icon: "unordered-list" },
-                { key: "question", path: "/admin/question", name: "问题", icon: "unordered-list" },
-                { key: "answer", path: "/admin/answer", name: "回答", icon: "unordered-list" },
-                { key: "user", path: "/admin/user", name: "用户", icon: "unordered-list" },
-                { key: "docker", path: "/admin/docker", name: "容器", icon: "unordered-list" },
+                // { key: "home", path: "/admin/home", name: "首页", icon: "unordered-list" },
+                { key: "question", path: "/admin/question", name: "问题管理", icon: "unordered-list" },
+                { key: "answer", path: "/admin/answer", name: "回答管理", icon: "unordered-list" },
+                { key: "user", path: "/admin/user", name: "用户管理", icon: "unordered-list" },
+                { key: "docker", path: "/admin/docker", name: "容器管理", icon: "unordered-list" },
             ],
             collapsed: false,
         }

@@ -15,18 +15,53 @@ export class Docker extends BaseComponent {
         },
         {
             title: '操作', dataIndex: '', key: 'x',
-            render: (text, record) => record.status === 0 ? <Button onClick={() => this.startDocker(record.id)} >启动</Button> : <Button onClick={() => this.stopDocker(record.id)} >关闭</Button>
+            render: (text, record, index) => record.status === 0
+                ? <Button loading={this.state.bloading[index]} type="primary" onClick={() => this.startDocker(record.id, index)} >启动</Button>
+                : <Button loading={this.state.bloading[index]} onClick={() => this.stopDocker(record.id, index)} type="danger">关闭</Button>
         }
     ]
 
-    startDocker(id) {
-        // this.post('/api/docker/start/' + id, null, res=>{
-
-        // })
+    startDocker(id, i) {
+        if (!id) return
+        let bloading = this.state.bloading
+        bloading[i] = true
+        this.setState({
+            bloading
+        })
+        this.post('/api/docker/start/' + id, null, res => {
+            if (res.status === 'ok') {
+                let { bloading, data } = this.state
+                bloading[i] = false
+                data[i].port = res.data.port
+                data[i].status = res.data.status
+                data[i].password = res.data.password
+                this.setState({
+                    bloading,
+                    data
+                })
+            }
+        })
     }
 
-    stopDocker(id) {
-
+    stopDocker(id, i) {
+        if (!id) return
+        let bloading = this.state.bloading
+        bloading[i] = true
+        this.setState({
+            bloading
+        })
+        this.delete('/api/docker/' + id, res => {
+            if (res.status === 'ok') {
+                let { bloading, data } = this.state
+                bloading[i] = false
+                data[i].port = 0
+                data[i].status = 0
+                this.setState({
+                    bloading,
+                    data
+                })
+            }
+        })
     }
 
     constructor(props) {
@@ -35,6 +70,7 @@ export class Docker extends BaseComponent {
             data: [],
             pagination: {},
             loading: false,
+            bloading: []
         }
     }
 
@@ -47,20 +83,16 @@ export class Docker extends BaseComponent {
         this.getWithErrorAction('/api/docker/listAll?page=' + (current || 0), res => {
             if (res.status === 'ok') {
                 let data = res.data
-                /*
-                totalElements	7
-                totalPages	1
-                pageNumber	1
-                numberOfElements	7
-                 */
+                let bloading = data.content.map(i => false)
                 this.setState({
                     loading: false,
                     data: data.content,
                     pagination: {
                         current: data.pageNumber,
                         total: data.totalElements,
-                        onChange: p => this.fetch(p - 1)
+                        onChange: p => this.fetch(p - 1),
                     },
+                    bloading,
                 });
             }
         })

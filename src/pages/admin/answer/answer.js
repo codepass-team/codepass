@@ -1,5 +1,5 @@
 import React from 'react'
-import { Row, Col, Table } from 'antd'
+import { Row, Col, Table, Tag } from 'antd'
 import BaseComponent from "../../../components/BaseComponent"
 
 
@@ -14,7 +14,11 @@ export class Answer extends BaseComponent {
         { title: '点赞数', dataIndex: 'likeCount' },
         { title: '评论数', dataIndex: 'commentCount' },
         { title: '收藏数', dataIndex: 'collectCount' },
-        { title: '状态', dataIndex: 'status' }
+        {
+            title: '状态', dataIndex: 'status', render: s => <Tag color={s ? 'green' : 'gray'}>
+                {s ? '编辑中' : '已发布'}
+            </Tag>
+        }
     ]
 
     constructor(props) {
@@ -32,7 +36,7 @@ export class Answer extends BaseComponent {
 
     fetch = (current) => {
         this.setState({ loading: true });
-        this.getWithErrorAction('/api/answer/listAll?page='+(current || 0), res => {
+        this.getWithErrorAction('/api/answer/listAll?page=' + (current || 0), res => {
             if (res.status === 'ok') {
                 let data = res.data
                 /*
@@ -47,7 +51,7 @@ export class Answer extends BaseComponent {
                     pagination: {
                         current: data.pageNumber,
                         total: data.totalElements,
-                        onChange: p=>this.fetch(p-1)
+                        onChange: p => this.fetch(p - 1)
                     },
                 });
             }
