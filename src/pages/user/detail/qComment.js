@@ -8,9 +8,9 @@ const { TextArea } = Input;
 const CommentList = ({ comments }) => (
     <List
         dataSource={comments}
-        header={`${comments.length} ${comments.length > 1 ? 'replies' : 'reply'}`}
+        header={comments.length + (comments.length > 1 ? 'replies' : 'reply')}
         itemLayout="horizontal"
-        renderItem={props => <Comment {...props} />}
+        renderItem={comment => <Comment avatar={<Avatar>comment.username[0]</Avatar>} {...comment} />}
     />
 );
 
@@ -34,6 +34,7 @@ class QComment extends BaseComponent {
         console.log(props)
         this.state = {
             questionId: 0,
+            user: 0,
             comments: 0,
             submitting: false,
             value: '',
@@ -55,26 +56,24 @@ class QComment extends BaseComponent {
         this.post('/api/comment/question/' + this.props.questionId, form, (res) => {
             if (res.status === 'ok') {
                 this.pushNotification("info", "发送成功")
+                this.setState({
+                    submitting: false,
+                    value: '',
+                    comments: [
+                        {
+                            author: this.props.user.username,
+                            avatar: <Avatar>this.props.user.username</Avatar>,
+                            content: <p>{this.state.value}</p>,
+                            datetime: moment().fromNow(),
+                        },
+                        ...this.state.comments,
+                    ],
+                });
             } else {
                 this.pushNotification("danger", "发送失败")
             }
         })
 
-        setTimeout(() => {
-            this.setState({
-                submitting: false,
-                value: '',
-                comments: [
-                    {
-                        author: 'Han Solo',
-                        avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-                        content: <p>{this.state.value}</p>,
-                        datetime: moment().fromNow(),
-                    },
-                    ...this.state.comments,
-                ],
-            });
-        }, 1000);
     };
 
     handleChange = e => {
@@ -85,7 +84,9 @@ class QComment extends BaseComponent {
 
     componentWillMount() {
         this.setState({
-            comments: this.props.comments.content
+            comments: this.props.comments.content,
+            user: this.props.user,
+            questionId: this.props.questionId
         })
     }
 
@@ -99,7 +100,7 @@ class QComment extends BaseComponent {
                     avatar={
                         <Avatar
                             icon='user'
-                            alt="Han Solo"
+                            alt="Coder"
                         />
                     }
                     content={

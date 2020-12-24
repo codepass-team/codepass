@@ -45,7 +45,7 @@ export default class QDetail extends BaseComponent {
         })
     };
 
-    
+
 
     showComment = () => {
         this.setState({
@@ -112,7 +112,9 @@ export default class QDetail extends BaseComponent {
                         <Skeleton />
                         :
                         <Col span={24}>
-                            <QComment comments={this.state.comments} questionId={this.state.question.id} />
+                            <QComment user={this.state.question.questioner}
+                                comments={this.state.comments}
+                                questionId={this.state.question.id} />
                         </Col> : null
                 }
             </Row>
@@ -237,8 +239,6 @@ export default class QDetail extends BaseComponent {
     }
     renderCheck = () => {
         const { likeCount, ulike } = this.state
-        console.log(ulike)
-        console.log(likeCount)
         if (!likeCount) {
             return (
                 <Row style={{ width: "100%", marginLeft: 5, fontSize: 18 }}>
