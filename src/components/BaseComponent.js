@@ -11,7 +11,9 @@ class BaseComponent extends Component {
         }
     }
 
-    ip = "http://katty.top:8000";
+    host = "http://katty.top"
+    port = 8000
+    ip = this.host + ":" + this.port
 
     post = (url, form, successAction, unsuccessAction, errorAction) => {
         const token = localStorage.getItem("token")

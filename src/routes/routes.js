@@ -8,6 +8,7 @@ import { Collect } from '../pages/user/collect'
 
 const mapStateToProps = state => ({
     user: state.identityReducer.user,
+    admin: state.identityReducer.admin
 })
 
 var wrap = (component) => {

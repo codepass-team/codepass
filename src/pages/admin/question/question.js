@@ -18,8 +18,6 @@ export class Question extends BaseComponent {
     ]
 
     constructor(props) {
-        console.log("Home")
-        console.log(props)
         super(props)
         this.state = {
             data: [],
@@ -32,17 +30,19 @@ export class Question extends BaseComponent {
         this.fetch();
     }
 
-    fetch = () => {
+    fetch = (current) => {
         this.setState({ loading: true });
-        this.getWithErrorAction('/api/question/listAll', res => {
+        this.getWithErrorAction('/api/question/listAll?page=' + current, res => {
             if (res.status === 'ok') {
                 let data = res.data
-                const pagination = { ...this.state.pagination };
-                pagination.total = data.totalCount;
                 this.setState({
                     loading: false,
                     data: data.content,
-                    pagination,
+                    pagination: {
+                        current: data.pageNumber,
+                        total: data.totalElements,
+                        onChange: p=>this.fetch(p-1)
+                    },
                 });
             }
         })

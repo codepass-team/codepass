@@ -28,6 +28,7 @@ class AdminLayout extends BaseComponent {
                 { key: "question", path: "/admin/question", name: "问题", icon: "unordered-list" },
                 { key: "answer", path: "/admin/answer", name: "回答", icon: "unordered-list" },
                 { key: "user", path: "/admin/user", name: "用户", icon: "unordered-list" },
+                { key: "docker", path: "/admin/docker", name: "容器", icon: "unordered-list" },
             ],
             collapsed: false,
         }
@@ -104,7 +105,7 @@ class AdminLayout extends BaseComponent {
                         </Menu>
                     </Sider>
                     <Content style={{ margin: '0 16px' }}>
-                        {this.createRoutes(mainRoutes[1].children)}
+                        {this.createRoutes(mainRoutes[1].children, mainRoutes[1].path)}
                         <AuthModal switch={this.switch} />
                         <BaseDrawer />
                     </Content>

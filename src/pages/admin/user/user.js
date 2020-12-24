@@ -16,8 +16,6 @@ export class User extends BaseComponent {
     ]
 
     constructor(props) {
-        console.log("Home")
-        console.log(props)
         super(props)
         this.state = {
             data: [],
