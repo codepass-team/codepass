@@ -10,7 +10,7 @@ const CommentList = ({ comments }) => (
         dataSource={comments}
         header={comments.length + (comments.length > 1 ? 'replies' : 'reply')}
         itemLayout="horizontal"
-        renderItem={comment => <Comment avatar={<Avatar>comment.username[0]</Avatar>} {...comment} />}
+        renderItem={comment => <Comment avatar={<Avatar>{comment.commenter}</Avatar>} {...comment} />}
     />
 );
 
