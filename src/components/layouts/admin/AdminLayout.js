@@ -1,6 +1,6 @@
 import React from "react"
 import { Route, Router, withRouter } from "react-router-dom"
-import { BackTop, Layout } from 'antd'
+import { BackTop, Icon, Layout, Menu } from 'antd'
 import { cancelModal, loginAsUser, logout, setOnCancel, showSignIn, showSignUp } from '../../../redux/actions/action'
 import mainRoutes from "../../../routes/routes"
 import PrivateRoute from "../../PrivateRoute"
@@ -9,9 +9,9 @@ import AuthModal from "../../auth/authModal"
 import BaseDrawer from "../../BaseDrawer"
 
 import { connect } from 'react-redux';
-import BaseHeader from "../user/BaseHeader"
+import AdminHeader from "./AdminHeader"
+const { Header, Content, Sider } = Layout;
 
-const { Content } = Layout;
 const mapStateToProps = state => ({
     user: state.identityReducer.user,
     signInVisible: state.modalReducer.signInVisible,
@@ -24,13 +24,18 @@ class AdminLayout extends BaseComponent {
         super(props);
         this.state = {
             items: [
-                { key: "/admin/home", name: "首页", icon: "home" },
-                { key: "/admin/question", name: "问题", icon: "question" },
-                { key: "/admin/answer", name: "回答", icon: "answer" },
-                { key: "/admin/user", name: "用户", icon: "user" },
+                { key: "home", path: "/admin/home", name: "首页", icon: "home" },
+                { key: "question", path: "/admin/question", name: "问题", icon: "question" },
+                { key: "answer", path: "/admin/answer", name: "回答", icon: "answer" },
+                { key: "user", path: "/admin/user", name: "用户", icon: "user" },
             ],
+            collapsed: false,
         }
     }
+
+    onCollapse = collapsed => {
+        this.setState({ collapsed });
+    };
 
     componentWillMount() {
         if (localStorage.getItem("user") !== null) {
@@ -66,20 +71,56 @@ class AdminLayout extends BaseComponent {
         this.props.dispatch(cancelModal())
     }
 
+    handleClick = (e) => {
+        console.log(this.state.items[Number.parseInt(e.key)])
+        this.setState({
+            current: e.key,
+        });
+
+        this.props.history.push({ pathname: this.state.items[Number.parseInt(e.key)].path })
+    }
+
     render() {
         return (
-            <Layout>
+            <Layout style={{ minHeight: '100vh' }}>
                 <BackTop visibilityHeight={200} style={{ zIndex: 10 }} />
-                <BaseHeader items={this.state.items} />
-                <Content style={{ backgroundColor: "white" }}>
-                    {this.createRoutes(mainRoutes[1].children)}
-                </Content>
-                <AuthModal switch={this.switch} />
-                <BaseDrawer />
+                <AdminHeader />
+                <Layout>
+                    <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse}>
+                        <Menu
+                            onClick={this.handleClick}
+                            defaultSelectedKeys={['0']}
+                            mode='vertical'
+                            theme='dark'
+                        >
+                            {this.state.items.map((item, index) =>
+                                <Menu.Item key={index}>
+                                    <Icon type={item.icon} />
+                                    {item.name}
+                                </Menu.Item>)}
+                        </Menu>
+                    </Sider>
+                    <Content style={{ margin: '0 16px' }}>
+                        {this.createRoutes(mainRoutes[1].children)}
+                        <AuthModal switch={this.switch} />
+                        <BaseDrawer />
+                    </Content>
+                </Layout>
             </Layout>
         );
     }
 }
 
+const styles = {
+    logo: {
+        height: '32px',
+        background: 'rgba(255, 255, 255, 0.2)',
+        margin: '16px',
+    },
+    container: {
+        marginTop: "50px",
+        paddingBottom: "50px"
+    }
+}
 
 export default connect(mapStateToProps)(withRouter(AdminLayout))

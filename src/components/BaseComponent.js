@@ -159,12 +159,12 @@ class BaseComponent extends Component {
         if (kind === 'warning')
             notification.warning({
                 message: reason,
-                description: "失败了",
+                description: "请求失败",
             })
         else if (kind === 'success')
             notification.success({
                 message: reason,
-                description: "成功了"
+                description: "请求成功"
             })
         else
             notification.open({
