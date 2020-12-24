@@ -20,11 +20,11 @@ class UserMenu extends BaseComponent {
 
     renderAvatar = () => {
         const { user, admin } = this.props
-        if (user === null || admin === null)
+        if (user === null && admin === null)
             return null;
         return (
             <Avatar style={styles.avatar}>
-                {(user || admin || 'Coder').toUpperCase()[0]}
+                {(user || admin || 'Coder').toUpperCase()}
             </Avatar>
         )
     }
@@ -33,7 +33,7 @@ class UserMenu extends BaseComponent {
 
     render() {
         const { user, admin } = this.props
-        if (user === null || admin === null) {
+        if (user === null && admin === null) {
             return null;
         }
 
@@ -41,7 +41,7 @@ class UserMenu extends BaseComponent {
             <Row type="flex" align='middle' justify="center" style={styles.container}>
                 {this.renderAvatar()}
                 <Typography style={styles.title1}>Welcome,</Typography>
-                <Typography style={styles.title2}>{this.props.user}</Typography>
+                <Typography style={styles.title2}>{this.props.user || this.props.admin || "Coder"}</Typography>
             </Row>
         )
     }

@@ -41,7 +41,6 @@ class SignUp extends BaseComponent {
             form.append('password', values.password);
 
             var successAction = (result) => {
-                localStorage.setItem('user', JSON.stringify(result.content));
                 this.props.switch()
                 this.pushNotification("success", "注册成功！现在可以登录啦！");
             }

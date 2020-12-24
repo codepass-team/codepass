@@ -32,26 +32,18 @@ class UserLayout extends BaseComponent {
     }
 
     componentWillMount() {
-        if (localStorage.getItem("user") !== null) {
-            const user = localStorage.getItem("user")
-            this.props.dispatch(loginAsUser(user))
-        } else {
-            this.props.dispatch(logout())
-            localStorage.clear()
-        }
         this.props.dispatch(setOnCancel(this.onCancel))
     }
 
-    createRoutes = (routes) => {
+    createRoutes = (routes, parent) => {
         return (
             routes.map((prop, key) => {
                 return <PrivateRoute
                     role={0}
                     auth={prop.auth}
-                    path={prop.path}
+                    path={parent + prop.path}
                     component={prop.component}
-                    key={key}
-                    user={this.props.user} />;
+                    key={key} />;
             })
         )
     };
@@ -74,7 +66,7 @@ class UserLayout extends BaseComponent {
                 <BaseHeader items={this.state.items} />
                 <Content style={{ backgroundColor: "white" }}>
                     <Router history={this.props.history}>
-                        {this.createRoutes(mainRoutes[0].children)}
+                        {this.createRoutes(mainRoutes[0].children, mainRoutes[0].path)}
                     </Router>
                 </Content>
                 <AuthModal switch={this.switch} />

@@ -1,7 +1,7 @@
 import React from "react"
 import { Route, Router, withRouter } from "react-router-dom"
 import { BackTop, Icon, Layout, Menu } from 'antd'
-import { cancelModal, loginAsUser, logout, setOnCancel, showSignIn, showSignUp } from '../../../redux/actions/action'
+import { cancelModal, loginAsUser, loginAsAdmin, logout, setOnCancel, showSignIn, showSignUp } from '../../../redux/actions/action'
 import mainRoutes from "../../../routes/routes"
 import PrivateRoute from "../../PrivateRoute"
 import BaseComponent from "../../BaseComponent"
@@ -24,39 +24,43 @@ class AdminLayout extends BaseComponent {
         super(props);
         this.state = {
             items: [
-                { key: "home", path: "/admin/home", name: "首页", icon: "home" },
-                { key: "question", path: "/admin/question", name: "问题", icon: "question" },
-                { key: "answer", path: "/admin/answer", name: "回答", icon: "answer" },
-                { key: "user", path: "/admin/user", name: "用户", icon: "user" },
+                { key: "home", path: "/admin/home", name: "首页", icon: "unordered-list" },
+                { key: "question", path: "/admin/question", name: "问题", icon: "unordered-list" },
+                { key: "answer", path: "/admin/answer", name: "回答", icon: "unordered-list" },
+                { key: "user", path: "/admin/user", name: "用户", icon: "unordered-list" },
             ],
             collapsed: false,
         }
+    }
+
+    componentWillMount() {
+        const user = this.loadStorage("user")
+        const isAdmin = this.loadStorage("isAdmin")
+        if (user) {
+            if (isAdmin == 'true') {
+                this.props.dispatch(loginAsAdmin(user))
+            }
+            else {
+                this.props.dispatch(loginAsUser(user))
+            }
+        } else {
+            this.props.dispatch(logout())
+        }
+        this.props.dispatch(setOnCancel(this.onCancel))
     }
 
     onCollapse = collapsed => {
         this.setState({ collapsed });
     };
 
-    componentWillMount() {
-        if (localStorage.getItem("user") !== null) {
-            const user = localStorage.getItem("user")
-            this.props.dispatch(loginAsUser(user))
-        } else {
-            this.props.dispatch(logout())
-            localStorage.clear()
-        }
-        this.props.dispatch(setOnCancel(this.onCancel))
-    }
-
-    createRoutes = (routes) => {
+    createRoutes = (routes, parent) => {
         return routes.map((route, key) => (
             <PrivateRoute
                 role={1}
                 auth={route.auth}
-                path={route.path}
+                path={parent + route.path}
                 component={route.component}
-                key={key}
-                user={this.props.user} />
+                key={key} />
         ))
     };
 
@@ -72,7 +76,6 @@ class AdminLayout extends BaseComponent {
     }
 
     handleClick = (e) => {
-        console.log(this.state.items[Number.parseInt(e.key)])
         this.setState({
             current: e.key,
         });

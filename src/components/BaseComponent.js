@@ -103,7 +103,7 @@ class BaseComponent extends Component {
     handleResult = (result, successAction, unsuccessAction, errorAction) => {
         if (!result) {
             if (errorAction) errorAction()
-            this.pushNotification("warning", "Connection Failure");
+            this.pushNotification("warning", "网络错误");
             return;
         } else if (result.status === null) {
             if (unsuccessAction) unsuccessAction(result)

@@ -23,7 +23,6 @@ class UserPopover extends BaseComponent {
     };
 
     signOut = () => {
-        localStorage.clear()
         this.props.dispatch(logout())
     }
 

@@ -8,8 +8,6 @@ import mainRoutes from "../../routes/routes";
 import PrivateRoute from "../PrivateRoute";
 import BaseComponent from "../BaseComponent";
 
-import store from '../../redux/store'
-
 const { Content } = Layout;
 
 const mapStateToProps = state => ({
@@ -34,14 +32,13 @@ class BaseLayout extends BaseComponent {
     return routes.map((route, key) => {
       return (
         // prop.auth === true ?
-        <PrivateRoute role={-1} auth={route.auth} path={route.path} component={route.component} key={key} user={this.props.user} />
+        <PrivateRoute role={route.role} auth={route.auth} path={route.path} component={route.component} key={key} />
         // : <Route path={route.path} component={route.component} key={key} />
       )
     });
   }
 
   refreshUser() {
-    console.log(store.getState())
     const user = this.loadStorage("user")
     const isAdmin = this.loadStorage("isAdmin")
     if (user) {
@@ -53,9 +50,7 @@ class BaseLayout extends BaseComponent {
       }
     } else {
       this.props.dispatch(logout())
-      localStorage.clear()
     }
-    console.log(store.getState())
   }
 
   render() {

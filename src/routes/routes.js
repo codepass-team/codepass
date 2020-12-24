@@ -65,6 +65,8 @@ const mainRoutes = [//默认路由（其实是第二层，第一层在隔壁inde
     {
         path: "/admin",
         icon: 'admin',
+        auth: true,
+        role: 1,
         component: AdminLayout,
         children: [
             {

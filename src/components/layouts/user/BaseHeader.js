@@ -27,7 +27,6 @@ class BaseHeader extends BaseComponent {
 
     constructor(props) {
         super(props);
-        console.log(this.props)
         this.state = {
             isEnter: false,
             index: 0,
@@ -90,7 +89,7 @@ class BaseHeader extends BaseComponent {
     }
 
     renderUser = () => {
-        if (this.props.user === null) {
+        if (this.props.user === null && this.props.admin === null) {
             return (
                 <Col span={12}>
                     <Row type="flex" justify="end" align='middle' style={{ marginRight: "40px" }}>
@@ -161,6 +160,7 @@ class BaseHeader extends BaseComponent {
     }
 
     render() {
+        console.log("baseheader")
         const bgheight = heights[this.state.index]
         const paperStyle = this.handleStyle()
         return (

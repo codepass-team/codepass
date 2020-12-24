@@ -33,11 +33,9 @@ class SignIn extends BaseComponent {
             var successAction = (result) => {
                 if (result.status === "ok") {
                     let data = result.data
-                    localStorage.setItem('user', usrname);
                     localStorage.setItem('token', data.token);
                     if (data.isAdmin) {
                         this.props.dispatch(loginAsAdmin(usrname));
-                        localStorage.setItem('isAdmin', true);
                         this.pushNotification("success", "欢迎管理员" + usrname + "回到CodePass");
                     } else {
                         this.props.dispatch(loginAsUser(usrname));
