@@ -9,10 +9,9 @@ import AuthModal from "../../auth/authModal"
 import BaseDrawer from "../../BaseDrawer"
 
 import { connect } from 'react-redux';
-import BaseHeader from "../user/BaseHeader"
-import Sider from "antd/lib/layout/Sider"
+import AdminHeader from "./AdminHeader"
+const { Header, Content, Sider } = Layout;
 
-const { Content } = Layout;
 const mapStateToProps = state => ({
     user: state.identityReducer.user,
     signInVisible: state.modalReducer.signInVisible,
@@ -83,30 +82,30 @@ class AdminLayout extends BaseComponent {
 
     render() {
         return (
-            <Layout>
+            <Layout style={{ minHeight: '100vh' }}>
                 <BackTop visibilityHeight={200} style={{ zIndex: 10 }} />
-                <BaseHeader items={this.state.items} />
-                <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse}>
-                    <div style={styles.logo} />
-                    <Menu
-                        onClick={this.handleClick}
-                        defaultSelectedKeys={['0']}
-                        mode='vertical'
-                        theme='dark'
-                    >
-                        {this.state.items.map((item, index) =>
-                            <Menu.Item key={index}>
-                                <Icon type={item.icon} />
-                                {item.name}
-                            </Menu.Item>)}
-                    </Menu>
-                </Sider>
+                <AdminHeader />
                 <Layout>
-                    <Content style={{ backgroundColor: "white" }}>
+                    <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse}>
+                        <div style={styles.logo} />
+                        <Menu
+                            onClick={this.handleClick}
+                            defaultSelectedKeys={['0']}
+                            mode='vertical'
+                            theme='dark'
+                        >
+                            {this.state.items.map((item, index) =>
+                                <Menu.Item key={index}>
+                                    <Icon type={item.icon} />
+                                    {item.name}
+                                </Menu.Item>)}
+                        </Menu>
+                    </Sider>
+                    <Content style={{ margin: '0 16px' }}>
                         {this.createRoutes(mainRoutes[1].children)}
+                        <AuthModal switch={this.switch} />
+                        <BaseDrawer />
                     </Content>
-                    <AuthModal switch={this.switch} />
-                    <BaseDrawer />
                 </Layout>
             </Layout>
         );
