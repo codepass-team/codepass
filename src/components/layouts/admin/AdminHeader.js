@@ -5,8 +5,9 @@ import BaseComponent from '../../BaseComponent';
 import { BackTop, Icon, Layout, Menu, Col, Row, Button, Popover } from 'antd'
 import UserPopover from '../../user/UserPopover';
 import UserMenu from '../../user/UserMenu';
-import { Paper } from '@material-ui/core';
-const { Header, Content, Sider } = Layout;
+import { showSignIn, showSignUp } from "../../../redux/actions/action"
+
+const { Header, Content, Sider } = Layout
 
 class AdminHeader extends BaseComponent {
 
@@ -49,6 +50,14 @@ class AdminHeader extends BaseComponent {
                 </Col>
             )
         }
+    }
+
+    signIn = () => {
+        this.props.dispatch(showSignIn())
+    }
+
+    signUp = () => {
+        this.props.dispatch(showSignUp())
     }
 
 
