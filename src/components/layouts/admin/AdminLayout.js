@@ -87,7 +87,6 @@ class AdminLayout extends BaseComponent {
                 <AdminHeader />
                 <Layout>
                     <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse}>
-                        <div style={styles.logo} />
                         <Menu
                             onClick={this.handleClick}
                             defaultSelectedKeys={['0']}
