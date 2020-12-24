@@ -78,7 +78,7 @@ export class Search extends BaseComponent {
                 <Row style={styles.container}>
                     <Row style={styles.rows} id="listStart" type='flex' justify='center'>
                         <Col xs={22} sm={20} lg={17}>
-                            <h3 style={styles.titles}>Search Result</h3>
+                            <h3 style={styles.titles}>搜索结果:</h3>
                         </Col>
                     </Row>
                     <Row style={styles.rows} type='flex' justify='center'>
@@ -96,10 +96,11 @@ const styles = {
         marginTop: "50px"
     },
     titles: {
-        marginLeft: 20,
+        marginLeft: 25,
         marginTop: 10,
-        fontSize: 22,
+        fontSize: 35,
         fontFamily: "Georgia"
+    
     },
     rows: {
         marginBottom: 30

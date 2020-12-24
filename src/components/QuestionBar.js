@@ -132,7 +132,7 @@ class QuestionBar extends BaseComponent {
                             autosize={{ minRows: 2, maxRows: 5 }}
                         />
                         <Row style={{ width: "100%", fontSize: 14, marginTop: 7 }} type="flex" justify="end">
-                            Docker-{dockerId} has been set up
+                            Docker容器-{dockerId}已经被建立好了！
                         </Row>
                         <Row style={{ width: "100%" }} type="flex" justify="end">
                             <Button
@@ -140,7 +140,7 @@ class QuestionBar extends BaseComponent {
                                 size="large"
                                 type="primary"
                                 onClick={this.redirectDocker}
-                            >Open the docker and show us the code</Button>
+                            >现在打开您的Docker容器来给我们展示你的代码吧！</Button>
                         </Row>
                         <Row style={{ width: "100%" }} type="flex" justify="end">
                             <Button
@@ -148,7 +148,7 @@ class QuestionBar extends BaseComponent {
                                 size="large"
                                 type="link"
                                 onClick={this.submit}
-                            >Go to Question Detail</Button>
+                            >进入问题详情页</Button>
                         </Row>
                     </Card>
                 )
