@@ -3,16 +3,18 @@ import { Redirect, Route, Router, withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 import { Layout } from 'antd';
 
-import { loginAsUser, logout } from '../../redux/actions/action';
+import { loginAsUser, loginAsAdmin, logout } from '../../redux/actions/action';
 import mainRoutes from "../../routes/routes";
 import PrivateRoute from "../PrivateRoute";
 import BaseComponent from "../BaseComponent";
 
+import store from '../../redux/store'
 
 const { Content } = Layout;
 
 const mapStateToProps = state => ({
-  user: state.identityReducer.user
+  user: state.identityReducer.user,
+  admin: state.identityReducer.admin
 })
 
 class BaseLayout extends BaseComponent {
@@ -39,13 +41,21 @@ class BaseLayout extends BaseComponent {
   }
 
   refreshUser() {
+    console.log(store.getState())
     const user = this.loadStorage("user")
+    const isAdmin = this.loadStorage("isAdmin")
     if (user) {
-      this.props.dispatch(loginAsUser(user))
+      if (isAdmin == 'true') {
+        this.props.dispatch(loginAsAdmin(user))
+      }
+      else {
+        this.props.dispatch(loginAsUser(user))
+      }
     } else {
       this.props.dispatch(logout())
       localStorage.clear()
     }
+    console.log(store.getState())
   }
 
   render() {

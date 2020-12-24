@@ -14,8 +14,9 @@ const { Header } = Layout
 
 const mapStateToProps = state => ({
     user: state.identityReducer.user,
+    admin: state.identityReducer.admin,
     signInVisible: state.modalReducer.signInVisible,
-    signUpVisible: state.modalReducer.signUpVisible,
+    signUpVisible: state.modalReducer.signUpVisible
 })
 
 var heights = [{ height: "800px" }, { height: "700px" }]
@@ -26,6 +27,7 @@ class BaseHeader extends BaseComponent {
 
     constructor(props) {
         super(props);
+        console.log(this.props)
         this.state = {
             isEnter: false,
             index: 0,

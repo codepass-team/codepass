@@ -1,6 +1,6 @@
 import React from 'react';
 import { withRouter } from "react-router-dom";
-import { loginAsUser } from '../../redux/actions/action';
+import { loginAsUser, loginAsAdmin } from '../../redux/actions/action';
 import { Button, Col, Form, Row } from 'antd';
 import BaseComponent from '../BaseComponent';
 import { FormButton, FormText } from '../../components/forms';
@@ -15,22 +15,35 @@ class SignIn extends BaseComponent {
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
-            if (values.usrname === '') {
+            const { usrname, pwd } = values
+
+            if (usrname === '') {
                 this.pushNotification("warning", "用户名不能为空", this.props.dispatch);
                 return;
             }
-            if (values.pwd === '') {
+            if (pwd === '') {
                 this.pushNotification("warning", "密码不能为空", this.props.dispatch);
                 return;
             }
 
             let form = new FormData();
-            form.append('username', values.usrname);
-            form.append('password', values.pwd);
+            form.append('username', usrname);
+            form.append('password', pwd);
 
             var successAction = (result) => {
                 if (result.status === "ok") {
-                    this.handleSuccess(values.usrname, result.data);
+                    let data = result.data
+                    localStorage.setItem('user', usrname);
+                    localStorage.setItem('token', data.token);
+                    if (data.isAdmin) {
+                        this.props.dispatch(loginAsAdmin(usrname));
+                        localStorage.setItem('isAdmin', true);
+                        this.pushNotification("success", "欢迎管理员" + usrname + "回到CodePass");
+                    } else {
+                        this.props.dispatch(loginAsUser(usrname));
+                        this.pushNotification("success", "欢迎" + usrname + "回到CodePass");
+                    }
+                    this.props.onCancel()
                 } else {
                     this.pushNotification("warning", "用户名或密码错误");
                 }
@@ -42,14 +55,6 @@ class SignIn extends BaseComponent {
 
             this.post('/api/login', form, successAction, errorAction);
         });
-    }
-
-    handleSuccess = (username, result) => {
-        this.props.dispatch(loginAsUser(username));
-        localStorage.setItem('user', username);
-        localStorage.setItem('token', result.token);
-        this.props.onCancel()
-        this.pushNotification("success", "欢迎" + username + "回到CodePass");
     }
 
     renderLogo = () => {
@@ -84,7 +89,7 @@ class SignIn extends BaseComponent {
                                     type="flex" justify='start'>请输入你的密码:</Row>
                                 <FormText form={this.props.form}
                                     label='' name='pwd' required={true} icon="lock"
-                                    inputType="password" name1='密码'/>
+                                    inputType="password" name1='密码' />
                                 <FormButton form={this.props.form} label="登陆" style={styles.button} />
                                 <Button style={styles.button2} onClick={this.props.onCancel}>
                                     取消

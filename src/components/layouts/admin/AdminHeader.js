@@ -2,12 +2,18 @@ import React from 'react'
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import BaseComponent from '../../BaseComponent';
-import { BackTop, Icon, Layout, Menu, Col, Row, Button, Popover } from 'antd'
+import { Layout, Menu, Col, Row, Button, Popover } from 'antd'
 import UserPopover from '../../user/UserPopover';
 import UserMenu from '../../user/UserMenu';
 import { showSignIn, showSignUp } from "../../../redux/actions/action"
 
-const { Header, Content, Sider } = Layout
+const { Header } = Layout
+
+const mapStateToProps = state => ({
+    admin: state.identityReducer.admin,
+    signInVisible: state.modalReducer.signInVisible,
+    signUpVisible: state.modalReducer.signUpVisible
+})
 
 class AdminHeader extends BaseComponent {
 
@@ -22,11 +28,12 @@ class AdminHeader extends BaseComponent {
     };
 
     renderUser = () => {
-        if (!this.props.user) {
+        console.log(this.props)
+        if (!this.props.admin) {
             return (
                 <Col span={12}>
                     <Row type="flex" justify="end" align='middle' style={{ marginRight: "40px" }}>
-                        <Button style={{ color: "white" }} type="link" icon="user" size="large"
+                        <Button style={{ color: "white", height: '64px' }} type="link" icon="user" size="large"
                             onClick={this.signIn}>
                             登录
                         </Button>
@@ -42,7 +49,7 @@ class AdminHeader extends BaseComponent {
                 <Col span={12}>
                     <Row type="flex" justify="end" style={{ marginRight: "40px" }}>
                         <Popover content={<UserPopover />}>
-                            <Button style={{ height: 64, backgroundColor: "rgba(0,0,0,0)" }} type="link">
+                            <Button style={{ height: 64 }} type="link">
                                 <UserMenu />
                             </Button>
                         </Popover>
@@ -100,7 +107,6 @@ class AdminHeader extends BaseComponent {
 }
 
 const styles = {
-
     logo: {
         height: '64px',
         width: '192px'
@@ -108,4 +114,4 @@ const styles = {
 }
 
 
-export default connect()(AdminHeader)
+export default (connect(mapStateToProps)(AdminHeader))

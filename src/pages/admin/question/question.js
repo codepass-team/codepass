@@ -41,7 +41,7 @@ export class Question extends BaseComponent {
                 pagination.total = data.totalCount;
                 this.setState({
                     loading: false,
-                    data: data.results,
+                    data: data.content,
                     pagination,
                 });
             }
@@ -50,18 +50,14 @@ export class Question extends BaseComponent {
 
     render() {
         return (
-            <Row style={{ marginTop: 20 }} type='flex' align='middle' justify='center'>
-                <Col span={18} offset={1}>
-                    <Table
-                        rowKey='id'
-                        columns={this.columns}
-                        dataSource={this.state.data}
-                        pagination={this.state.pagination}
-                        loading={this.state.loading}
-                        onChange={this.handleTableChange}
-                    />
-                </Col>
-            </Row>
+            <Table
+                rowKey='id'
+                columns={this.columns}
+                dataSource={this.state.data}
+                pagination={this.state.pagination}
+                loading={this.state.loading}
+                onChange={this.handleTableChange}
+            />
         )
     }
 }

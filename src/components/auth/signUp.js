@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 
 const mapStateToProps = state => ({
     user: state.identityReducer.user,
-    admin: state.identityReducer.admin,
+    admin: state.identityReducer.admin
 })
 
 class SignUp extends BaseComponent {

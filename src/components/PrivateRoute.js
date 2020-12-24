@@ -7,7 +7,7 @@ import { notification } from 'antd';
 const mapStateToProps = state => ({
     user_redux: state.identityReducer.user,
     admin_redux: state.identityReducer.admin,
-    sales_redux: state.identityReducer.sales,
+    sales_redux: state.identityReducer.sales
 })
 
 const PrivateRoute = function ({

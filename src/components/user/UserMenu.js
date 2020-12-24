@@ -1,12 +1,13 @@
 import React from "react";
-import {Row} from 'antd';
-import {withRouter} from "react-router-dom";
-import {connect} from "react-redux"
+import { Row } from 'antd';
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux"
 import BaseComponent from "../BaseComponent"
-import {Avatar, Typography} from '@material-ui/core';
+import { Avatar, Typography } from '@material-ui/core';
 
 const mapStateToProps = state => ({
-    user: state.identityReducer.user
+    user: state.identityReducer.user,
+    admin: state.identityReducer.admin
 })
 
 class UserMenu extends BaseComponent {
@@ -18,11 +19,12 @@ class UserMenu extends BaseComponent {
     };
 
     renderAvatar = () => {
-        if (this.props.user === null)
+        const { user, admin } = this.props
+        if (user === null || admin === null)
             return null;
         return (
             <Avatar style={styles.avatar}>
-                {this.props.user.toUpperCase()[0]}
+                {(user || admin || 'Coder').toUpperCase()[0]}
             </Avatar>
         )
     }
@@ -30,7 +32,8 @@ class UserMenu extends BaseComponent {
     /* <Avatar style={styles.avatar} src={this.getImagePath(this.props.user.avatarId)}/> */
 
     render() {
-        if (this.props.user === null) {
+        const { user, admin } = this.props
+        if (user === null || admin === null) {
             return null;
         }
 
