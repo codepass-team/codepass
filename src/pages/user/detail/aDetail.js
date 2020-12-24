@@ -119,7 +119,9 @@ class ADetail extends BaseComponent {
                         <Skeleton />
                         :
                         <Col span={24}>
-                            <QComment comments={this.state.comments} questionId={this.state.question.id} />
+                            <QComment user={this.state.question.questioner}
+                                comments={this.state.comments}
+                                questionId={this.state.question.id} />
                         </Col> : null
                 }
             </Row >

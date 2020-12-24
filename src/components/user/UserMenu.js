@@ -24,7 +24,7 @@ class UserMenu extends BaseComponent {
             return null;
         return (
             <Avatar style={styles.avatar}>
-                {(user || admin || 'Coder').toUpperCase()}
+                {(user || admin || 'Coder').toUpperCase()[0]}
             </Avatar>
         )
     }
@@ -41,7 +41,7 @@ class UserMenu extends BaseComponent {
             <Row type="flex" align='middle' justify="center" style={styles.container}>
                 {this.renderAvatar()}
                 <Typography style={styles.title1}>Welcome,</Typography>
-                <Typography style={styles.title2}>{this.props.user || this.props.admin || "Coder"}</Typography>
+                <Typography style={styles.title2}>{(this.props.user || this.props.admin || "Coder")}</Typography>
             </Row>
         )
     }
