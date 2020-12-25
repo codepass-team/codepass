@@ -1,5 +1,5 @@
 import React from 'react'
-import { Row, Col, Table, Tag } from 'antd'
+import { Row, Col, Table, Tag, Button } from 'antd'
 import BaseComponent from "../../../components/BaseComponent"
 
 
@@ -18,8 +18,23 @@ export class Answer extends BaseComponent {
             title: '状态', dataIndex: 'status', render: s => <Tag color={s ? 'green' : 'gray'}>
                 {s ? '编辑中' : '已发布'}
             </Tag>
+        },
+        {
+            title: '操作', dataIndex: 'x', render: (s, r) => <Button onClick={()=>this.del(r.id)}>删除</Button>
         }
     ]
+
+    del(id) {
+        this.delete('/api/answer/' + id, res => {
+            if (res.status === 'ok') {
+                let idx = this.state.data.map(r => r.id).indexOf(id)
+                this.state.data.splice(idx, 1)
+                this.setState({
+                    data: this.state.data
+                })
+            }
+        })
+    }
 
     constructor(props) {
         super(props)

@@ -56,6 +56,7 @@ export class Docker extends BaseComponent {
                 bloading[i] = false
                 data[i].port = 0
                 data[i].status = 0
+                data[i].password = ''
                 this.setState({
                     bloading,
                     data
