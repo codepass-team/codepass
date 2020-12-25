@@ -11,13 +11,14 @@ export class List extends BaseComponent {
         this.state = {
             items: [],
             loading: false,
+            user: 0,
             // page, etc
         }
     };
 
     componentWillMount() {
 
-        this.setState({ loading: true })
+        this.setState({ loading: true, user: this.props.user })
 
         this.getWithErrorAction('/api/question/listAll', (result) => {
             if (result.status === "ok") {
@@ -41,7 +42,9 @@ export class List extends BaseComponent {
     }
 
     renderUCard = (item, index) => {
-        // 只有自己提出的问题处在编辑状态, 后端才会返回
+        if (item.questioner.username !== this.state.user && item.status == 0) {
+            return null
+        }
         return (
             <UCard data={item} key={index} />
         )
