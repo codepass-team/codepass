@@ -15,8 +15,8 @@ export class Answer extends BaseComponent {
         { title: '评论数', dataIndex: 'commentCount' },
         { title: '收藏数', dataIndex: 'collectCount' },
         {
-            title: '状态', dataIndex: 'status', render: s => <Tag color={s ? 'green' : 'gray'}>
-                {s ? '编辑中' : '已发布'}
+            title: '状态', dataIndex: 'status', render: s => <Tag color={s ? 'gray' : 'green'}>
+                {s ? '已发布' : '编辑中'}
             </Tag>
         },
         {

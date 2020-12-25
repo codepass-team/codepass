@@ -78,6 +78,7 @@ class QuestionBar extends BaseComponent {
     }
 
     submit = () => {
+        console.log(this.state)
         const { qid, title, desp } = this.state
         const user = this.loadStorage("user")
 
