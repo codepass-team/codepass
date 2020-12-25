@@ -88,7 +88,7 @@ class SignIn extends BaseComponent {
                                 <FormText form={this.props.form}
                                     label='' name='pwd' required={true} icon="lock"
                                     inputType="password" name1='密码' />
-                                <FormButton form={this.props.form} label="登陆" style={styles.button} />
+                                <FormButton form={this.props.form} label="登录" style={styles.button} />
                                 <Button style={styles.button2} onClick={this.props.onCancel}>
                                     取消
                                 </Button>
