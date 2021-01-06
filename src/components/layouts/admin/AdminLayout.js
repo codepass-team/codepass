@@ -1,5 +1,5 @@
 import React from "react"
-import { Route, Router, withRouter } from "react-router-dom"
+import { withRouter } from "react-router-dom"
 import { BackTop, Icon, Layout, Menu } from 'antd'
 import { cancelModal, loginAsUser, loginAsAdmin, logout, setOnCancel, showSignIn, showSignUp } from '../../../redux/actions/action'
 import mainRoutes from "../../../routes/routes"
@@ -10,7 +10,7 @@ import BaseDrawer from "../../BaseDrawer"
 
 import { connect } from 'react-redux';
 import AdminHeader from "./AdminHeader"
-const { Header, Content, Sider } = Layout;
+const { Content, Sider } = Layout;
 
 const mapStateToProps = state => ({
     user: state.identityReducer.user,

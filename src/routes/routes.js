@@ -3,8 +3,6 @@ import UserLayout from '../components/layouts/user/UserLayout'
 import AdminLayout from '../components/layouts/admin/AdminLayout'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { Form } from 'antd'
-import { Collect } from '../pages/user/collect'
 
 const mapStateToProps = state => ({
     user: state.identityReducer.user,

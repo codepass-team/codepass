@@ -193,6 +193,8 @@ export default class Data extends BaseComponent {
                         <Button onClick={() => { this.cancelButtonClick() }} className='operate-btn'>取消</Button>
                     </Col>
                 )
+            default:
+                return;
         }
     }
 }

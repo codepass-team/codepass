@@ -1,12 +1,10 @@
 import React from "react";
 import BaseComponent from '../../../components/BaseComponent'
-import { Col, Row } from 'antd';
-import { connect } from "react-redux";
+import { Row } from 'antd';
 
 export class User extends BaseComponent {
     constructor(props) {
         super(props)
-
     }
 
     render() {

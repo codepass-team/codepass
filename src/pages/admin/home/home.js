@@ -1,8 +1,7 @@
 import React from 'react'
-import { connect } from 'react-redux';
 import { withRouter } from "react-router-dom";
 import BaseComponent from '../../../components/BaseComponent';
-import { Menu, Icon, Col, Row, Table } from 'antd'
+import { Col, Row } from 'antd'
 
 export class Home extends BaseComponent {
 

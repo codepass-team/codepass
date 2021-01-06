@@ -1,5 +1,5 @@
 import React from 'react'
-import { Row, Col, Table, Tag, Button } from 'antd'
+import { Table, Tag, Button } from 'antd'
 import BaseComponent from "../../../components/BaseComponent"
 
 

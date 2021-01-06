@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
 import BaseComponent from '../../BaseComponent';
 import { Layout, Menu, Col, Row, Button, Popover } from 'antd'
 import UserPopover from '../../user/UserPopover';

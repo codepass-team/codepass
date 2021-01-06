@@ -1,7 +1,7 @@
 import React from "react"
 import { Router, withRouter } from "react-router-dom"
 import { BackTop, Layout } from 'antd'
-import { cancelModal, loginAsUser, logout, setOnCancel, showSignIn, showSignUp } from '../../../redux/actions/action'
+import { cancelModal, setOnCancel, showSignIn, showSignUp } from '../../../redux/actions/action'
 import mainRoutes from "../../../routes/routes"
 import PrivateRoute from "../../PrivateRoute"
 import BaseHeader from "./BaseHeader"

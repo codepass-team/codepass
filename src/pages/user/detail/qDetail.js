@@ -328,7 +328,7 @@ export default class QDetail extends BaseComponent {
 
 
     submit = () => {
-        const { id, title, content } = this.state.question
+        const { id } = this.state.question
         var successAction = (result) => {
             if (result.status === "ok") {
                 this.pushNotification("success", "问题已提交")

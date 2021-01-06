@@ -2,32 +2,8 @@ import React from "react";
 import BaseComponent from '../../../components/BaseComponent'
 import copy from 'copy-to-clipboard';
 import { withRouter } from "react-router-dom";
-import Description from '../../../components/markd/Description'
-import { Button, Card, Col, Descriptions, Icon, Input, Row } from 'antd';
-import like from '@ant-design/icons'
-import User from '../../../components/auth/user'
+import { Card, Col, Icon, Row } from 'antd';
 
-const { TextArea } = Input;
-const test = {
-    "answer": [{
-        "desp": "222",
-        "dockerId": "A Docker",
-        "user": "nyako",
-        "diff": ""
-    }, {
-        "desp": "333",
-        "dockerId": "as",
-        "user": "asd",
-        "diff": ""
-    }],
-    "desp": "A Large Prob",
-    "dockerId": "Q Docker",
-    "qid": "sadasdasfd",
-    "title": "Question 1",
-    "user": "Questioner"
-}
-
-var columns = [];
 
 class ACard extends BaseComponent {
 
@@ -81,7 +57,7 @@ class ACard extends BaseComponent {
     }
 
     render() {
-        const { id, questioner, content, likeCount, questionContent, questionTitle, dockerId, status } = this.props.data
+        const { id, questioner, content, likeCount, questionTitle } = this.props.data
         let user = questioner.username
         console.log(this.props.data, user)
         // const my = this.getAnswer(test.answer)
@@ -122,19 +98,5 @@ class ACard extends BaseComponent {
     }
 }
 
-const styles = {
-    container: {
-        marginBottom: "20px",
-        fontSize: 22
-    },
-    btn: {
-        padding: 5,
-        marginRight: 10
-    },
-    btn2: {
-        padding: 0,
-        marginLeft: 5
-    }
-}
 
 export default withRouter(ACard);
