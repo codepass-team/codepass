@@ -11,7 +11,7 @@ class BaseComponent extends Component {
         }
     }
 
-    host = "http://katty.top"
+    host = "http://39.108.128.87"
     port = 8000
     ip = this.host + ":" + this.port
 
