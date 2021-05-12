@@ -46,10 +46,10 @@ jobs:
           jekyll: false # optional, default is true
         env:
           GH_PAT: ${{ secrets.GH_PAT }}
-      - name: Deploy via ssh
-        uses: garygrossgarten/github-action-ssh@release
-        with:
-          command: /home/frezcirno/codepass/deploy_front.sh
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          privateKey: ${{ secrets.SSH_PRIVATE_KEY }}
+      # - name: Deploy via ssh
+      #   uses: garygrossgarten/github-action-ssh@release
+      #   with:
+      #     command: /home/frezcirno/codepass/deploy_front.sh
+      #     host: ${{ secrets.SSH_HOST }}
+      #     username: ${{ secrets.SSH_USER }}
+      #     privateKey: ${{ secrets.SSH_PRIVATE_KEY }}

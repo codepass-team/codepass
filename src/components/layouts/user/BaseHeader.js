@@ -127,7 +127,11 @@ class BaseHeader extends BaseComponent {
                 <Col sm={0} lg={10}>
                     {/* 当屏幕分辨率小于sm值时隐藏logo */}
                     <Row type="flex" justify='center'>
-                        <img alt="" style={styles.logo} src={require("../../../assets/logo2.png")} />
+                        <a onClick={() => {
+                            this.props.history.push({ pathname: "/user/home" })
+                        }}>
+                            <img alt="" style={styles.logo} src={require("../../../assets/logo2.png")} />
+                        </a>
                     </Row>
                 </Col>
                 <Col sm={12} lg={10}>
