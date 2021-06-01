@@ -57,7 +57,7 @@ class Answer extends BaseComponent {
                     <Description desp={content} />
                 </Paragraph>
                 <Collapse defaultActiveKey={['1']}>
-                    <Panel header="Show me the code" key="1">
+                    <Panel header="展示代码" key="1">
                         {this.renderDiff(diff)}
                     </Panel>
                 </Collapse>

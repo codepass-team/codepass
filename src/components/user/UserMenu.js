@@ -40,7 +40,7 @@ class UserMenu extends BaseComponent {
         return (
             <Row type="flex" align='middle' justify="center" style={styles.container}>
                 {this.renderAvatar()}
-                <Typography style={styles.title1}>Welcome,</Typography>
+                <Typography style={styles.title1}>欢迎,</Typography>
                 <Typography style={styles.title2}>{(this.props.user || this.props.admin || "Coder")}</Typography>
             </Row>
         )

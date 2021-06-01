@@ -89,7 +89,7 @@ class BaseBanner extends BaseComponent {
                     id="title"
                     style={styles.title2}
                 >
-                    Welcome to
+                    欢迎来到
                 </TweenOne>
 
                 <TweenOne
