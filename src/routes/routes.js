@@ -35,6 +35,11 @@ const mainRoutes = [//默认路由（其实是第二层，第一层在隔壁inde
                 component: wrap(Pages.User.List),
             },
             {
+                path: "/help",
+                icon: 'help',
+                component: wrap(Pages.User.Help),
+            },
+            {
                 path: "/search",
                 icon: 'search',
                 component: wrap(Pages.User.Search)

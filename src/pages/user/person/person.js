@@ -29,6 +29,10 @@ export class Person extends BaseComponent {
                 name: '年龄',
                 content: null
             },
+            email:{
+                name:'邮箱',
+                content:null
+            },
             data: null,
             change: -1,
         }
@@ -47,6 +51,7 @@ export class Person extends BaseComponent {
                     job: { name: '职业', content: result.data.job },
                     tech: { name: '所在行业', content: result.data.tech },
                     age: { name: '年龄', content: result.data.age },
+                    age: { name: '邮箱', content: result.data.email },
                     loading: false
                 })
             } else {
@@ -103,6 +108,9 @@ export class Person extends BaseComponent {
                         }
                         <Divider></Divider>
                         {this.state.loading ? <Skeleton /> : <Data {...this.state.age} onChangeState={this.onChangeState}></Data>
+                        }
+                        <Divider></Divider>
+                        {this.state.loading ? <Skeleton /> : <Data {...this.state.email} onChangeState={this.onChangeState}></Data>
                         }
                         <Divider></Divider>
                     </Col>

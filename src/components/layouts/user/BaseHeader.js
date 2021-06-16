@@ -54,8 +54,11 @@ class BaseHeader extends BaseComponent {
             this.state.index = 1
         } else if (pathname === '/user/my') {
             this.state.index = 2
-        } else
-            this.state.index = -1
+        } else if (pathname === '/user/help'){
+            this.state.index = 3
+        }
+        // } else
+        //     this.state.index = -1
     }
 
     renderItems = (item) => {
@@ -66,7 +69,7 @@ class BaseHeader extends BaseComponent {
 
     renderMenu = () => {
         return (
-            <Col span={12}>
+            <Col span={14}>
                 <Menu
                     theme="white"
                     mode="horizontal"
@@ -91,7 +94,7 @@ class BaseHeader extends BaseComponent {
     renderUser = () => {
         if (this.props.user === null && this.props.admin === null) {
             return (
-                <Col span={12}>
+                <Col span={10}>
                     <Row type="flex" justify="end" align='middle' style={{ marginRight: "40px" }}>
                         <Button style={{ color: "white" }} type="link" icon="user" size="large"
                             onClick={this.signIn}>
@@ -107,7 +110,7 @@ class BaseHeader extends BaseComponent {
         } else {
             const content = (<UserPopover />)
             return (
-                <Col span={12}>
+                <Col span={10}>
                     <Row type="flex" justify="end" style={{ marginRight: "40px" }}>
                         <Popover content={content}>
                             <Button style={{ height: 64, backgroundColor: "rgba(0,0,0,0)" }} type="link">

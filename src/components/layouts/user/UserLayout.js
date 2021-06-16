@@ -26,7 +26,9 @@ class UserLayout extends BaseComponent {
             items: [
                 { key: "/user/home", name: "首页", icon: "home" },
                 { key: "/user/list", name: "发现", icon: "unordered-list" },
-                { key: "/user/my", name: "我的问答", icon: "user" }
+                { key: "/user/my", name: "我的问答", icon: "user" },
+                //添加帮助页面
+                { key: "/user/help", name: "帮助", icon: "question-circle" },
             ],
         }
     }
