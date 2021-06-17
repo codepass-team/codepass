@@ -43,8 +43,8 @@ class SignUp extends BaseComponent {
             var successAction = (result) => {
                 this.props.switch()
                 this.pushNotification("success", "注册成功！现在可以登录啦！");
-                this.props.history.push('/person')
-                this.pushNotification("warning", "请尽快填写个人信息，这有助于您忘记密码时修改密码");
+                // this.props.history.push('/person')
+                // this.pushNotification("warning", "请尽快填写个人信息，这有助于您忘记密码时修改密码");
             }
 
             var unsuccessAction = (result) => {
