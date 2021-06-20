@@ -44,6 +44,7 @@ class BaseBanner extends BaseComponent {
     }
 
     render() {
+        console.log('basebanner');
         return (
             <BannerAnim
                 ref={(c) => {

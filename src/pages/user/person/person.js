@@ -51,7 +51,7 @@ export class Person extends BaseComponent {
                     job: { name: '职业', content: result.data.job },
                     tech: { name: '所在行业', content: result.data.tech },
                     age: { name: '年龄', content: result.data.age },
-                    age: { name: '邮箱', content: result.data.email },
+                    email: { name: '邮箱', content: result.data.email },
                     loading: false
                 })
             } else {
@@ -65,6 +65,7 @@ export class Person extends BaseComponent {
     }
 
     modifyState = () => {
+        console.log(this.state);
         var successAction = (result) => {
             console.log(result)
             if (result.status === 'ok') {

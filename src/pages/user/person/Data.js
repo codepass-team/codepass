@@ -13,7 +13,7 @@ export default class Data extends BaseComponent {
             display_btn: false,
             display_msg: true,
             save_btn_disabled: true,
-            input: null
+            input: null,
         }
     }
 
@@ -29,7 +29,7 @@ export default class Data extends BaseComponent {
     }
 
     renderRow() {
-        if (this.props.content === null) {
+        if (this.props.content === null||this.props.content==='null') {
             return (
                 <Col className='msg' span={18} onMouseOver={() => this.handleMouseOver()} onMouseOut={() => this.handleMouseOut()}>
                     <span className='msg-text'>未知</span>
@@ -106,6 +106,7 @@ export default class Data extends BaseComponent {
     }
 
     renderModifyData() {
+        console.log(this.state.input);
         switch (this.props.name) {
             case ('昵称'):
                 return (
@@ -118,7 +119,7 @@ export default class Data extends BaseComponent {
                             type='primary'
                             className='operate-btn'
                             disabled={this.state.save_btn_disabled ? true : false}
-                            onClick={() => this.props.onChangeState({ name: { name: '昵称', content: this.state.input },change:0})}
+                            onClick={() => this.props.onChangeState({ name: { name: '昵称', content: this.state.input?this.state.input:null },change:0})}
                         >保存</Button>
                         <Button onClick={() => { this.cancelButtonClick() }} className='operate-btn'>取消</Button>
                     </Col>
@@ -133,7 +134,7 @@ export default class Data extends BaseComponent {
                         <Button
                             type='primary'
                             className='operate-btn'
-                            onClick={() => this.props.onChangeState({ gender: { name: '性别', content: this.state.input } ,change:1})}
+                            onClick={() => this.props.onChangeState({ gender: { name: '性别', content: this.state.input?this.state.input:null } ,change:1})}
                         >保存</Button>
                         <Button onClick={() => { this.cancelButtonClick() }} className='operate-btn'>取消</Button>
                     </Col>
@@ -142,14 +143,14 @@ export default class Data extends BaseComponent {
                 return (
                     <Col span={18}>
                         <Input
-                            placeholder={this.props.content ? this.props.content : ''}
+                            placeholder={this.props.content? this.props.content : ''}
                             style={{ width: '50%' }} onChange={(e) => { this.inputChange(e.target.value) }}
                         />
                         <Button
                             type='primary'
                             className='operate-btn'
                             disabled={this.state.save_btn_disabled ? true : false}
-                            onClick={() => this.props.onChangeState({ job: { name: '职业', content: this.state.input },change:2 })}
+                            onClick={() => this.props.onChangeState({ job: { name: '职业', content: this.state.input?this.state.input:null },change:2 })}
                         >保存</Button>
                         <Button onClick={() => { this.cancelButtonClick() }} className='operate-btn'>取消</Button>
                     </Col>
@@ -158,7 +159,7 @@ export default class Data extends BaseComponent {
                 return (
                     <Col span={18}>
                         <Select style={{ width: '50%' }}
-                            defaultValue='高新科技'
+                            defaultValue={this.state.input?this.state.input:'高新科技'}
                             onChange={e => this.inputChange(e)}
                         >
                             <Option value='高新科技'>高新科技</Option>
@@ -180,7 +181,7 @@ export default class Data extends BaseComponent {
                             <Option value='化工业'>化工业</Option>
                         </Select>
                         <Button type='primary' className='operate-btn'
-                            onClick={() => this.props.onChangeState({ tech: { name: '所在行业', content: this.state.input },change:3 })}>保存</Button>
+                            onClick={() => this.props.onChangeState({ tech: { name: '所在行业', content: this.state.input?this.state.input:'高新科技' },change:3 })}>保存</Button>
                         <Button onClick={() => { this.cancelButtonClick() }} className='operate-btn'>取消</Button>
                     </Col>
                 )
@@ -189,7 +190,23 @@ export default class Data extends BaseComponent {
                     <Col span={18}>
                         <InputNumber min={1} max={100} style={{ width: '50%' }} onChange={(e) => { this.inputChange(e) }}></InputNumber>
                         <Button type='primary' className='operate-btn' disabled={this.state.save_btn_disabled ? true : false}
-                            onClick={() => this.props.onChangeState({ age: { name: '年龄', content: this.state.input },change:4})}>保存</Button>
+                            onClick={() => this.props.onChangeState({ age: { name: '年龄', content: this.state.input?this.state.input:null },change:4})}>保存</Button>
+                        <Button onClick={() => { this.cancelButtonClick() }} className='operate-btn'>取消</Button>
+                    </Col>
+                )
+            case ('邮箱'):
+                return (
+                    <Col span={18}>
+                        <Input
+                            placeholder={this.props.content? this.props.content : ''}
+                            style={{ width: '50%' }} onChange={(e) => { this.inputChange(e.target.value) }}
+                        />
+                        <Button
+                            type='primary'
+                            className='operate-btn'
+                            disabled={this.state.save_btn_disabled ? true : false}
+                            onClick={() => this.props.onChangeState({ job: { name: '邮箱', content: this.state.input?this.state.input:null },change:2 })}
+                        >保存</Button>
                         <Button onClick={() => { this.cancelButtonClick() }} className='operate-btn'>取消</Button>
                     </Col>
                 )

@@ -7,6 +7,8 @@ import Description from '../../../components/markd/Description'
 
 const { TabPane } = Tabs;
 
+//收藏夹页面
+
 export class Collect extends BaseComponent{
     constructor(props){
         super(props)
@@ -179,4 +181,4 @@ const styles = {
     }
 }
 
-export default withRouter(Collect)
+// export default withRouter(Collect)

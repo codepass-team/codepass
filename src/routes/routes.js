@@ -64,6 +64,11 @@ const mainRoutes = [//默认路由（其实是第二层，第一层在隔壁inde
                 icon: 'playground',
                 component: wrap(Pages.Playground)
             },
+            {
+                path: "/collect",
+                icon: 'collect',
+                component: wrap(Pages.User.Collect)
+            }
         ]
     },
     {

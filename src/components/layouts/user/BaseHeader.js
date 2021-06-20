@@ -56,9 +56,8 @@ class BaseHeader extends BaseComponent {
             this.state.index = 2
         } else if (pathname === '/user/help'){
             this.state.index = 3
-        }
-        // } else
-        //     this.state.index = -1
+        } else
+            this.state.index = -1
     }
 
     renderItems = (item) => {
@@ -167,7 +166,6 @@ class BaseHeader extends BaseComponent {
     }
 
     render() {
-        console.log("baseheader")
         const bgheight = heights[this.state.index]
         const paperStyle = this.handleStyle()
         return (

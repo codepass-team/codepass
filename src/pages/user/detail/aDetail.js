@@ -266,6 +266,7 @@ class ADetail extends BaseComponent {
     }
 
     follow = () => {
+        console.log(this.state.question.questioner.id);
         this.post('/api/user/follow/' + this.state.question.questioner.id, null, (res) => {
             if (res.status === 'ok') {
                 this.setState({
