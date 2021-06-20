@@ -24,6 +24,10 @@ class SignUp extends BaseComponent {
                 this.pushNotification("warning", "密码是空的!", this.props.dispatch);
                 return;
             }
+            if (values.email === '') {
+                this.pushNotification("warning", "邮箱是空的!", this.props.dispatch);
+                return;
+            }
             if (values.passwordAgain !== values.password) {
                 this.pushNotification("warning", "两次输入的密码不一致!", this.props.dispatch);
                 return;
@@ -39,6 +43,7 @@ class SignUp extends BaseComponent {
             let form = new FormData();
             form.append('username', values.username);
             form.append('password', values.password);
+            form.append('email', values.email);
 
             var successAction = (result) => {
                 this.props.switch()
@@ -76,20 +81,24 @@ class SignUp extends BaseComponent {
                         <div style={styles.welcome2}></div>
                         <Form onSubmit={this.handleSubmit} type='flex' justify='center'>
                             <Row style={{ width: "100%" }} type="flex" justify='center'>
-                             <Row style={{ width: "100%", marginLeft: "80px", color: '#AAAAAA', fontSize: 15 }}
+                                <Row style={{ width: "100%", marginLeft: "80px", color: '#AAAAAA', fontSize: 15 }}
                                     type="flex" justify='start'>请输入你的用户名:</Row>
                                 <FormText form={this.props.form}
-                                    name='username' required={true} icon="user" name1='用户名'/>
+                                    name='username' required={true} icon="user" name1='用户名' />
+                                <Row style={{ width: "100%", marginLeft: "80px", color: '#AAAAAA', fontSize: 15 }}
+                                    type="flex" justify='start'>请输入你的邮箱:</Row>
+                                <FormText form={this.props.form}
+                                    name='email' required={true} icon="mail" name1='邮箱' />
                                 <Row style={{ width: "100%", marginLeft: "80px", color: '#AAAAAA', fontSize: 15 }}
                                     type="flex" justify='start'>请输入你的密码:</Row>
                                 <FormText form={this.props.form} style={{ marginBottom: "10px" }}
                                     name='password' required={true} icon="lock"
-                                    inputType="password" name1='密码'/>
+                                    inputType="password" name1='密码' />
                                 <Row style={{ width: "100%", marginLeft: "80px", color: '#AAAAAA', fontSize: 15 }}
                                     type="flex" justify='start'>重复你的密码:</Row>
                                 <FormText form={this.props.form}
                                     name="passwordAgain" required={true} icon='lock'
-                                    inputType='password' name1='密码进行二次确认'/>
+                                    inputType='password' name1='密码进行二次确认' />
                             </Row>
                             <Row type='flex' justify='center'>
                                 <Col>

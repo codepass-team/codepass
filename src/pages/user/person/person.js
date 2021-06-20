@@ -29,9 +29,9 @@ export class Person extends BaseComponent {
                 name: '年龄',
                 content: null
             },
-            email:{
-                name:'邮箱',
-                content:null
+            email: {
+                name: '邮箱',
+                content: null
             },
             data: null,
             change: -1,
@@ -111,7 +111,7 @@ export class Person extends BaseComponent {
                         {this.state.loading ? <Skeleton /> : <Data {...this.state.age} onChangeState={this.onChangeState}></Data>
                         }
                         <Divider></Divider>
-                        {this.state.loading ? <Skeleton /> : <Data {...this.state.email} onChangeState={this.onChangeState}></Data>
+                        {this.state.loading ? <Skeleton /> : <Data {...this.state.email} enable_change={false} onChangeState={this.onChangeState}></Data>
                         }
                         <Divider></Divider>
                     </Col>
