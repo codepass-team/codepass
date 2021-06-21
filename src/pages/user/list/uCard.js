@@ -12,8 +12,6 @@ const { Title, Paragraph } = Typography;
 class UCard extends BaseComponent {
 
     constructor(props) {
-        console.log("UCard")
-        console.log(props)
         super(props);
         this.state = {
             desp: 1,

@@ -16,7 +16,7 @@ class QCard extends BaseComponent {
     renderTitle = (title, likeCount, user, qid) => {
         return (
             <Card style={{ marginTop: 8 }} bodyStyle={{ paddingTop: 12, paddingBottom: 12, margin: 0 }}>
-                <Col span={12} style={{ fontSize: 18, paddingLeft: 5, paddingTop: 3 }}>
+                <Col span={16} style={{ fontSize: 18, paddingLeft: 5, paddingTop: 3 }}>
                     <a onClick={() => {
                         this.props.history.push({
                             pathname: "/user/detail",
@@ -28,11 +28,11 @@ class QCard extends BaseComponent {
                     <Icon type="fire" style={{ marginRight: 5, marginLeft: 5, fontSize: 13 }} />
                     <p style={{ fontSize: 13, display: 'inline' }}>{likeCount == null ? 0 : likeCount}</p>
                 </Col>
-                <Col span={12}>
-                    <Col span={2} style={{ marginLeft: 140 }}>
+                <Col span={8}>
+                    <Col span={12}>{this.renderStatus()}</Col>
+                    <Col span={12}>
                         <Icon type="delete" style={{ paddingTop: 10 }} onClick={() => this.props.deleteQCard(this.props.index)} />
                     </Col>
-                    <Col span={6}>{this.renderStatus()}</Col>
                 </Col>
             </Card>
         );

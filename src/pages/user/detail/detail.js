@@ -9,8 +9,6 @@ import ADetail from './aDetail'
  */
 export class Detail extends BaseComponent {
     constructor(props) {
-        console.log("Detail")
-        console.log(props)
         super(props);
         this.state = {
             question: 0,

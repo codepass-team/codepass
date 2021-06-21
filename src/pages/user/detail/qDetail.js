@@ -79,7 +79,7 @@ export default class QDetail extends BaseComponent {
             <Row type="flex" justify="start" align="middle">
                 <Col span={18}>
                     <Col span={24}>
-                        <Title level={1} style={{ fontWeight: 600, marginTop: 12, marginBottom: 12 }}>{title}
+                        <Title level={1} style={styles.questionTitle}>{title}
                         </Title>
                     </Col>
                     <Row type="flex" justify="start" align="middle" style={{ width: '100%' }}>
@@ -202,7 +202,7 @@ export default class QDetail extends BaseComponent {
             if (answers.length === 0) {
                 return (
                     <Row style={{ marginTop: 100 }} type="flex" justify="center">
-                        <Paragraph style={{ fontSize: 24 }}>Kept you waiting, huh?</Paragraph>
+                        <Paragraph style={{ fontSize: 24 }}>让你久等了?</Paragraph>
                     </Row>)
             } else {
                 return (
@@ -214,7 +214,7 @@ export default class QDetail extends BaseComponent {
         } else {
             return (
                 <Row style={{ marginTop: 100 }} type="flex" justify="center">
-                    <Paragraph style={{ fontSize: 24 }}>Submit the question to make it visible online</Paragraph>
+                    <Paragraph style={{ fontSize: 24 }}>提交问题，使其在网上可见</Paragraph>
                 </Row>
             )
         }
@@ -237,6 +237,7 @@ export default class QDetail extends BaseComponent {
             </Row>
         )
     }
+
     renderCheck = () => {
         const { likeCount, ulike } = this.state
         if (!likeCount) {
@@ -353,6 +354,13 @@ export default class QDetail extends BaseComponent {
 const styles = {
     container: {
         marginTop: "50px"
+    },
+    questionTitle:{
+        lineHeight:'32px',
+        color:'#121212',
+        fontSize:'22px',
+        fontWeight:'600',
+
     }
 }
 

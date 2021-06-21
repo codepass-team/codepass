@@ -6,6 +6,7 @@ import Description from '../../../components/markd/Description'
 import { Avatar, Card, Col, Collapse, Row, Typography } from 'antd'
 import { Diff2Html } from "diff2html"
 import "./resource/diff.css"
+import MyAvatar from "../../handleAvatar"
 
 const { Paragraph } = Typography
 const { Panel } = Collapse
@@ -14,6 +15,7 @@ class Answer extends BaseComponent {
 
     constructor(props) {
         super(props);
+        console.log(props);
         this.state = {
             desp: 1,
         }
@@ -30,16 +32,14 @@ class Answer extends BaseComponent {
         return (
             <Row type="flex" style={{ width: "100%" }}>
                 <Row type="flex" align='middle' justify="start">
-                    <Avatar shape="square" style={{ marginRight: 8, fontSize: 25 }} size={44}>
-                        {user.toUpperCase()}
-                    </Avatar>
+                    <MyAvatar id={this.props.data.answerer.id} name={this.props.data.answerer.username}></MyAvatar>
                 </Row>
                 <Col span={18} style={{ padding: 2 }}>
-                    <Row type="flex" align='middle' justify="start" style={{ width: "80%", fontSize: 16 }}>
+                    <Row type="flex" align='middle' justify="start" style={{ width: "80%", fontSize: 24 }}>
                         {user}
                     </Row>
                     <Row type="flex" align='middle' justify="start" style={{ width: "80%", fontSize: 14 }}>
-                        {time}
+                        {this.handleDate(this.props.data.answerTime)+ ' '+this.handleTime(this.props.data.answerTime)}
                     </Row>
                 </Col>
             </Row>

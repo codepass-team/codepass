@@ -11,14 +11,14 @@ export class List extends BaseComponent {
         this.state = {
             items: [],
             loading: false,
-            user: 0,
+            user: this.loadStorage("user"),
             // page, etc
         }
     };
 
     componentWillMount() {
 
-        this.setState({ loading: true, user: this.props.user })
+        // this.setState({ loading: true, user: this.props.user })
 
         this.getWithErrorAction('/api/question/listAll', (result) => {
             if (result.status === "ok") {
@@ -42,7 +42,8 @@ export class List extends BaseComponent {
     }
 
     renderUCard = (item, index) => {
-        if (item.questioner.username !== this.state.user && item.status == 0) {
+        console.log(item);
+        if (item.questioner.username === this.state.user || item.status == 0) {
             return null
         }
         return (

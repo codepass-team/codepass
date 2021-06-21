@@ -1,12 +1,13 @@
 import React from "react"
 import { connect } from 'react-redux'
-import { Avatar, Button, Col, Divider, Input, Row, Skeleton, Typography } from 'antd'
+import { Avatar, Button, Col, Divider, Input, Row, Skeleton, Typography, Icon } from 'antd'
 import Answer from './answer'
 import BaseComponent from '../../../components/BaseComponent'
 import Description from '../../../components/markd/Description'
 import { showSignIn } from "../../../redux/actions/action"
 import QComment from './qComment'
 import { HeartTwoTone } from '@ant-design/icons'
+import MyAvatar from "../../handleAvatar"
 
 const { Title, Paragraph } = Typography;
 const { TextArea } = Input;
@@ -16,8 +17,7 @@ const mapStateToProps = state => ({
 
 class ADetail extends BaseComponent {
     constructor(props) {
-        console.log("ADetail")
-        console.log(props)
+        console.log(props);
         super(props);
         this.state = {
             found: false,
@@ -28,7 +28,8 @@ class ADetail extends BaseComponent {
             dockerId: "",
             aid: "",
             time: "",
-
+            id: props.question.questioner.id,
+            name: props.question.questioner.username,
             loading: false,
 
             showComment: false,
@@ -94,10 +95,10 @@ class ADetail extends BaseComponent {
     renderTitle = (title, desp, name, raiseTime) => {
         return (
             <Row type="flex" justify="start" align="middle">
-                <Col span={24}>
-                    <Title level={1} style={{ fontWeight: 600, marginTop: 12, marginBottom: 12 }}>{title}</Title>
+                <Col span={17}>
+                    <Title level={1} style={{ fontWeight: 600, marginBottom: 4 }}>{title}</Title>
                 </Col>
-                <Col span={24}>
+                <Col span={7}>
                     <Row type="flex" justify="start" align="middle">
                         {this.renderUser(name, raiseTime)}
                     </Row>
@@ -107,13 +108,17 @@ class ADetail extends BaseComponent {
                         <Description desp={desp} />
                     </Paragraph>
                 </Row>
-                {this.renderCheck()}
-                <Col span={24}>
-                    {!this.state.showComment ?
-                        <Button onClick={this.showComment}>评论</Button> :
-                        <Button onClick={this.hideComment}>收起评论</Button>
-                    }
-                </Col>
+                <Row type='flex' justify="space-between">
+                    <Col span={12} style={{paddingTop:3}}>
+                        {this.renderCheck()}
+                    </Col>
+                    <Col span={12}>
+                        {!this.state.showComment ?
+                            <Button onClick={this.showComment} type='primary'>评论</Button> :
+                            <Button onClick={this.hideComment} type='dashed'>收起评论</Button>
+                        }
+                    </Col>
+                </Row>
                 {this.state.showComment ?
                     this.state.loading2 ?
                         <Skeleton />
@@ -319,20 +324,18 @@ class ADetail extends BaseComponent {
         return (
             <Row type="flex" style={{ width: "100%" }}>
                 <Col type="flex" align='middle' justify="start">
-                    <Avatar shape="square" style={{ marginRight: 8, fontSize: 30 }} size={50}>
-                        {user}
-                    </Avatar>
+                    <MyAvatar id={this.state.id} name={this.state.name}></MyAvatar>
                 </Col>
                 <Col span={18} style={{ padding: 2 }}>
                     <Row type="flex" align='middle' justify="start" style={{ width: "80%", fontSize: 20 }}>
-                        <Col>{user}</Col>
+                        <Col style={{ marginRight: 10, marginBottom: 5 }}>{user}</Col>
                         {!this.state.ufol ?
-                            <Button onClick={this.follow}>关注</Button>
-                            : <Button onClick={this.unfollow}>取消关注</Button>
+                            <Button onClick={this.follow} size="small" type="primary"><Icon type="plus" />关注</Button>
+                            : <Button onClick={this.unfollow} size="small" type="dashed"><Icon type="close" />取消关注</Button>
                         }
                     </Row>
                     <Row type="flex" align='middle' justify="start" style={{ width: "80%", fontSize: 16 }}>
-                        {this.handleDate(time) + ' ' + this.handleDate(time)}
+                        {this.handleDate(time) + ' ' + this.handleTime(time)}
                     </Row>
                 </Col>
             </Row>
