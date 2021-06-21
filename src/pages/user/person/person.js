@@ -96,19 +96,19 @@ export class Person extends BaseComponent {
                         </div>
                     </Col>
                     <Col span={18} style={{ position: 'relative', top: '25px' }}>
-                        {this.state.loading ? <Skeleton /> : <Data {...this.state.name} onChangeState={this.onChangeState}></Data>
+                        {this.state.loading ? <Skeleton /> : <Data {...this.state.name} enable_change={true} onChangeState={this.onChangeState}></Data>
                         }
                         <Divider></Divider>
-                        {this.state.loading ? <Skeleton /> : <Data {...this.state.gender} onChangeState={this.onChangeState}></Data>
+                        {this.state.loading ? <Skeleton /> : <Data {...this.state.gender} enable_change={true} onChangeState={this.onChangeState}></Data>
                         }
                         <Divider></Divider>
-                        {this.state.loading ? <Skeleton /> : <Data {...this.state.job} onChangeState={this.onChangeState}></Data>
+                        {this.state.loading ? <Skeleton /> : <Data {...this.state.job} enable_change={true} onChangeState={this.onChangeState}></Data>
                         }
                         <Divider></Divider>
-                        {this.state.loading ? <Skeleton /> : <Data {...this.state.tech} onChangeState={this.onChangeState}></Data>
+                        {this.state.loading ? <Skeleton /> : <Data {...this.state.tech} enable_change={true} onChangeState={this.onChangeState}></Data>
                         }
                         <Divider></Divider>
-                        {this.state.loading ? <Skeleton /> : <Data {...this.state.age} onChangeState={this.onChangeState}></Data>
+                        {this.state.loading ? <Skeleton /> : <Data {...this.state.age} enable_change={true} onChangeState={this.onChangeState}></Data>
                         }
                         <Divider></Divider>
                         {this.state.loading ? <Skeleton /> : <Data {...this.state.email} enable_change={false} onChangeState={this.onChangeState}></Data>

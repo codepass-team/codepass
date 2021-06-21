@@ -1,9 +1,6 @@
 import React from 'react'
 import BaseComponent from '../../../components/BaseComponent';
-import { withRouter } from "react-router-dom"
-import User from '../../../components/auth/user'
-import {Button, Col, Icon, List, Row,Tabs,Avatar, Card} from 'antd';
-import Description from '../../../components/markd/Description'
+import {Col, Icon, List, Row, Tabs, Avatar} from 'antd';
 
 const { TabPane } = Tabs;
 

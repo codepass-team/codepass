@@ -1,6 +1,6 @@
 import React from "react"
 import BaseComponent from '../../../components/BaseComponent'
-import { Col, Row, Skeleton, Tabs } from 'antd'
+import { Col, Row, Tabs } from 'antd'
 
 const { TabPane } = Tabs;
 
