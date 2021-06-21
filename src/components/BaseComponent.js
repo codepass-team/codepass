@@ -112,7 +112,7 @@ class BaseComponent extends Component {
             return;
         }
         if (result.status === 401) {
-            this.pushNotification("warning", "登录过期, 请重新登录");
+            this.pushNotification("warning", "请您先登录");
             localStorage.clear()
         }
         if (successAction) successAction(result);

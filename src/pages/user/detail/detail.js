@@ -3,6 +3,7 @@ import BaseComponent from '../../../components/BaseComponent'
 import { Col, Row } from 'antd';
 import QDetail from './qDetail'
 import ADetail from './aDetail'
+import ErrorPage from '../../../components/ErrorPage'
 
 /**
  * 问题/答案详情页
@@ -24,8 +25,10 @@ export class Detail extends BaseComponent {
         var successAction = (result) => {
             if (result.status === "ok") {
                 this.setState({ question: result.data, found: true })
-            } else {
-                this.pushNotification("warning", JSON.stringify(result));
+            }
+            else {
+                // this.pushNotification("warning", JSON.stringify(result));
+                this.pushNotification("warning", "请您先登录")
             }
         }
 
@@ -38,6 +41,11 @@ export class Detail extends BaseComponent {
     }
 
     render() {
+        if (!this.loadStorage("user") || this.loadStorage("user") === "")
+            return (
+                <Row type="flex" justify="center" style={{ marginTop: 200 }}>
+                    <ErrorPage text={"您还没有登录"} />
+                </Row>)
         if (!this.state.found)
             return (
                 <Row style={styles.container}>

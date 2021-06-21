@@ -24,11 +24,12 @@ export class List extends BaseComponent {
             if (result.status === "ok") {
                 // TODO: 页码处理
                 this.setState({ items: result.data.content, loading: false })
-            } else {
-                this.pushNotification("warning", JSON.stringify(result));
-            }
+            } 
+            // else {
+            //     this.pushNotification("warning", JSON.stringify(result));
+            // }
         }, () => {
-            this.pushNotification("warning", "Connection Failed");
+            this.pushNotification("warning", "连接失败");
         });
     }
 
@@ -43,7 +44,7 @@ export class List extends BaseComponent {
 
     renderUCard = (item, index) => {
         console.log(item);
-        if (item.questioner.username === this.state.user || item.status == 0) {
+        if (item.status == 0) {
             return null
         }
         return (

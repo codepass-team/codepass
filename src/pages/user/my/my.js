@@ -29,17 +29,19 @@ export class My extends BaseComponent {
         this.getWithErrorAction('/api/question/listMy', (result) => {
             if (result.status === "ok") {
                 this.setState({ qdata: result.data, loading1: false })
-            } else {
-                this.pushNotification("warning", JSON.stringify(result));
-            }
+            } 
+            // else {
+            //     this.pushNotification("warning", JSON.stringify(result));
+            // }
         }, errorAction);
 
         this.getWithErrorAction('/api/answer/listMy', (result) => {
             if (result.status === "ok") {
                 this.setState({ adata: result.data, loading2: false })
-            } else {
-                this.pushNotification("warning", JSON.stringify(result));
-            }
+            } 
+            // else {
+            //     this.pushNotification("warning", JSON.stringify(result));
+            // }
         }, errorAction);
     }
 
@@ -95,7 +97,7 @@ export class My extends BaseComponent {
                                             <Row type="flex" justify='center'>
                                                 <Col>现在还没有问题...</Col>
                                             </Row>
-                                            <Row type="flex" justify='center' style={{ marginTop: 1 }}>
+                                            <Row type="flex" justify='center' style={{ marginTop: 15 }}>
                                                 <Col>
                                                     <a onClick={() => {
                                                         this.props.history.push({
@@ -119,7 +121,6 @@ export class My extends BaseComponent {
                                             <Row type="flex" justify='center' style={{ marginTop: 15 }}>
                                                 <Col>
                                                     <a onClick={() => {
-                                                        this.state.banner.slickGoTo(1)
                                                         this.props.history.push({
                                                             pathname: "/user/list",
                                                         })
