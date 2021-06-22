@@ -7,10 +7,11 @@ const { TextArea } = Input;
 
 const CommentList = ({ comments }) => (
     <List
+        style={{marginTop:10}}
         dataSource={comments}
         header={`${comments.length} ${comments.length > 1 ? 'replies' : 'reply'}`}
         itemLayout="horizontal"
-        renderItem={props => <Comment {...props} />}
+        renderItem={comment => <Comment avatar={<MyAvatar id={comment.id} name={comment.commenter.username} size={30}></MyAvatar>} {...comment} />}
     />
 );
 
@@ -93,7 +94,7 @@ class AComment extends BaseComponent {
         const { comments, submitting, value } = this.state;
 
         return (
-            <div>
+            <div style={{position:'relative',top:'10'}}>
                 {comments.length > 0 ? <CommentList comments={comments} /> : <Col>现在还没有人评论...</Col>}
                 <Comment
                     avatar={

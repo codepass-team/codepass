@@ -5,6 +5,7 @@ import Answer from './answer'
 import Description from '../../../components/markd/Description'
 import QComment from "./qComment";
 import { HeartTwoTone } from '@ant-design/icons'
+import MyAvatar from "../../handleAvatar";
 const { Title, Paragraph } = Typography;
 const { TextArea } = Input;
 
@@ -23,7 +24,9 @@ export default class QDetail extends BaseComponent {
             likeCount: 0,
             showComment: false,
             loading2: false,
-            comments: 0
+            comments: 0,
+            id: props.question.questioner.id,
+            name: props.question.questioner.username
         }
     }
 
@@ -77,7 +80,7 @@ export default class QDetail extends BaseComponent {
         const { raiseTime } = this.state.question
         return (
             <Row type="flex" justify="start" align="middle">
-                <Col span={18}>
+                <Col span={17}>
                     <Col span={24}>
                         <Title level={1} style={styles.questionTitle}>{title}
                         </Title>
@@ -95,18 +98,22 @@ export default class QDetail extends BaseComponent {
                             />}
                     </Row>
                 </Col>
-                <Col span={6}>
+                <Col span={7}>
                     <Row type="flex" justify="start" align="middle">
                         {this.renderUser(this.state.question.questioner.username, raiseTime)}
                     </Row>
                 </Col>
-                {this.renderCheck()}
-                <Col span={24}>
-                    {!this.state.showComment ?
-                        <Button onClick={this.showComment}>评论</Button> :
-                        <Button onClick={this.hideComment}>收起评论</Button>
-                    }
-                </Col>
+                <Row type='flex' justify="space-between" style={{marginTop:10}}>
+                    <Col span={20} style={{paddingTop:3}}>
+                        {this.renderCheck()}
+                    </Col>
+                    <Col span={4}>
+                        {!this.state.showComment ?
+                            <Button onClick={this.showComment} type='primary'>评论</Button> :
+                            <Button onClick={this.hideComment} type='dashed'>收起评论</Button>
+                        }
+                    </Col>
+                </Row>
                 {this.state.showComment ?
                     this.state.loading2 ?
                         <Skeleton />
@@ -129,7 +136,7 @@ export default class QDetail extends BaseComponent {
         return (
             <Row type="flex" style={{ width: "100%" }}>
                 <Row type="flex" align='middle' justify="start">
-                    <Avatar shape='square' size={64} icon="user" />
+                    <MyAvatar id={this.state.id} name={this.state.name}></MyAvatar>
                 </Row>
                 <Col span={18} style={{ padding: 2 }}>
                     <Row type="flex" align='middle' justify="start" style={{ width: "80%", fontSize: 20 }}>
@@ -242,35 +249,35 @@ export default class QDetail extends BaseComponent {
         const { likeCount, ulike } = this.state
         if (!likeCount) {
             return (
-                <Row style={{ width: "100%", marginLeft: 5, fontSize: 18 }}>
+                <Col style={{ width: "100%", marginLeft: 5, fontSize: 18 }} span={24}>
                     该问题还没有人点赞哦！
                     <HeartTwoTone twoToneColor="#1890ff"
                         onClick={() => this.check(1)}
                     />
-                </Row>
+                </Col>
             )
         } else {
             if (!ulike) {
                 return (
-                    <Row style={{ width: "100%", marginLeft: 5, fontSize: 18 }}>
+                    <Col style={{ width: "100%", marginLeft: 5, fontSize: 18 }} span={24}>
 
                         <HeartTwoTone twoToneColor="#1890ff"
                             onClick={() => this.check(1)}
                         />
                         X
                         {likeCount}
-                    </Row>
+                    </Col>
                 )
             } else {
                 return (
-                    <Row style={{ width: "100%", marginLeft: 5, fontSize: 18 }}>
+                    <Col style={{ width: "100%", marginLeft: 5, fontSize: 18 }} span={24}>
 
                         <HeartTwoTone twoToneColor="#cf1322"
                             onClick={() => this.check(0)}
                         />
                         X
                         {likeCount}
-                    </Row>
+                    </Col>
                 )
             }
 
@@ -355,11 +362,11 @@ const styles = {
     container: {
         marginTop: "50px"
     },
-    questionTitle:{
-        lineHeight:'32px',
-        color:'#121212',
-        fontSize:'22px',
-        fontWeight:'600',
+    questionTitle: {
+        lineHeight: '32px',
+        color: '#121212',
+        fontSize: '22px',
+        fontWeight: '600',
 
     }
 }

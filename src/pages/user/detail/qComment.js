@@ -2,17 +2,19 @@ import React from "react"
 import { Comment, Avatar, Form, Button, List, Input, Col } from 'antd';
 import moment from 'moment';
 import BaseComponent from '../../../components/BaseComponent';
+import MyAvatar from "../../handleAvatar";
 
 const { TextArea } = Input;
 
-const CommentList = ({ comments }) => (
-    <List
+const CommentList = ({ comments }) => {
+    console.log(comments);
+    return (<List
         dataSource={comments}
         header={comments.length + ' 评论'}
         itemLayout="horizontal"
-        renderItem={comment => <Comment avatar={<Avatar>{comment.commenter}</Avatar>} {...comment} />}
+        renderItem={comment => <Comment avatar={<MyAvatar id={comment.id} name={comment.commenter.username} size={30}></MyAvatar>} {...comment} />}
     />
-);
+)};
 
 const Editor = ({ onChange, onSubmit, submitting, value }) => (
     <div>
@@ -30,8 +32,6 @@ const Editor = ({ onChange, onSubmit, submitting, value }) => (
 class QComment extends BaseComponent {
     constructor(props) {
         super(props)
-        console.log("QComment")
-        console.log(props)
         this.state = {
             questionId: 0,
             user: 0,
@@ -92,9 +92,8 @@ class QComment extends BaseComponent {
 
     render() {
         const { comments, submitting, value } = this.state;
-
         return (
-            <div>
+            <div style={{marginTop:20}}>
                 {comments.length > 0 ? <CommentList comments={comments} /> : <Col>现在还没有人评论...</Col>}
                 <Comment
                     avatar={

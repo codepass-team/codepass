@@ -34,7 +34,7 @@ export class Person extends BaseComponent {
                 content: null
             },
             data: null,
-            change: -1,
+            change: "",
         }
     }
 
@@ -43,7 +43,6 @@ export class Person extends BaseComponent {
             loading: true
         })
         this.get('/api/user', (result) => {
-            console.log(result)
             if (result.status === "ok") {
                 this.setState({
                     name: { name: '昵称', content: result.data.username },
@@ -61,25 +60,28 @@ export class Person extends BaseComponent {
     }
 
     onChangeState = (state) => {
-        this.setState(state, this.modifyState)
+        let val = Object.keys(state)[0]
+        console.log(val);
+        this.setState({
+            ...state,
+            change:val
+        }, this.modifyState)
     }
 
     modifyState = () => {
         console.log(this.state);
         var successAction = (result) => {
-            console.log(result)
             if (result.status === 'ok') {
-                console.log(1)
+                this.pushNotification("success", "修改信息成功");
             }
             else {
                 this.pushNotification("warning", "更新失败");
             }
         }
-        if (this.state.change != -1) {
-            var keys = Object.keys(this.state)
-            var values = Object.values(this.state)
-            var val = this.state.change
-            this.post('/api/user?' + keys[val] + '=' + values[val].content, null, successAction)
+        if (this.state.change !== '') {
+            console.log(this.state.change);
+            console.log(this.state[this.state.change].content);
+            this.post('/api/user?' + this.state.change + '=' + this.state[this.state.change].content, null, successAction)
         }
     }
 

@@ -110,7 +110,6 @@ export default class Data extends BaseComponent {
     }
 
     renderModifyData() {
-        console.log(this.state.input);
         switch (this.props.name) {
             case ('昵称'):
                 return (
@@ -147,7 +146,7 @@ export default class Data extends BaseComponent {
                 return (
                     <Col span={18}>
                         <Input
-                            placeholder={this.props.content ? this.props.content : ''}
+                            placeholder={this.props.content !== null && this.props.content !== 'null' ? this.props.content : ''}
                             style={{ width: '50%' }} onChange={(e) => { this.inputChange(e.target.value) }}
                         />
                         <Button
@@ -192,9 +191,9 @@ export default class Data extends BaseComponent {
             case ('年龄'):
                 return (
                     <Col span={18}>
-                        <InputNumber min={1} max={100} style={{ width: '50%' }} onChange={(e) => { this.inputChange(e) }}></InputNumber>
+                        <InputNumber min={1} max={100} style={{ width: '50%' }} onChange={(e) => { this.inputChange(e) }} placeholder={this.props.content !== null && this.props.content !== 'null' ? this.props.content : ''}></InputNumber>
                         <Button type='primary' className='operate-btn' disabled={this.state.save_btn_disabled ? true : false}
-                            onClick={() => this.props.onChangeState({ age: { name: '年龄', content: this.state.input ? this.state.input : null }, change: 4 })}>保存</Button>
+                            onClick={() => {this.props.onChangeState({ age: { name: '年龄', content: this.state.input ? this.state.input : null }, change: 4 })}}>保存</Button>
                         <Button onClick={() => { this.cancelButtonClick() }} className='operate-btn'>取消</Button>
                     </Col>
                 )

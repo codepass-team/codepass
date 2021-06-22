@@ -11,6 +11,7 @@ import ErrorPage from '../../../components/ErrorPage'
 export class Detail extends BaseComponent {
     constructor(props) {
         super(props);
+        console.log(props)
         this.state = {
             question: 0,
             found: false
@@ -21,7 +22,6 @@ export class Detail extends BaseComponent {
         // location由react-router注入
         // location.state可以用来存放临时信息
         const { id } = this.props.location.state
-        console.log(id)
         var successAction = (result) => {
             if (result.status === "ok") {
                 this.setState({ question: result.data, found: true })

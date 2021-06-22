@@ -108,11 +108,11 @@ class ADetail extends BaseComponent {
                         <Description desp={desp} />
                     </Paragraph>
                 </Row>
-                <Row type='flex' justify="space-between">
-                    <Col span={12} style={{paddingTop:3}}>
+                <Row type='flex' justify="space-between" style={{marginTop:10}}>
+                    <Col span={20} style={{paddingTop:3}}>
                         {this.renderCheck()}
                     </Col>
-                    <Col span={12}>
+                    <Col span={4}>
                         {!this.state.showComment ?
                             <Button onClick={this.showComment} type='primary'>评论</Button> :
                             <Button onClick={this.hideComment} type='dashed'>收起评论</Button>
@@ -133,7 +133,8 @@ class ADetail extends BaseComponent {
         )
     }
 
-    renderAnswer = (answer) => {
+    renderAnswer = (answer,index) => {
+        console.log(answer);
         if (answer.answerer.username === this.loadStorage("user") && answer.status === 0) {
             // 是我提出的回答, 而且还在编辑中
             if (!this.state.edit) {
@@ -142,7 +143,7 @@ class ADetail extends BaseComponent {
             return null
         }
         return (
-            <Answer data={answer} />
+            <Answer data={answer} key={index}/>
         )
     }
 
@@ -162,39 +163,37 @@ class ADetail extends BaseComponent {
     }
     renderCheck = () => {
         const { likeCount, ulike } = this.state
-        console.log(ulike)
-        console.log(likeCount)
         if (!likeCount) {
             return (
-                <Row style={{ width: "100%", marginLeft: 5, fontSize: 18 }}>
+                <Col style={{ width: "100%", marginLeft: 5, fontSize: 18 }} span={24}>
                     该问题还没有人点赞哦！
                     <HeartTwoTone twoToneColor="#1890ff"
                         onClick={() => this.check(1)}
                     />
-                </Row>
+                </Col>
             )
         } else {
             if (!ulike) {
                 return (
-                    <Row style={{ width: "100%", marginLeft: 5, fontSize: 18 }}>
+                    <Col style={{ width: "100%", marginLeft: 5, fontSize: 18 }}  span={24}>
 
                         <HeartTwoTone twoToneColor="#1890ff"
                             onClick={() => this.check(1)}
                         />
                         X
                         {likeCount}
-                    </Row>
+                    </Col>
                 )
             } else {
                 return (
-                    <Row style={{ width: "100%", marginLeft: 5, fontSize: 18 }}>
+                    <Col style={{ width: "100%", marginLeft: 5, fontSize: 18 }} span={24}>
 
                         <HeartTwoTone twoToneColor="#cf1322"
                             onClick={() => this.check(0)}
                         />
                         X
                         {likeCount}
-                    </Row>
+                    </Col>
                 )
             }
 
@@ -329,10 +328,10 @@ class ADetail extends BaseComponent {
                 <Col span={18} style={{ padding: 2 }}>
                     <Row type="flex" align='middle' justify="start" style={{ width: "80%", fontSize: 20 }}>
                         <Col style={{ marginRight: 10, marginBottom: 5 }}>{user}</Col>
-                        {!this.state.ufol ?
+                        {/* {!this.state.ufol ?
                             <Button onClick={this.follow} size="small" type="primary"><Icon type="plus" />关注</Button>
                             : <Button onClick={this.unfollow} size="small" type="dashed"><Icon type="close" />取消关注</Button>
-                        }
+                        } */}
                     </Row>
                     <Row type="flex" align='middle' justify="start" style={{ width: "80%", fontSize: 16 }}>
                         {this.handleDate(time) + ' ' + this.handleTime(time)}

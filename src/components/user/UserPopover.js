@@ -45,9 +45,9 @@ class UserPopover extends BaseComponent {
                 <ListItem button onClick={this.personalData}>
                     <Typography>个人资料</Typography>
                 </ListItem>
-                <ListItem button onClick={this.collections}>
+                {/* <ListItem button onClick={this.collections}>
                     <Typography>收藏夹</Typography>
-                </ListItem>
+                </ListItem> */}
                 <ListItem button onClick={this.signOut}>
                     <Typography>注销</Typography>
                 </ListItem>

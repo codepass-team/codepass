@@ -44,7 +44,7 @@ export class List extends BaseComponent {
 
     renderUCard = (item, index) => {
         console.log(item);
-        if (item.status == 0) {
+        if (item.status === 0) {
             return null
         }
         return (
