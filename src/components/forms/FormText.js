@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Form, Icon, Input } from 'antd';
 
-const FormItem = Form.Item;
-
 export class FormText extends Component {
 
     renderInput() {
@@ -22,7 +20,6 @@ export class FormText extends Component {
     }
 
     render() {
-
         const formItemLayout = {
             labelCol: {
                 xs: { span: 24 },
@@ -38,8 +35,9 @@ export class FormText extends Component {
         const { message } = this.props
 
         return (
-            <FormItem {...formItemLayout} label={this.props.label}>
+            <Form.Item {...formItemLayout} label={this.props.label}>
                 {getFieldDecorator(this.props.name, {
+                    initialValue: this.props.defaultValue,
                     rules: [
                         {
                             type: this.props.type, message: (message === "" ? '不是有效的' + this.props.type : message),
@@ -47,13 +45,16 @@ export class FormText extends Component {
                         {
                             required: this.props.required,
                             message: (message === "" ? '请输入您的' + this.props.name1 + ' !' : message),
-                        }
-                    ],
-                    initialValue: this.props.defaultValue
+                        },
+                        { validator: this.props.validator },
+                    ]
                 })(
-                    <Input size="large" style={{ width: '349px' }} type={this.props.inputType} rows={this.props.rows} prefix={<Icon type={this.props.icon} />} />
+                    <Input size="large" style={{ width: '349px' }}
+                        type={this.props.inputType}
+                        rows={this.props.rows}
+                        prefix={<Icon type={this.props.icon} />} />
                 )}
-            </FormItem>
+            </Form.Item>
         );
     }
 }

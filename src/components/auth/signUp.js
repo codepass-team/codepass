@@ -11,7 +11,17 @@ const mapStateToProps = state => ({
     admin: state.identityReducer.admin
 })
 
+var throttName = false;
+var throttEmail = false;
+
 class SignUp extends BaseComponent {
+    constructor(props) {
+        super(props)
+        this.state = {
+            statusName: "success",
+            statusEmail: "success",
+        }
+    }
 
     handleSubmit = (e) => {
         e.preventDefault();
@@ -68,6 +78,44 @@ class SignUp extends BaseComponent {
         )
     }
 
+    validUsername(rule, value, callback) {
+        if (throttName) return
+        throttName = true
+
+        let name = value
+        let form = new FormData();
+        form.append('name', name);
+
+        this.timeout(300).then(() => {
+            let successAction = (result) => {
+                let exist = result.data
+                if (exist) callback("用户名已存在");
+                else callback();
+            }
+            this.post('/api/existname', form, successAction, null);
+            throttName = false
+        })
+    }
+
+    validEmail(rule, value, callback) {
+        if (throttEmail) return
+        throttEmail = true
+
+        let email = value
+        let form = new FormData();
+        form.append('email', email);
+
+        this.timeout(300).then(() => {
+            let successAction = (result) => {
+                let exist = result.data
+                if (exist) callback("邮箱已存在");
+                else callback();
+            }
+            this.post('/api/existemail', form, successAction, null);
+            throttEmail = false
+        })
+    }
+
     renderContent = () => {
         return (
             <Row type='flex'
@@ -83,11 +131,11 @@ class SignUp extends BaseComponent {
                             <Row style={{ width: "100%" }} type="flex" justify='center'>
                                 <Row style={{ width: "100%", marginLeft: "80px", color: '#AAAAAA', fontSize: 15 }}
                                     type="flex" justify='start'>请输入你的用户名:</Row>
-                                <FormText form={this.props.form}
+                                <FormText form={this.props.form} validator={this.validUsername.bind(this)}
                                     name='username' required={true} icon="user" name1='用户名' />
                                 <Row style={{ width: "100%", marginLeft: "80px", color: '#AAAAAA', fontSize: 15 }}
                                     type="flex" justify='start'>请输入你的邮箱:</Row>
-                                <FormText form={this.props.form}
+                                <FormText form={this.props.form} validator={this.validEmail.bind(this)}
                                     name='email' required={true} icon="mail" name1='邮箱' />
                                 <Row style={{ width: "100%", marginLeft: "80px", color: '#AAAAAA', fontSize: 15 }}
                                     type="flex" justify='start'>请输入你的密码:</Row>
