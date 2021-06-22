@@ -79,40 +79,44 @@ class SignUp extends BaseComponent {
     }
 
     validUsername(rule, value, callback) {
-        if (throttName) return
-        throttName = true
+        this.timeout(200).then(() => {
+            if (throttName) return
+            throttName = true
 
-        let name = value
-        let form = new FormData();
-        form.append('name', name);
+            let name = value
+            let form = new FormData();
+            form.append('name', name);
 
-        this.timeout(300).then(() => {
-            let successAction = (result) => {
-                let exist = result.data
-                if (exist) callback("用户名已存在");
-                else callback();
-            }
-            this.post('/api/existname', form, successAction, null);
-            throttName = false
+            this.timeout(100).then(() => {
+                let successAction = (result) => {
+                    let exist = result.data
+                    if (exist) callback("用户名已存在");
+                    else callback();
+                }
+                this.post('/api/existname', form, successAction, null);
+                throttName = false
+            })
         })
     }
 
     validEmail(rule, value, callback) {
-        if (throttEmail) return
-        throttEmail = true
+        this.timeout(200).then(() => {
+            if (throttEmail) return
+            throttEmail = true
 
-        let email = value
-        let form = new FormData();
-        form.append('email', email);
+            let email = value
+            let form = new FormData();
+            form.append('email', email);
 
-        this.timeout(300).then(() => {
-            let successAction = (result) => {
-                let exist = result.data
-                if (exist) callback("邮箱已存在");
-                else callback();
-            }
-            this.post('/api/existemail', form, successAction, null);
-            throttEmail = false
+            this.timeout(100).then(() => {
+                let successAction = (result) => {
+                    let exist = result.data
+                    if (exist) callback("邮箱已存在");
+                    else callback();
+                }
+                this.post('/api/existemail', form, successAction, null);
+                throttEmail = false
+            })
         })
     }
 
