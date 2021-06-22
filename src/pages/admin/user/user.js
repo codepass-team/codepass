@@ -43,9 +43,9 @@ export class User extends BaseComponent {
         this.fetch();
     }
 
-    fetch = () => {
+    fetch = (current) => {
         this.setState({ loading: true });
-        this.getWithErrorAction('/api/user/listAll', res => {
+        this.getWithErrorAction('/api/user/listAll?page=' + (current || 0), res => {
             if (res.status === 'ok') {
                 let data = res.data
                 this.setState({
