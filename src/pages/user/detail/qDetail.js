@@ -11,8 +11,6 @@ const { TextArea } = Input;
 
 export default class QDetail extends BaseComponent {
     constructor(props) {
-        console.log("QDetail")
-        console.log(props)
         super(props);
         this.state = {
             found: false,

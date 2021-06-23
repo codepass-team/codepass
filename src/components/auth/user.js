@@ -1,8 +1,8 @@
 import React from "react";
-import {Col} from 'antd';
-import {withRouter} from "react-router-dom";
+import { Col } from 'antd';
+import { withRouter } from "react-router-dom";
 import BaseComponent from '../BaseComponent'
-import {Avatar, Typography} from '@material-ui/core';
+import { Avatar, Typography } from '@material-ui/core';
 
 
 var styles = {}
@@ -12,7 +12,6 @@ class User extends BaseComponent {
     renderAvatar = () => {
         if (this.props.user === null)
             return null;
-        console.log(this.props.user)
         return (
             <Avatar size="small" shape="square" style={styles.avatar}>
                 {this.props.user.toUpperCase()[0]}
@@ -48,7 +47,7 @@ const styles_s = {
     title2: {
         color: "black",
         fontSize: '18px',
-        marginLeft:5
+        marginLeft: 5
     },
     avatar: {
         marginRight: 20,

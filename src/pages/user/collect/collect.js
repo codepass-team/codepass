@@ -1,21 +1,21 @@
 import React from 'react'
 import BaseComponent from '../../../components/BaseComponent';
-import {Col, Icon, List, Row, Tabs, Avatar} from 'antd';
+import { Col, Icon, List, Row, Tabs, Avatar } from 'antd';
 
 const { TabPane } = Tabs;
 
 //收藏夹页面
 
-export class Collect extends BaseComponent{
-    constructor(props){
+export class Collect extends BaseComponent {
+    constructor(props) {
         super(props)
-        this.state={
-            qCollection:[],
-            aCollection:[]
+        this.state = {
+            qCollection: [],
+            aCollection: []
         }
     }
 
-    componentWillMount(){
+    componentWillMount() {
         let errorAction = (result) => {
             this.pushNotification("warning", "Connection Failed");
         }
@@ -37,14 +37,13 @@ export class Collect extends BaseComponent{
         }, errorAction);
     }
 
-    deleteQuestion = (index)=>{
-        console.log(index)
-        var successAction = (result)=>{
-            if(result.status=='ok'){
+    deleteQuestion = (index) => {
+        var successAction = (result) => {
+            if (result.status == 'ok') {
                 let qCollection = this.state.qCollection
-                qCollection.splice(index,1)
+                qCollection.splice(index, 1)
                 this.setState({
-                    qCollection:qCollection
+                    qCollection: qCollection
                 })
             }
             else {
@@ -52,18 +51,16 @@ export class Collect extends BaseComponent{
             }
         }
 
-        this.post('/api/question/unfollow/' + this.state.qCollection[index].id,null,successAction,
-            ()=>{console.log('unsuccess')},()=>{console.log('error')})
+        this.post('/api/question/unfollow/' + this.state.qCollection[index].id, null, successAction, null, null)
     }
 
-    deleteAnswer = (index)=>{
-        console.log(index)
-        var successAction = (result)=>{
-            if(result.status=='ok'){
+    deleteAnswer = (index) => {
+        var successAction = (result) => {
+            if (result.status == 'ok') {
                 let aCollection = this.state.aCollection
-                aCollection.splice(index,1)
+                aCollection.splice(index, 1)
                 this.setState({
-                    aCollection:aCollection
+                    aCollection: aCollection
                 })
             }
             else {
@@ -71,71 +68,27 @@ export class Collect extends BaseComponent{
             }
         }
 
-        this.post('/api/answer/uncollect/' + this.state.aCollection[index].id,null,successAction,
-            ()=>{console.log('unsuccess')},()=>{console.log('error')})
+        this.post('/api/answer/uncollect/' + this.state.aCollection[index].id, null, successAction, null, null)
     }
 
-    render(){
-        const { qCollection,aCollection } = this.state;
-        console.log(qCollection,aCollection)
+    render() {
+        const { qCollection, aCollection } = this.state;
         return (
             <Row style={styles.container}>
-                    <Col lg={6} xs={1} />
-                    <Col lg={12} xs={22}>
-                        <Tabs defaultActiveKey="1" >
-                            <TabPane tab="Questions" key="1">
-                                {this.state.qCollection.length === 0 ?
-                                    <Row style={styles.container} type="flex" justify="center">
-                                        <Row style={{ fontSize: 22, marginTop: 300 }}>
-                                            您还没有关注问题哦...
-                                        </Row>
-                                    </Row> : 
-                                    <List
-                                        itemLayout="horizontal"
-                                        dataSource={qCollection}
-                                        renderItem={(item,index)=>{
-                                            console.log(index)
-                                            let id = item.id
-                                            let user = item.questioner.username
-                                            console.log(id,user)
-                                            return (<List.Item>
-                                                <Col span={20}>
-                                                <List.Item.Meta
-                                                    avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                                                    title={<a onClick={() => {
-                                                        this.props.history.push({
-                                                        pathname: "/user/detail",
-                                                        state: { id, user, completed: true }
-                                                        })
-                                                    }}>
-                                                        {item.title}
-                                                    </a>
-                                                    }
-                                                    description={item.content}
-                                                >
-                                                </List.Item.Meta>
-                                                </Col>
-                                                <Col span={2}>
-                                                    <Icon type="delete" style={{paddingTop:10}} onClick={()=>this.deleteQuestion(index)} />
-                                                </Col>
-                                            </List.Item>
-                                            )}}
-                                    ></List>
-                                    }
-                            </TabPane>
-                            <TabPane tab="Answers" key="2">
-                                {this.state.aCollection.length === 0
-                                    ? <Row style={styles.container} type="flex" justify="center">
-                                        <Row style={{ fontSize: 22, marginTop: 300 }}>
-                                            您还没有收藏回答哦...
-                                        </Row>
+                <Col lg={6} xs={1} />
+                <Col lg={12} xs={22}>
+                    <Tabs defaultActiveKey="1" >
+                        <TabPane tab="Questions" key="1">
+                            {this.state.qCollection.length === 0 ?
+                                <Row style={styles.container} type="flex" justify="center">
+                                    <Row style={{ fontSize: 22, marginTop: 300 }}>
+                                        您还没有关注问题哦...
                                     </Row>
-                                    : 
-                                    <List
+                                </Row> :
+                                <List
                                     itemLayout="horizontal"
-                                    dataSource={aCollection}
-                                    renderItem={(item,index)=>{
-                                        console.log(index)
+                                    dataSource={qCollection}
+                                    renderItem={(item, index) => {
                                         let id = item.id
                                         let user = item.questioner.username
                                         return (<List.Item>
@@ -144,8 +97,48 @@ export class Collect extends BaseComponent{
                                                     avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
                                                     title={<a onClick={() => {
                                                         this.props.history.push({
-                                                        pathname: "/user/detail",
-                                                        state: { id, user, completed: true }
+                                                            pathname: "/user/detail",
+                                                            state: { id, user, completed: true }
+                                                        })
+                                                    }}>
+                                                        {item.title}
+                                                    </a>
+                                                    }
+                                                    description={item.content}
+                                                >
+                                                </List.Item.Meta>
+                                            </Col>
+                                            <Col span={2}>
+                                                <Icon type="delete" style={{ paddingTop: 10 }} onClick={() => this.deleteQuestion(index)} />
+                                            </Col>
+                                        </List.Item>
+                                        )
+                                    }}
+                                ></List>
+                            }
+                        </TabPane>
+                        <TabPane tab="Answers" key="2">
+                            {this.state.aCollection.length === 0
+                                ? <Row style={styles.container} type="flex" justify="center">
+                                    <Row style={{ fontSize: 22, marginTop: 300 }}>
+                                        您还没有收藏回答哦...
+                                    </Row>
+                                </Row>
+                                :
+                                <List
+                                    itemLayout="horizontal"
+                                    dataSource={aCollection}
+                                    renderItem={(item, index) => {
+                                        let id = item.id
+                                        let user = item.questioner.username
+                                        return (<List.Item>
+                                            <Col span={20}>
+                                                <List.Item.Meta
+                                                    avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+                                                    title={<a onClick={() => {
+                                                        this.props.history.push({
+                                                            pathname: "/user/detail",
+                                                            state: { id, user, completed: true }
                                                         })
                                                     }}>
                                                         {item.questionTitle}
@@ -154,19 +147,20 @@ export class Collect extends BaseComponent{
                                                     description={item.content}
                                                 >
                                                 </List.Item.Meta>
-                                                </Col>
-                                                <Col span={2}>
-                                                    <Icon type="delete" style={{paddingTop:10}} onClick={()=>this.deleteAnswer(index)} />
-                                                </Col>
+                                            </Col>
+                                            <Col span={2}>
+                                                <Icon type="delete" style={{ paddingTop: 10 }} onClick={() => this.deleteAnswer(index)} />
+                                            </Col>
                                         </List.Item>
-                                        )}}
-                                        ></List>
-                                    }
-                            </TabPane>
-                        </Tabs>
-                    </Col>
-                    <Col lg={6} xs={1} />
-                </Row>
+                                        )
+                                    }}
+                                ></List>
+                            }
+                        </TabPane>
+                    </Tabs>
+                </Col>
+                <Col lg={6} xs={1} />
+            </Row>
         )
     }
 }

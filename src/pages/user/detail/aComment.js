@@ -31,8 +31,6 @@ const Editor = ({ onChange, onSubmit, submitting, value }) => (
 class AComment extends BaseComponent {
     constructor(props) {
         super(props)
-        console.log("AComment")
-        console.log(props)
         this.state = {
             answerId: 0,
             comments: 0,

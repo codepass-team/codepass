@@ -42,13 +42,6 @@ class SignUp extends BaseComponent {
                 this.pushNotification("warning", "两次输入的密码不一致!", this.props.dispatch);
                 return;
             }
-            // if(values.name===''){
-            //     this.pushNotification("warning","姓名不能为空",this.props.dispatch);
-            // }
-            if (!err) {
-                console.log("hey");
-                console.log('Received values of form: ', values);
-            }
 
             let form = new FormData();
             form.append('username', values.username);

@@ -17,7 +17,6 @@ const mapStateToProps = state => ({
 
 class ADetail extends BaseComponent {
     constructor(props) {
-        console.log(props);
         super(props);
         this.state = {
             found: false,
@@ -108,8 +107,8 @@ class ADetail extends BaseComponent {
                         <Description desp={desp} />
                     </Paragraph>
                 </Row>
-                <Row type='flex' justify="space-between" style={{marginTop:10}}>
-                    <Col span={20} style={{paddingTop:3}}>
+                <Row type='flex' justify="space-between" style={{ marginTop: 10 }}>
+                    <Col span={20} style={{ paddingTop: 3 }}>
                         {this.renderCheck()}
                     </Col>
                     <Col span={4}>
@@ -133,8 +132,7 @@ class ADetail extends BaseComponent {
         )
     }
 
-    renderAnswer = (answer,index) => {
-        console.log(answer);
+    renderAnswer = (answer, index) => {
         if (answer.answerer.username === this.loadStorage("user") && answer.status === 0) {
             // 是我提出的回答, 而且还在编辑中
             if (!this.state.edit) {
@@ -143,7 +141,7 @@ class ADetail extends BaseComponent {
             return null
         }
         return (
-            <Answer data={answer} key={index}/>
+            <Answer data={answer} key={index} />
         )
     }
 
@@ -175,7 +173,7 @@ class ADetail extends BaseComponent {
         } else {
             if (!ulike) {
                 return (
-                    <Col style={{ width: "100%", marginLeft: 5, fontSize: 18 }}  span={24}>
+                    <Col style={{ width: "100%", marginLeft: 5, fontSize: 18 }} span={24}>
 
                         <HeartTwoTone twoToneColor="#1890ff"
                             onClick={() => this.check(1)}
@@ -270,7 +268,6 @@ class ADetail extends BaseComponent {
     }
 
     follow = () => {
-        console.log(this.state.question.questioner.id);
         this.post('/api/user/follow/' + this.state.question.questioner.id, null, (res) => {
             if (res.status === 'ok') {
                 this.setState({

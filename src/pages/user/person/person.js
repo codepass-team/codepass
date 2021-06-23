@@ -61,15 +61,13 @@ export class Person extends BaseComponent {
 
     onChangeState = (state) => {
         let val = Object.keys(state)[0]
-        console.log(val);
         this.setState({
             ...state,
-            change:val
+            change: val
         }, this.modifyState)
     }
 
     modifyState = () => {
-        console.log(this.state);
         var successAction = (result) => {
             if (result.status === 'ok') {
                 this.pushNotification("success", "修改信息成功");
@@ -79,8 +77,6 @@ export class Person extends BaseComponent {
             }
         }
         if (this.state.change !== '') {
-            console.log(this.state.change);
-            console.log(this.state[this.state.change].content);
             this.post('/api/user?' + this.state.change + '=' + this.state[this.state.change].content, null, successAction)
         }
     }

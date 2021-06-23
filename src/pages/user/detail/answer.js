@@ -15,7 +15,6 @@ class Answer extends BaseComponent {
 
     constructor(props) {
         super(props);
-        console.log(props);
         this.state = {
             desp: 1,
         }

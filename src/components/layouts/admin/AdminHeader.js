@@ -27,7 +27,6 @@ class AdminHeader extends BaseComponent {
     };
 
     renderUser = () => {
-        console.log(this.props)
         if (!this.props.admin) {
             return (
                 <Col span={12}>

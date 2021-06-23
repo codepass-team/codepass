@@ -47,7 +47,6 @@ class SignIn extends BaseComponent {
                         this.props.dispatch(loginAsUser(usrname));
                         this.pushNotification("success", "欢迎" + usrname + "回到CodePass");
                         this.get('/api/user', (result) => {
-                            console.log(result)
                             if (result.status === "ok"&&result.data.email===null) {
                                 this.pushNotification("success", '填写邮箱有助于您找回密码哦!');
                             }
@@ -62,7 +61,6 @@ class SignIn extends BaseComponent {
             var errorAction = (result) => {
                 this.pushNotification("warning", "用户名或密码错误");
             }
-            console.log(123);
             this.post('/api/login', form, successAction, errorAction);
         });
     }

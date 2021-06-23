@@ -16,8 +16,6 @@ const mapStateToProps = state => ({
 
 class ADetail extends BaseComponent {
     constructor(props) {
-        console.log("ADetail")
-        console.log(props)
         super(props);
         this.state = {
             found: false,
@@ -152,8 +150,6 @@ class ADetail extends BaseComponent {
         }
     }
     renderCheck = (likeCount, ulike) => {
-        console.log(ulike)
-        console.log(likeCount)
         if (!likeCount) {
             return (
                 <Row style={{ width: "100%", marginLeft: 5, fontSize: 18 }}>

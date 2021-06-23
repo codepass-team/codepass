@@ -44,7 +44,6 @@ class SearchBar extends BaseComponent {
         }
         var successAction = (result) => {
             const group = result.data
-            console.log(group)
             this.setState({ dataSource: group });
         }
         this.get('/api/question/searchRecommend?keywords=' + value + '&limits=5', successAction)

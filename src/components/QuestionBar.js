@@ -78,7 +78,6 @@ class QuestionBar extends BaseComponent {
     }
 
     submit = () => {
-        console.log(this.state)
         const { qid, title, desp } = this.state
         const user = this.loadStorage("user")
 
@@ -188,30 +187,33 @@ class QuestionBar extends BaseComponent {
 
     renderOpt() {
         if (this.state.optVis) {
-            console.log(this.state.optData)
-            return <div><span style={{ fontSize: 22 }}>您可能想问:</span>
-                <List
-                    bordered={true}
-                    itemLayout="horizontal"
-                    dataSource={this.state.optData}
-                    renderItem={item => (
-                        <List.Item>
-                            <List.Item.Meta
-                                title={<a title={"请浏览问题的细节"}
-                                    style={{ color: "white", fontSize: 22 }} onClick={() => {
-                                        let tx = this.loadStorage("user")
-                                        let qid = item.id
-                                        // 页面跳转时传参数
-                                        this.props.history.push({
-                                            pathname: "/user/detail",
-                                            state: { id: qid, tx, completed: true }
-                                        })
-                                    }}>{item.title}</a>}
-                                description={<span style={{ color: "white" }}>{item.description}</span>}
-                            />
-                        </List.Item>
-                    )}
-                /></div>
+            return (
+                <div>
+                    <span style={{ fontSize: 22 }}>您可能想问:</span>
+                    <List
+                        bordered={true}
+                        itemLayout="horizontal"
+                        dataSource={this.state.optData}
+                        renderItem={item => (
+                            <List.Item>
+                                <List.Item.Meta
+                                    title={<a title={"请浏览问题的细节"}
+                                        style={{ color: "white", fontSize: 22 }} onClick={() => {
+                                            let tx = this.loadStorage("user")
+                                            let qid = item.id
+                                            // 页面跳转时传参数
+                                            this.props.history.push({
+                                                pathname: "/user/detail",
+                                                state: { id: qid, tx, completed: true }
+                                            })
+                                        }}>{item.title}</a>}
+                                    description={<span style={{ color: "white" }}>{item.description}</span>}
+                                />
+                            </List.Item>
+                        )}
+                    />
+                </div>
+            )
         } else {
 
         }
