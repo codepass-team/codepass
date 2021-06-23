@@ -11,7 +11,6 @@ import ErrorPage from '../../../components/ErrorPage'
 export class Detail extends BaseComponent {
     constructor(props) {
         super(props);
-        console.log(props)
         this.state = {
             question: 0,
             found: false

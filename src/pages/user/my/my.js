@@ -29,7 +29,7 @@ export class My extends BaseComponent {
         this.getWithErrorAction('/api/question/listMy', (result) => {
             if (result.status === "ok") {
                 this.setState({ qdata: result.data, loading1: false })
-            } 
+            }
             // else {
             //     this.pushNotification("warning", JSON.stringify(result));
             // }
@@ -38,7 +38,7 @@ export class My extends BaseComponent {
         this.getWithErrorAction('/api/answer/listMy', (result) => {
             if (result.status === "ok") {
                 this.setState({ adata: result.data, loading2: false })
-            } 
+            }
             // else {
             //     this.pushNotification("warning", JSON.stringify(result));
             // }
@@ -51,7 +51,6 @@ export class My extends BaseComponent {
                 var qdata = this.state.qdata
                 qdata.splice(index, 1)
                 this.setState({ qdata: qdata })
-                console.log(this.state.qdata)
             }
             else {
                 this.pushNotification("warning", JSON.stringify(result));
@@ -67,7 +66,6 @@ export class My extends BaseComponent {
                 var adata = this.state.adata
                 adata.splice(index, 1)
                 this.setState({ adata: adata })
-                console.log(this.state.adata)
             }
             else {
                 this.pushNotification("warning", JSON.stringify(result));
@@ -78,7 +76,6 @@ export class My extends BaseComponent {
     }
 
     render() {
-        console.log(this.state.qdata, this.state.adata)
         if (!this.loadStorage("user") || this.loadStorage("user") === "")
             return (
                 <Row type="flex" justify="center" style={{ marginTop: 200 }}>

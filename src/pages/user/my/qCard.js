@@ -48,7 +48,6 @@ class QCard extends BaseComponent {
 
     render() {
         const { id, title, likeCount, questioner } = this.props.data
-        console.log(this.props.data)
         return (
             this.renderTitle(title, likeCount, questioner.username, id)
         );
