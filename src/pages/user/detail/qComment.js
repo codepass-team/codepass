@@ -7,13 +7,26 @@ import MyAvatar from "../../handleAvatar";
 const { TextArea } = Input;
 
 const CommentList = ({ comments }) => {
-    console.log(comments);
-    return (<List
-        dataSource={comments}
-        header={comments.length + ' 评论'}
-        itemLayout="horizontal"
-        renderItem={comment => <Comment avatar={<MyAvatar id={comment.commenter.id} name={comment.commenter.username} size={30}></MyAvatar>} {...comment} />}
-    />
+    return (
+        <List
+            dataSource={comments}
+            header={comments.length + ' 评论'}
+            itemLayout="horizontal"
+            renderItem={comment => (
+                <li>
+                    <Comment
+                        avatar={
+                            <MyAvatar
+                                id={comment.commenter.id}
+                                name={comment.commenter.username}
+                                size={30} />}
+                        author={comment.commenter.username}
+                        content={comment.content}
+                        datetime={moment(comment.commentTime).fromNow()}
+                    />
+                </li>
+            )}
+        />
     )
 };
 
@@ -57,20 +70,16 @@ class QComment extends BaseComponent {
         this.post('/api/comment/question/' + this.props.questionId, form, (res) => {
             if (res.status === 'ok') {
                 this.pushNotification("success", "发送成功")
+                console.log(this.state.comments)
                 this.setState({
                     submitting: false,
                     value: '',
                     comments: [
-                        {
-                            id: res.data.id,
-                            questionId: res.data.questionId,
-                            content: <p>{this.state.value}</p>,
-                            commentTime: moment().fromNow(),
-                            commenter: res.data.commenter,
-                        },
+                        res.data,
                         ...this.state.comments,
                     ],
                 });
+                console.log(this.state.comments)
             } else {
                 this.pushNotification("danger", "发送失败")
             }

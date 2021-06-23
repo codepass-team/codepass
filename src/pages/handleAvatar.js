@@ -39,8 +39,12 @@ export default class MyAvatar extends BaseComponent {
     }
 
     render() {
-        return (<Avatar shape={this.props.shape || "square"} style={{ marginRight: 8, fontSize: 30, marginTop: 5, backgroundColor: this.state.color }} size={this.state.size}>
-            {this.state.name}
-        </Avatar>)
+        return (
+            <Avatar
+                shape={this.props.shape || "square"}
+                style={{ marginRight: 8, fontSize: 30, marginTop: 5, backgroundColor: this.state.color }}
+                size={this.state.size}>
+                {this.state.name}
+            </Avatar>)
     }
 }
