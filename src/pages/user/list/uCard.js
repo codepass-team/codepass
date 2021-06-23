@@ -41,8 +41,8 @@ class UCard extends BaseComponent {
                     <Paragraph style={{ fontSize: 18, paddingTop: 3, float: 'right' }}>{this.handleDate(time) + ' ' + this.handleTime(time)}</Paragraph>
                 </Col>
                 <Row type="flex" justify="start" align="middle" style={{ width: '100%' }}>
-                    <Paragraph style={{ fontSize: 14, fontWeight: 400, marginBottom: 5 }}>
-                        <Description desp={'问题描述: ' + desp || '提问者没有填写问题描述'} />
+                    <Paragraph style={{ fontSize: 14, fontWeight: 400, marginTop: 10, marginBottom: 15 }}>
+                        <Description desp={desp ? '问题描述: ' + desp : '提问者没有填写问题描述'} />
                     </Paragraph>
                 </Row>
                 <Row type="flex" justify="start" align="middle" style={{ width: '100%' }}>
