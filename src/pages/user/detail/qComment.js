@@ -12,9 +12,10 @@ const CommentList = ({ comments }) => {
         dataSource={comments}
         header={comments.length + ' 评论'}
         itemLayout="horizontal"
-        renderItem={comment => <Comment avatar={<MyAvatar id={comment.id} name={comment.commenter.username} size={30}></MyAvatar>} {...comment} />}
+        renderItem={comment => <Comment avatar={<MyAvatar id={comment.commenter.id} name={comment.commenter.username} size={30}></MyAvatar>} {...comment} />}
     />
-)};
+    )
+};
 
 const Editor = ({ onChange, onSubmit, submitting, value }) => (
     <div>
@@ -55,16 +56,17 @@ class QComment extends BaseComponent {
 
         this.post('/api/comment/question/' + this.props.questionId, form, (res) => {
             if (res.status === 'ok') {
-                this.pushNotification("info", "发送成功")
+                this.pushNotification("success", "发送成功")
                 this.setState({
                     submitting: false,
                     value: '',
                     comments: [
                         {
-                            author: this.props.user.username,
-                            avatar: <Avatar>this.props.user.username</Avatar>,
+                            id: res.data.id,
+                            questionId: res.data.questionId,
                             content: <p>{this.state.value}</p>,
-                            datetime: moment().fromNow(),
+                            commentTime: moment().fromNow(),
+                            commenter: res.data.commenter,
                         },
                         ...this.state.comments,
                     ],
@@ -93,7 +95,7 @@ class QComment extends BaseComponent {
     render() {
         const { comments, submitting, value } = this.state;
         return (
-            <div style={{marginTop:20}}>
+            <div style={{ marginTop: 20 }}>
                 {comments.length > 0 ? <CommentList comments={comments} /> : <Col>现在还没有人评论...</Col>}
                 <Comment
                     avatar={
