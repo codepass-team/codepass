@@ -57,6 +57,7 @@ class QComment extends BaseComponent {
         this.post('/api/comment/question/' + this.props.questionId, form, (res) => {
             if (res.status === 'ok') {
                 this.pushNotification("success", "发送成功")
+                console.log(res)
                 this.setState({
                     submitting: false,
                     value: '',
@@ -71,6 +72,7 @@ class QComment extends BaseComponent {
                         ...this.state.comments,
                     ],
                 });
+                console.log(this.state.comments)
             } else {
                 this.pushNotification("danger", "发送失败")
             }

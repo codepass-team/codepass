@@ -47,7 +47,7 @@ class UCard extends BaseComponent {
                 </Row>
                 <Row type="flex" justify="start" align="middle" style={{ width: '100%' }}>
                     <Col span={4}>{likeCount || 0} 点赞</Col>
-                    <Col span={4}>{collectCount || 0} 关注</Col>
+                    {/* <Col span={4}>{collectCount || 0} 关注</Col> */}
                     <Col span={4}>{commentCount || 0} 评论</Col>
                     <Col span={12}></Col>
                 </Row>
