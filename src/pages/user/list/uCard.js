@@ -4,9 +4,9 @@ import { Avatar, Card, Col, Row, Typography } from 'antd';
 import User from '../../../components/auth/user'
 import Description from '../../../components/markd/Description'
 import { withRouter } from "react-router-dom";
+import MyAvatar from '../../handleAvatar'
 
 const { Title, Paragraph } = Typography;
-
 
 
 class UCard extends BaseComponent {
@@ -18,7 +18,7 @@ class UCard extends BaseComponent {
         }
     };
 
-    renderTitle = (title, desp, user, time, id, likeCount, collectCount, commentCount) => {
+    renderTitle = (title, desp, user, time, id, likeCount, collectCount, commentCount, userid) => {
         return (
             <Card
                 style={{ width: "100%", marginBottom: 10 }}
@@ -31,7 +31,7 @@ class UCard extends BaseComponent {
                     }}>{title}</a>}</Title>}>
 
                 <Col span={2}>
-                    <Avatar shape="square">{user}</Avatar>
+                    <MyAvatar id={userid} name={user} shape="square"></MyAvatar>
                 </Col>
                 <Col span={5}>
                     <User user={user} />
@@ -58,7 +58,7 @@ class UCard extends BaseComponent {
     render() {
         const { id, title, content, questioner, raiseTime, likeCount, collectCount, commentCount } = this.props.data
         return (
-            this.renderTitle(title, content, questioner.username, raiseTime, id, likeCount, collectCount, commentCount)
+            this.renderTitle(title, content, questioner.username, raiseTime, id, likeCount, collectCount, commentCount, questioner.id)
         );
     }
 }

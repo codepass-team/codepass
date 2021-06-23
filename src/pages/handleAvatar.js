@@ -9,13 +9,16 @@ export default class MyAvatar extends BaseComponent {
             id: 0,
             name: '',
             color: '',
-            size:props.size?props.size:55
+            size: props.size ? props.size : 55
         }
     }
 
     getName = () => {
-        if (this.props.name.length < 2) return this.props.name
-        return this.props.name.substring(0, 3)
+        if (this.props.name.length < 2) return this.props.name.toUpperCase()
+        if (this.props.name.length % 2 == 0) {
+            return this.props.name.substring(0, 2).toUpperCase()
+        }
+        return this.props.name.substring(0, 3).toUpperCase()
     }
 
     hashColor = () => {
@@ -26,17 +29,17 @@ export default class MyAvatar extends BaseComponent {
             y = y * id % 256;
         }
         this.state.color = 'rgb(' + x + ',' + y + ',' + x * y % 256 + ')';
-        console.log(this.state.color);
     }
 
     componentWillMount() {
         this.state.id = this.props.id
         this.state.name = this.getName()
         this.hashColor();
+        console.log(this.state.id, this.state.name, this.state.color);
     }
 
     render() {
-        return (<Avatar shape="square" style={{ marginRight: 8, fontSize: 30, marginTop: 5, backgroundColor:this.state.color }} shape="circle" size={this.state.size}>
+        return (<Avatar shape={this.props.shape || "square"} style={{ marginRight: 8, fontSize: 30, marginTop: 5, backgroundColor: this.state.color }} size={this.state.size}>
             {this.state.name}
         </Avatar>)
     }
