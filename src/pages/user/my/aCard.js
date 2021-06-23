@@ -57,9 +57,8 @@ class ACard extends BaseComponent {
     }
 
     render() {
-        const { id, questioner, content, likeCount, questionTitle } = this.props.data
+        const { questioner, questionId, content, likeCount, questionTitle } = this.props.data
         let user = questioner.username
-        console.log(this.props.data, user)
         // const my = this.getAnswer(test.answer)
         // if (!my || !my.dockerId) {
         //     return null
@@ -78,7 +77,7 @@ class ACard extends BaseComponent {
                     <a onClick={() => {
                         this.props.history.push({
                             pathname: "/user/detail",
-                            state: { id, user, completed: true }
+                            state: { id: questionId, user, completed: true }
                         })
                     }}>
                         {content}
