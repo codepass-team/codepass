@@ -6,7 +6,6 @@ export default class MyAvatar extends BaseComponent {
     constructor(props) {
         super(props)
         this.state = {
-            id: 0,
             name: '',
             color: '',
             size: props.size ? props.size : 55
@@ -22,7 +21,7 @@ export default class MyAvatar extends BaseComponent {
     }
 
     hashColor = () => {
-        let id = this.state.id
+        let id = this.props.id
         let x = id % 10, y = id % 100 / 10
         for (let i = 0; i < id % 256; i++) {
             x = x * id % 256;
@@ -32,10 +31,8 @@ export default class MyAvatar extends BaseComponent {
     }
 
     componentWillMount() {
-        this.state.id = this.props.id
         this.state.name = this.getName()
         this.hashColor();
-        console.log(this.state.id, this.state.name, this.state.color);
     }
 
     render() {

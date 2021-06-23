@@ -7,6 +7,7 @@ import MyAvatar from "../../handleAvatar";
 const { TextArea } = Input;
 
 const CommentList = ({ comments }) => {
+
     return (
         <List
             dataSource={comments}
@@ -70,16 +71,18 @@ class QComment extends BaseComponent {
         this.post('/api/comment/question/' + this.props.questionId, form, (res) => {
             if (res.status === 'ok') {
                 this.pushNotification("success", "发送成功")
-                console.log(this.state.comments)
+                let datas = [
+                    res.data,
+                    ...this.state.comments,
+                ];
                 this.setState({
                     submitting: false,
                     value: '',
-                    comments: [
-                        res.data,
-                        ...this.state.comments,
-                    ],
+                    comments: []
                 });
-                console.log(this.state.comments)
+                this.setState({
+                    comments: datas
+                })
             } else {
                 this.pushNotification("danger", "发送失败")
             }
